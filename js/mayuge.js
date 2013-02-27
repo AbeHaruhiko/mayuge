@@ -126,7 +126,8 @@ function loadSvgCompleteHandler(svgXml) {
 
     // jquery-svg使用時
     var grpRMayuge = svgWrapper.group({class_: "draggable", transform: "translate(" + ((xBR1 + xER1)/2) + "," + ((yBR1 + yER1)/2) + ")"});
-    svgWrapper.use(grpRMayuge, "#path-r-mayuge", {fill: "black", transform: "scale(" + scaleBR + "),rotate(" + dgr + ")", strokeWidth: "1"})
+    // svgWrapper.use(grpRMayuge, "#path-r-mayuge", {fill: "black", transform: "scale(" + scaleBR + "),rotate(" + dgr + ")", strokeWidth: "1"})
+    svgWrapper.use(grpRMayuge, "#path-r-mayuge", {fill: "black", transform: "scale(" + scaleBR + ")", strokeWidth: "1"})
 
     // 左目
     var pointEL1 = $(this).find("#EL1");
@@ -153,7 +154,7 @@ function loadSvgCompleteHandler(svgXml) {
 
     // jquery-svg使用時  
     var grpLMayuge = svgWrapper.group({class_: "draggable", transform: "translate(" + ((xBL1 + xEL1)/2) + "," + ((yBL1 + yEL1)/2) + ")"});
-    svgWrapper.use(grpLMayuge, "#path-r-mayuge", {fill: "black", transform: "scale(-" + scaleBL + "," + scaleBL + "),rotate(" + dgr + ")", strokeWidth: "1"})
+    svgWrapper.use(grpLMayuge, "#path-r-mayuge", {fill: "black", transform: "scale(-" + scaleBL + "," + scaleBL + ")", strokeWidth: "1"})
 
 
 
@@ -161,7 +162,12 @@ function loadSvgCompleteHandler(svgXml) {
 
     $(".draggable", svgWrapper.root()).each(function(index, element) {
       makeSVGElementDraggable(element);
+      element.addEventListener("mouseup", export2canvas);
     })
+
+    export2canvas();
+
+
 
   });
 
@@ -170,6 +176,23 @@ function loadSvgCompleteHandler(svgXml) {
   // moveElementToTop("r-mayuge");
 
 
+}
+
+function export2canvas() {
+  // CANVAS書き出し
+  if (!$("#svg-mayuge").attr("xmlns:xlink")){
+    $("#svg-mayuge").attr({"xmlns:xlink": $.svg.xlinkNS});
+  }
+  var xml = svgWrapper.toSVG();
+  console.log(xml);
+  // PNG書き出しはレンダリング完了後に行なう
+  canvg($("#canvasArea")[0], xml, {renderCallback: export2png});
+}
+
+function export2png() {
+  // PNG書き出し
+  console.log($("#canvasArea")[0].toDataURL());
+  $("#pngArea > img").attr({src: $("#canvasArea")[0].toDataURL()});
 }
 
 function moveElementToTop(id) {

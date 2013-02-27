@@ -15,9 +15,9 @@
       cursor: move;
     }
   </style>
-  <script type="text/ecmascript"> <![CDATA[ 
+<!--   <script type="text/ecmascript"> <![CDATA[ 
   ]]> </script>
-  
+ -->  
   <defs
      id="defs-mayuge">
     <path
