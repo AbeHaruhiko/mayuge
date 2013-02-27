@@ -8,19 +8,23 @@
 // // $logpath = realpath(dirname((__FILE__ ))).'/../../../errorlog' ;
 // $logpath = '/var/log/' ;
 // $logfile = "$logpath/'phperror'.$logdate.log" ;
-// ini_set('error_log', $logfile) ;
+ini_set('error_log', '/virtual/calico/log/error.log') ;
+error_log("test");
+
+//$IMAGE_DIR_PTH = '/var/www/html/mayuge/img/';
+$IMAGE_DIR_PATH = './img/';
 
 $filename = strtolower(basename($_FILES['imageSelector']['name']));
-if (move_uploaded_file($_FILES['imageSelector']['tmp_name'], '/var/www/html/mayuge/img/' . $filename)) {
+if (move_uploaded_file($_FILES['imageSelector']['tmp_name'], $IMAGE_DIR_PATH . $filename)) {
     $data = array('filename' => $filename);
 } else {
     $data = array('error' => 'Failed to save');
 }
 
-// error_log($filename);
+error_log($filename);
 // error_log('test');
 
-list($width, $height) = getimagesize('/var/www/html/mayuge/img/' . $filename);
+list($width, $height) = getimagesize($IMAGE_DIR_PATH . $filename);
 
 // error_log($width.':'.$height);
 
@@ -40,13 +44,13 @@ if ($width > $limitSize || $height > $limitSize) {
 	}
 
 	include ('image.php');
-	$image = new Image('/var/www/html/mayuge/img/' . $filename);
+	$image = new Image($IMAGE_DIR_PATH . $filename);
 	$image->Resize($width, $height)->Save();
 }
 
 
 
-$postfields = array("image"=>"@/var/www/html/mayuge/img/" . $filename .";type=image/jpeg");
+$postfields = array("image"=>"@".$IMAGE_DIR_PATH . $filename .";type=image/jpeg");
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, "http://detectface.com/api/detect");

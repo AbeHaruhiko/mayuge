@@ -53,17 +53,17 @@ angular.element(document).ready(function() {
     reader.readAsDataURL(file);
 
     // アップロード
-    $(this).upload('./phptest.php', onUploadCompleted, 'xml');
+    $(this).upload('./proxy.php', onUploadCompleted, 'xml');
   });
 });
 
-function onUploadCompleted(res) {
+onUploadCompleted = function(res) {
   console.log(res);
   detectedFaces = res;
   getSVG();
 }
 
-function getSVG() {
+getSVG = function() {
 
   // jquery-svg使用時
   $("#svgArea").width(selectedImageWidth).height(selectedImageHeight);
@@ -87,7 +87,7 @@ function getSVG() {
 
 }
 
-function loadSvgCompleteHandler(svgXml) {
+loadSvgCompleteHandler = function(svgXml) {
 
   // jquery-svg使用時
   svgWrapper.image(0, 0, selectedImageWidth, selectedImageHeight, localImage.src);
@@ -178,7 +178,7 @@ function loadSvgCompleteHandler(svgXml) {
 
 }
 
-function export2canvas() {
+export2canvas = function() {
   // CANVAS書き出し
   if (!$("#svg-mayuge").attr("xmlns:xlink")){
     $("#svg-mayuge").attr({"xmlns:xlink": $.svg.xlinkNS});
@@ -189,13 +189,13 @@ function export2canvas() {
   canvg($("#canvasArea")[0], xml, {renderCallback: export2png});
 }
 
-function export2png() {
+export2png = function() {
   // PNG書き出し
   console.log($("#canvasArea")[0].toDataURL());
   $("#pngArea > img").attr({src: $("#canvasArea")[0].toDataURL()});
 }
 
-function moveElementToTop(id) {
+moveElementToTop = function(id) {
   var e = svgWrapper.getElementById(id);
   svgWrapper.remove(e);
   svgWrapper.add(e);
