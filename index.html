@@ -1,26 +1,62 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-</head>
-<body>
-<script type="text/javascript" src="http://imgj.xrea.com/xa.j?site=calico.s502.xrea.com"></script>
-<noscript><iframe height="60" width="468" frameborder="0" marginheight="0" marginwidth="0" scrolling="no" allowtransparency="true" src="http://img.xrea.com/ad_iframe.fcg?site=calico.s502.xrea.com"><a href="http://img.xrea.com/ad_click.fcg?site=calico.s502.xrea.com" target="_blank"><img src="http://img.xrea.com/ad_img.fcg?site=calico.s502.xrea.com" border="0" alt="xreaad"></a></iframe></noscript>
+<!-- <!DOCTYPE HTML> -->
+<html ng-app>
+  <head>
+    <meta charset="UTF-8">
+    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
+    <script src="./js/jquery.upload-1.0.2.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+    <script src="./js/jquery.svg.js"></script>
+    <script src="./js/drag-and-drop.js"></script>
+    <script src="./js/rgbcolor.js"></script>
+    <script src="./js/canvg.js"></script>
+    <!--
+    <script src="./js/raphael-min.js" type="text/javascript"></script>
+    <script src="./js/raphael-svg-import.js" type="text/javascript"></script>
+    <script src="./js/svg.js" type="text/javascript"></script>
+    <script src="./js/svg.import.min.js" type="text/javascript"></script>
+    -->
+    <!-- 
+    <script src="./js/jquery-plugin.js"></script>
+    <script src="./js/util.js"></script>
+    <script src="./js/button.js"></script>
+    <script src="./js/uploader.basic.js"></script>
+    <script src="./js/dnd.js"></script>
+    <script src="./js/uploader.js"></script>
+    <script src="./js/handler.base.js"></script>
+    <script src="./js/handler.form.js"></script>
+    <script src="./js/handler.xhr.js"></script>
+    -->
+    <script src="./js/mayuge.js"></script>
+    <style>
+      body {
+        margin: 0px;
+        padding: 0px;
+      }
+    </style>
+    <link rel="stylesheet" type="text/css" href="./css/jquery.svg.css">
+  </head>
+  <body id="content" ng-controller="mainCtrl">
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-<script src="./js/jquery.upload-1.0.2.min.js" type="text/javascript"></script>
-<script>
-$(function(){
-    $('input[type=button]').click(function() {
-        alert('hoge');
-        $('input[type=file]').upload('./phptest.php', function(res) {
-            alert('ファイルをアップロードしました：' + res.filename);
-        }, 'json');
-    });
-});
-</script>
-<input type="file" name="upload" />
-<input type="button" value="アップロード" />
+<!--     <input id="fileSelector" name="fileSelector" type="file" style="display:none" onchange="angular.element(this).scope().setFiles(this);">
+    <span class="input-append" style="margin-right:5px;">
+      <input id="filePath" class="input-large" type="text">
+      <a class="btn" onclick="$('input[id=fileSelector]').click();">ファイル選択</a>
+      <button class="btn" ng-click="upload()"><i class="icon-upload"></i> CSV Import</button>
+    </span>
+ -->
 
-</body>
-</html>	
+
+
+    
+    <input id="imageSelector" name="imageSelector" type="file"/>
+<!--     <canvas id="mayugeCanvas" width="578" height="400"></canvas>
+ -->
+    <!-- <object data="./svg/golgo3.svg" type="image/svg+xml"></object> -->
+    <div id="svgArea"></div>
+    <canvas id="canvasArea" style="display: none;"></canvas>
+    <div id="pngArea"><img/></div>
+    <pre id="debug"></pre>
+  </body>
+</html>
