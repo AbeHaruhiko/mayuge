@@ -1,15 +1,6 @@
 <?php
-
-//echo "hello";
-
-
 /**** エラーログを記録 ****/
-// $logdate = date('Ymd') ;
-// // $logpath = realpath(dirname((__FILE__ ))).'/../../../errorlog' ;
-// $logpath = '/var/log/' ;
-// $logfile = "$logpath/'phperror'.$logdate.log" ;
-ini_set('error_log', '/virtual/calico/log/error.log') ;
-error_log("test");
+//ini_set('error_log', '/virtual/calico/log/error.log') ;
 
 //$IMAGE_DIR_PTH = '/var/www/html/mayuge/img/';
 $IMAGE_DIR_PATH = './img/';
@@ -61,3 +52,5 @@ curl_exec($ch);
 //var_dump(curl_exec($ch));
 //error_log(print_r(curl_exec($ch))); // Webサーバのエラーログに記述す
 curl_close ($ch);
+
+unlink($IMAGE_DIR_PATH . $filename);
