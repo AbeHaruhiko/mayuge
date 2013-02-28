@@ -1,62 +1,49 @@
-<!-- <!DOCTYPE HTML> -->
-<html ng-app>
-  <head>
-    <meta charset="UTF-8">
-    <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
-    <script src="http://code.jquery.com/jquery-latest.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
-    <script src="./js/jquery.upload-1.0.2.min.js"></script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
-    <script src="./js/jquery.svg.js"></script>
-    <script src="./js/drag-and-drop.js"></script>
-    <script src="./js/rgbcolor.js"></script>
-    <script src="./js/canvg.js"></script>
-    <!--
-    <script src="./js/raphael-min.js" type="text/javascript"></script>
-    <script src="./js/raphael-svg-import.js" type="text/javascript"></script>
-    <script src="./js/svg.js" type="text/javascript"></script>
-    <script src="./js/svg.import.min.js" type="text/javascript"></script>
-    -->
-    <!-- 
-    <script src="./js/jquery-plugin.js"></script>
-    <script src="./js/util.js"></script>
-    <script src="./js/button.js"></script>
-    <script src="./js/uploader.basic.js"></script>
-    <script src="./js/dnd.js"></script>
-    <script src="./js/uploader.js"></script>
-    <script src="./js/handler.base.js"></script>
-    <script src="./js/handler.form.js"></script>
-    <script src="./js/handler.xhr.js"></script>
-    -->
-    <script src="./js/mayuge.js"></script>
-    <style>
-      body {
-        margin: 0px;
-        padding: 0px;
-      }
-    </style>
-    <link rel="stylesheet" type="text/css" href="./css/jquery.svg.css">
-  </head>
-  <body id="content" ng-controller="mainCtrl">
-
-<!--     <input id="fileSelector" name="fileSelector" type="file" style="display:none" onchange="angular.element(this).scope().setFiles(this);">
-    <span class="input-append" style="margin-right:5px;">
-      <input id="filePath" class="input-large" type="text">
-      <a class="btn" onclick="$('input[id=fileSelector]').click();">ファイル選択</a>
-      <button class="btn" ng-click="upload()"><i class="icon-upload"></i> CSV Import</button>
-    </span>
- -->
+<!DOCTYPE html>
+<html lang="ja" ng-app>
+<head>
+<meta charset="UTF-8">
+<link href="css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css" href="./css/jquery.svg.css">
+</head>
+<body id="content" ng-controller="mainCtrl" style="padding-top:40px">
+<div class="container">
+ 
+    <div class="span12">
+        <div class="navbar">
+            <div class="navbar-inner">
+                <a href="" class="brand">Mayuge Generator</a>
+            </div>
+        </div>
+ 
+        <div class="row">
+            <input id="imageSelector" name="imageSelector" type="file"/>
+        </div>
+        <div class="row">
+            <div class="span6">
+                <div id="svgArea"></div>
+                <canvas id="canvasArea" style="display: none;"></canvas>
+            </div>
+            <div class="span6">
+                <div id="pngArea"><img/></div>
+            </div>
+        </div>
 
 
+        <pre id="debug"></pre>
+    </div>
 
-    
-    <input id="imageSelector" name="imageSelector" type="file"/>
-<!--     <canvas id="mayugeCanvas" width="578" height="400"></canvas>
- -->
-    <!-- <object data="./svg/golgo3.svg" type="image/svg+xml"></object> -->
-    <div id="svgArea"></div>
-    <canvas id="canvasArea" style="display: none;"></canvas>
-    <div id="pngArea"><img/></div>
-    <pre id="debug"></pre>
-  </body>
+
+</div>
+
+
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.min.js"></script>
+<script src="./js/jquery.upload-1.0.2.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
+<script src="./js/jquery.svg.js"></script>
+<script src="./js/drag-and-drop.js"></script>
+<script src="./js/rgbcolor.js"></script>
+<script src="./js/canvg.js"></script>
+<script src="./js/mayuge.js"></script>
+</body>
 </html>

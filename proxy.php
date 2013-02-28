@@ -1,9 +1,8 @@
 <?php
-/**** エラーログを記録 ****/
-//ini_set('error_log', '/virtual/calico/log/error.log') ;
+ini_set('error_log', '/virtual/calico/log/error.log') ;
 
 //$IMAGE_DIR_PTH = '/var/www/html/mayuge/img/';
-$IMAGE_DIR_PATH = './img/';
+$IMAGE_DIR_PATH = './tmpimg/';
 
 $filename = strtolower(basename($_FILES['imageSelector']['name']));
 if (move_uploaded_file($_FILES['imageSelector']['tmp_name'], $IMAGE_DIR_PATH . $filename)) {
@@ -12,7 +11,7 @@ if (move_uploaded_file($_FILES['imageSelector']['tmp_name'], $IMAGE_DIR_PATH . $
     $data = array('error' => 'Failed to save');
 }
 
-error_log($filename);
+//error_log($filename);
 // error_log('test');
 
 list($width, $height) = getimagesize($IMAGE_DIR_PATH . $filename);

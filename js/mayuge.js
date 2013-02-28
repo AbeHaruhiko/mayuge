@@ -170,12 +170,6 @@ loadSvgCompleteHandler = function(svgXml) {
 
 
   });
-
-
-  // moveElementToTop("l-mayuge")
-  // moveElementToTop("r-mayuge");
-
-
 }
 
 export2canvas = function() {
@@ -186,18 +180,44 @@ export2canvas = function() {
   var xml = svgWrapper.toSVG();
   console.log(xml);
   // PNG書き出しはレンダリング完了後に行なう
-  canvg($("#canvasArea")[0], xml, {renderCallback: export2png});
+  canvg($("#canvasArea")[0], xml, {renderCallback: export2pngAndServer});
+
 }
 
-export2png = function() {
+export2pngAndServer = function() {
+
+  var dataURL = $("#canvasArea")[0].toDataURL();
   // PNG書き出し
   console.log($("#canvasArea")[0].toDataURL());
-  $("#pngArea > img").attr({src: $("#canvasArea")[0].toDataURL()});
+  $("#pngArea > img").attr({src: dataURL});
+
+  // サーバに投げる。
+  var fd = new FormData();
+  var hogehoge = dataURItoBlob(dataURL);
+  fd.append('mayugedImage', hogehoge);
+
+  $.ajax({
+    url: 'save.php',
+    type: 'POST',
+    data: fd,
+    dataType: 'image/png',
+    contentType: false, // デフォルトの値は application/x-www-form-urlencoded; charset=UTF-8'
+    processData: false  // デフォルトの値は application/x-www-form-urlencoded
+  })
+  .done(function(data) {
+    console.log(data);
+  })
+  .fail(function() {
+    console.log('error');
+  });
+
 }
 
-moveElementToTop = function(id) {
-  var e = svgWrapper.getElementById(id);
-  svgWrapper.remove(e);
-  svgWrapper.add(e);
-
+dataURItoBlob = function(dataURI) {
+    var binary = atob(dataURI.split(',')[1]);
+    var array = [];
+    for(var i = 0; i < binary.length; i++) {
+        array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], {type: 'image/png'});
 }
