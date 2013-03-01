@@ -197,7 +197,7 @@ export2pngAndServer = function() {
   fd.append('mayugedImage', hogehoge);
 
   $.ajax({
-    url: './save.php',
+    url: '/save.php',
     type: 'POST',
     data: fd,
     dataType: 'text',
@@ -205,12 +205,12 @@ export2pngAndServer = function() {
     processData: false  // デフォルトの値は application/x-www-form-urlencoded
   })
   .done(function(data) {
-    // console.log(data);
+    console.log(data);
     history.replaceState("index");
     history.pushState(data, null, "/imgstore/" + data);
   })
-  .fail(function() {
-    console.log('error');
+  .fail(function(xhr, status, exception) {
+    console.log(status);
   });
 
 }
