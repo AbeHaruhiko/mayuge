@@ -58,7 +58,7 @@ angular.element(document).ready(function() {
 });
 
 onUploadCompleted = function(res) {
-  console.log(res);
+  // console.log(res);
   detectedFaces = res;
   getSVG();
 }
@@ -112,9 +112,9 @@ loadSvgCompleteHandler = function(svgXml) {
     var yBR1 = ~~pointBR1.attr("y");
     var xBR5 = ~~pointBR5.attr("x");
     var yBR5 = ~~pointBR5.attr("y");
-    console.log(xBR1 + " : " + yBR1 + " : " + xBR5 + " : " + yBR5);
+    // console.log(xBR1 + " : " + yBR1 + " : " + xBR5 + " : " + yBR5);
     var lenBR = Math.sqrt(Math.pow(xBR1 - xBR5, 2) + Math.pow(yBR1 - yBR5, 2))
-    console.log(lenBR);
+    // console.log(lenBR);
     var scaleBR = lenBR/95 * 1.2
 
     widthBR = xBR1 - xBR5;
@@ -141,9 +141,9 @@ loadSvgCompleteHandler = function(svgXml) {
     var yBL1 = ~~pointBL1.attr("y");
     var xBL5 = ~~pointBL5.attr("x");
     var yBL5 = ~~pointBL5.attr("y");
-    console.log(xBL1 + " : " + yBL1 + " : " + xBL5 + " : " + yBL5);
+    // console.log(xBL1 + " : " + yBL1 + " : " + xBL5 + " : " + yBL5);
     var lenBL = Math.sqrt(Math.pow(xBL1 - xBL5, 2) + Math.pow(yBL1 - yBL5, 2))
-    console.log(lenBL);
+    // console.log(lenBL);
     var scaleBL = lenBL/95 * 1.2
 
     widthBL = xBL1 - xBL5;
@@ -178,7 +178,7 @@ export2canvas = function() {
     $("#svg-mayuge").attr({"xmlns:xlink": $.svg.xlinkNS});
   }
   var xml = svgWrapper.toSVG();
-  console.log(xml);
+  // console.log(xml);
   // PNG書き出しはレンダリング完了後に行なう
   canvg($("#canvasArea")[0], xml, {renderCallback: export2pngAndServer});
 
@@ -188,7 +188,7 @@ export2pngAndServer = function() {
 
   var dataURL = $("#canvasArea")[0].toDataURL();
   // PNG書き出し
-  console.log($("#canvasArea")[0].toDataURL());
+  // console.log($("#canvasArea")[0].toDataURL());
   $("#pngArea > img").attr({src: dataURL});
 
   // サーバに投げる。
@@ -197,15 +197,17 @@ export2pngAndServer = function() {
   fd.append('mayugedImage', hogehoge);
 
   $.ajax({
-    url: 'save.php',
+    url: './save.php',
     type: 'POST',
     data: fd,
-    dataType: 'image/png',
+    dataType: 'text',
     contentType: false, // デフォルトの値は application/x-www-form-urlencoded; charset=UTF-8'
     processData: false  // デフォルトの値は application/x-www-form-urlencoded
   })
   .done(function(data) {
-    console.log(data);
+    // console.log(data);
+    history.replaceState("index");
+    history.pushState(data, null, "/imgstore/" + data);
   })
   .fail(function() {
     console.log('error');
