@@ -208,7 +208,7 @@ export2pngAndServer = function() {
   .done(function(data) {
     console.log(data);
     history.replaceState("index");
-    history.pushState(data, null, "/imgstore/" + data);
+    // history.pushState(data, null, "Sfn=" + data);
   })
   .fail(function(xhr, status, exception) {
     console.log(status);
