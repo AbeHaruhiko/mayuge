@@ -28,7 +28,7 @@ angular.element(document).ready(function() {
         selectedImageHeight = localImage.height;
 
 
-        var limitSize = 800;
+        var limitSize = 400;
         if (selectedImageWidth > limitSize || selectedImageHeight > limitSize) {
 
           if (selectedImageWidth > selectedImageHeight) {
@@ -53,12 +53,12 @@ angular.element(document).ready(function() {
     reader.readAsDataURL(file);
 
     // アップロード
-    $(this).upload('./proxy.php', onUploadCompleted, 'xml');
+    $(this).upload('/proxy.php', onUploadCompleted, 'xml');
   });
 });
 
 onUploadCompleted = function(res) {
-  // console.log(res);
+  console.log(res);
   detectedFaces = res;
   getSVG();
 }
@@ -66,6 +66,7 @@ onUploadCompleted = function(res) {
 getSVG = function() {
 
   // jquery-svg使用時
+  $("#svgArea").svg('destroy');
   $("#svgArea").width(selectedImageWidth).height(selectedImageHeight);
   $("#svgArea").svg();
   svgWrapper = $("#svgArea").svg('get');
@@ -165,11 +166,11 @@ loadSvgCompleteHandler = function(svgXml) {
       element.addEventListener("mouseup", export2canvas);
     })
 
-    export2canvas();
 
 
 
   });
+  export2canvas();
 }
 
 export2canvas = function() {
@@ -178,7 +179,7 @@ export2canvas = function() {
     $("#svg-mayuge").attr({"xmlns:xlink": $.svg.xlinkNS});
   }
   var xml = svgWrapper.toSVG();
-  // console.log(xml);
+  console.log(xml);
   // PNG書き出しはレンダリング完了後に行なう
   canvg($("#canvasArea")[0], xml, {renderCallback: export2pngAndServer});
 
