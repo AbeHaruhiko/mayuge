@@ -182,6 +182,33 @@ var mainCtrl = function($scope, $http) {
       return new Blob([new Uint8Array(array)], {type: 'image/png'});
   }
 
+  $scope.popstate = function(event) {
+    // Getパラメータにファイルが指定されてたら読み込む
+    var urlGetParams = $scope.getUrlGetParams();
+    if (urlGetParams && urlGetParams.length) {
+      var remoteFileName = urlGetParams['file'];
+      $("#pngArea > img").attr({src: './imgstore/' + remoteFileName + '.png'});
+    } else {
+      $("#pngArea > img").remove();
+      $("#pngArea").append("<img/>");
+    }
+    $("#svgArea").svg('destroy'); 
+  }
+
+  $scope.getUrlGetParams = function()
+  {
+    var vars, hash;
+    var hashes = location.search.substr(1).split("&");
+    if (hashes[0] != "") {
+      vars = [];
+      for(var i = 0; i < hashes.length; i++) {
+          hash = hashes[i].split('=');
+          vars.push(hash[0]);
+          vars[hash[0]] = hash[1];
+      }
+    }
+    return vars;
+  }
 }
 
 // DOMの準備完了時
@@ -190,7 +217,7 @@ angular.element(document).ready(function() {
   //ファイル選択時にテキストボックスにパスをコピー
   $('input[id=imageSelector]').change(function() {
        $('#filePath').val($(this).val());
-    });
+  });
 
   // ファイル選択時イベントハンドラ
   $("#imageSelector").change(function() {
@@ -246,4 +273,4 @@ angular.element(document).ready(function() {
   });
 });
 
-
+window.addEventListener('popstate', function(event) {angular.element('#content').scope().popstate(event);},false );
