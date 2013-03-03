@@ -8,9 +8,9 @@ angular.element(document).ready(function() {
 
   // Getパラメータにファイルが指定されてたら読み込む
   var urlGetParams = getUrlGetParams();
-  if (!urlGetParams.length) {
+  if (urlGetParams.length) {
     var remoteFileName = urlGetParams['file'];
-    $("#pngArea > img").attr({src: '/imgstore/' + remoteFileName});
+    $("#pngArea > img").attr({src: './imgstore/' + remoteFileName});
   }
 
   // ファイル選択時イベントハンドラ
