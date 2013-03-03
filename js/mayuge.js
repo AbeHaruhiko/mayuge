@@ -61,7 +61,7 @@ angular.element(document).ready(function() {
     reader.readAsDataURL(file);
 
     // アップロード
-    $(this).upload('/proxy.php', onUploadCompleted, 'xml');
+    $(this).upload('./proxy.php', onUploadCompleted, 'xml');
   });
 });
 
@@ -206,7 +206,7 @@ export2pngAndServer = function() {
   fd.append('mayugedImage', hogehoge);
 
   $.ajax({
-    url: '/save.php',
+    url: './save.php',
     type: 'POST',
     data: fd,
     dataType: 'text',
