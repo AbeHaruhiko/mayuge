@@ -6,6 +6,14 @@ var mainCtrl = function($scope, $http) {
 // DOMの準備完了時
 angular.element(document).ready(function() {
 
+  // Getパラメータにファイルが指定されてたら読み込む
+  var urlGetParams = getUrlGetParams();
+  if (!urlGetParams.length) {
+    var remoteFileName = urlGetParams['file'];
+    $("#pngArea > img").attr({src: '/imgstore/' + remoteFileName});
+  }
+
+  // ファイル選択時イベントハンドラ
   $("#imageSelector").change(function() {
 
     // 選択されたファイルを取得
@@ -28,7 +36,7 @@ angular.element(document).ready(function() {
         selectedImageHeight = localImage.height;
 
 
-        var limitSize = 800;
+        var limitSize = 400;
         if (selectedImageWidth > limitSize || selectedImageHeight > limitSize) {
 
           if (selectedImageWidth > selectedImageHeight) {
@@ -53,7 +61,7 @@ angular.element(document).ready(function() {
     reader.readAsDataURL(file);
 
     // アップロード
-    $(this).upload('./proxy.php', onUploadCompleted, 'xml');
+    $(this).upload('/proxy.php', onUploadCompleted, 'xml');
   });
 });
 
@@ -207,7 +215,7 @@ export2pngAndServer = function() {
   .done(function(data) {
     console.log(data);
     history.replaceState("index");
-    history.pushState(data, null, "/imgstore/" + data);
+    history.pushState(data, null, "?file=" + data);
   })
   .fail(function(xhr, status, exception) {
     console.log(status);
@@ -222,4 +230,18 @@ dataURItoBlob = function(dataURI) {
         array.push(binary.charCodeAt(i));
     }
     return new Blob([new Uint8Array(array)], {type: 'image/png'});
+}
+
+
+getUrlGetParams = function()
+{
+    var vars = [], hash;
+    var hashes = location.search.substr(1).split("&");
+    for(var i = 0; i < hashes.length; i++)
+    {
+        hash = hashes[i].split('=');
+        vars.push(hash[0]);
+        vars[hash[0]] = hash[1];
+    }
+    return vars;
 }
