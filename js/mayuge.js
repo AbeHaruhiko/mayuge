@@ -166,6 +166,9 @@ var mainCtrl = function($scope, $http) {
       console.log(data);
       history.replaceState("index");
       history.pushState(data, null, "?file=" + data);
+      $("#g-plus-share").attr({"data-href": '/?file=' + data});
+      gapi.plus.go();
+
     })
     .fail(function(xhr, status, exception) {
       console.log(status);
@@ -188,6 +191,8 @@ var mainCtrl = function($scope, $http) {
     if (urlGetParams && urlGetParams.length) {
       var remoteFileName = urlGetParams['file'];
       $("#pngArea > img").attr({src: './imgstore/' + remoteFileName + '.png'});
+      $("#g-plus-share").attr({"data-href": '/?file=' + remoteFileName});
+      gapi.plus.go();
     } else {
       $("#pngArea > img").remove();
       $("#pngArea").append("<img/>");
