@@ -153,6 +153,7 @@ var mainCtrl = function($scope, $http) {
     // サーバに投げる。
     var fd = new FormData();
     fd.append('mayugedImage', $scope.dataURItoBlob(dataURL));
+    fd.append('currentFile', currentFile);
 
     $.ajax({
       url: './save.php',
@@ -163,6 +164,7 @@ var mainCtrl = function($scope, $http) {
       processData: false  // デフォルトの値は application/x-www-form-urlencoded
     })
     .done(function(data) {
+      currentFile = data;
       console.log(data);
       history.replaceState("index");
       history.pushState(data, null, "?file=" + data);
@@ -226,6 +228,9 @@ angular.element(document).ready(function() {
 
   // ファイル選択時イベントハンドラ
   $("#imageSelector").change(function() {
+
+    // サーバ側保存済みファイルIDをクリア
+    currentFile = null;
 
     // 選択されたファイルを取得
     var file = this.files[0];
