@@ -1,5 +1,5 @@
 <?php
-ini_set('error_log', '/virtual/calico/log/error.log') ;
+// ini_set('error_log', '/virtual/calico/log/error.log') ;
 
 //$IMAGE_DIR_PTH = '/var/www/html/mayuge/img/';
 $IMAGE_DIR_PATH = './tmpimg/';
@@ -19,7 +19,7 @@ list($width, $height) = getimagesize($IMAGE_DIR_PATH . $filename);
 // error_log($width.':'.$height);
 
 // ½Ä²£800px°ÊÆâ¤Ë½Ì¾®
-$limitSize = 800;
+$limitSize = 400;
 if ($width > $limitSize || $height > $limitSize) {
 
 	if ($width > $height) {
