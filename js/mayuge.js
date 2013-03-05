@@ -164,11 +164,16 @@ var mainCtrl = function($scope, $http) {
       processData: false  // デフォルトの値は application/x-www-form-urlencoded
     })
     .done(function(data) {
-      currentFile = data;
-      console.log(data);
-      history.replaceState("index");
-      history.pushState(data, null, "?file=" + data);
-      $("#g-plus-share").attr({"data-href": '/?file=' + data});
+      if (data != currentFile) {
+        currentFile = data;
+        console.log(data);
+        history.replaceState("index");
+        history.pushState(data, null, "?file=" + data);
+      }
+      var parent = $("#g-plus-share").parent();
+      //$("#g-plus-share").detach().appendTo(parent);
+      $("#g-plus-share").attr({"data-href": '/?file=' + data});        
+      gapi.plus.render();
       gapi.plus.go();
 
     })
