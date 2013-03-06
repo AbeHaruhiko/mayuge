@@ -164,16 +164,17 @@ var mainCtrl = function($scope, $http) {
       processData: false  // デフォルトの値は application/x-www-form-urlencoded
     })
     .done(function(data) {
-      if (data != currentFile) {
-        currentFile = data;
-        console.log(data);
-        history.replaceState("index");
+      console.log(data);
+      //history.replaceState("index");
+      if (currentFile == null) {
         history.pushState(data, null, "?file=" + data);
+      } else {
+        history.replaceState(data, null, "?file=" + data);
       }
-      var parent = $("#g-plus-share").parent();
-      //$("#g-plus-share").detach().appendTo(parent);
+      currentFile = data;
+      $("#snsBtn > div").remove();
+      $("#snsBtn").append('<div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>');
       $("#g-plus-share").attr({"data-href": '/?file=' + data});        
-      gapi.plus.render();
       gapi.plus.go();
 
     })
@@ -194,11 +195,14 @@ var mainCtrl = function($scope, $http) {
 
   $scope.popstate = function(event) {
     // Getパラメータにファイルが指定されてたら読み込む
+    $("#snsBtn > div").remove();
+    $("#snsBtn").append('<div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>');
+
     var urlGetParams = $scope.getUrlGetParams();
     if (urlGetParams && urlGetParams.length) {
       var remoteFileName = urlGetParams['file'];
       $("#pngArea > img").attr({src: './imgstore/' + remoteFileName + '.png'});
-      $("#g-plus-share").attr({"data-href": '/?file=' + remoteFileName});
+      $("#g-plus-share").attr({"data-href": '/?file=' + remoteFileName});        
       gapi.plus.go();
     } else {
       $("#pngArea > img").remove();
