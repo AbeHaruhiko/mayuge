@@ -96,13 +96,21 @@ svgDrag = (function() {
         e.preventDefault();
         if (isDragging) {
           isDragging = false;
+          tDeltaX = e.clientX - startEvtStamp.clientX;
+          tDeltaY = e.clientY - startEvtStamp.clientY;
           if (dragSimpleRect) {
             hideDraggingRect();
-            tDeltaX = e.clientX - startEvtStamp.clientX;
-            tDeltaY = e.clientY - startEvtStamp.clientY;
             translate(currentDraggingEntity, tDeltaX, tDeltaY);
             return draggingRect.removeAttributeNS(null, "transform");
           }
+
+          // mayuge customize
+          if (tDeltaX != 0 || tDeltaY != 0) {
+            var $scope = angular.element('#content').scope();
+            $scope.export2canvas();
+          }
+          // mayuge customize
+
         }
       }, false);
       return function(element) {

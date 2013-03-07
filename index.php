@@ -40,8 +40,16 @@
         </div>
         <div class="row">
             <div class="span6">
-                <div id="svgArea"></div>
+                <div id="svgArea" style="display: inline-block;"></div>
                 <canvas id="canvasArea" style="display: none;"></canvas>
+                <div style="display: inline-block;">
+                    <label class="radio">
+                        <input type="radio" ng-model="optionsLR" name="optionsLR" id="optionsR" value="r">右まゆ
+                    </label>
+                    <label class="radio">
+                        <input type="radio" ng-model="optionsLR" name="optionsLR" id="optionsL" value="l">左まゆ
+                    </label>
+                </div>
             </div>
             <div class="span6">
                 <div id="pngArea">
@@ -49,7 +57,7 @@
                 </div>
             </div>
         </div>
-
+        <pre>{{optionsLR|json}}</pre>
 
     </div>
 
@@ -67,6 +75,7 @@
 <script src="./js/rgbcolor.js"></script>
 <script src="./js/canvg.js"></script>
 <script src="./js/mayuge.js"></script>
+<script src="./js/sketchmayuge.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
   {lang: 'ja', parsetags: 'explicit'}

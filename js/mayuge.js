@@ -1,5 +1,10 @@
 var mainCtrl = function($scope, $http) {
 
+  // モデルの初期化など
+  $scope.optionsLR = "r";
+
+
+
   $scope.setFiles = function(element) {
       $scope.$apply(function($scope) {
         console.log('files:', element.files);
@@ -51,6 +56,15 @@ var mainCtrl = function($scope, $http) {
   }
 
   $scope.loadSvgCompleteHandler = function(svgXml) {
+
+    // 手描き準備
+    //sketchpad = svgWrapper; 
+    // var surface = svgWrapper.rect(0, 0, '100%', '100%', {id: 'surface', fill: 'white'}); 
+    //$(svgWrapper).mousedown(startDrag).mousemove(dragging).mouseup(endDrag); 
+    //resetSize(svgWrapper, '100%', '100%'); 
+
+    $("#svgArea").on("mousedown", "image", startDrag).on("mousemove", "image", dragging).on("mouseup", "image", endDrag);
+
 
     // jquery-svg使用時
     svgWrapper.image(0, 0, selectedImageWidth, selectedImageHeight, localImage.src);
@@ -125,7 +139,9 @@ var mainCtrl = function($scope, $http) {
 
       $(".draggable", svgWrapper.root()).each(function(index, element) {
         makeSVGElementDraggable(element);
-        element.addEventListener("mouseup", $scope.export2canvas);
+        // element.addEventListener("mouseup", $scope.export2canvas);
+        var $scope = angular.element('#content').scope();
+        element.addEventListener("dblclick", function() {$scope.removeMayuge($(element));});
       })
     });
     $scope.export2canvas();
@@ -230,6 +246,11 @@ var mainCtrl = function($scope, $http) {
       }
     }
     return vars;
+  }
+
+  $scope.removeMayuge = function(element) {
+    element.remove();
+    $scope.export2canvas();
   }
 }
 
