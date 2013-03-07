@@ -27,18 +27,16 @@
                 <input id="filePath" class="input-large" type="text">
                 <a class="btn" onclick="$('input[id=imageSelector]').click();">ファイル選択</a>
             </span>
-            <div id="snsBtn" class="pull-right">
-                <div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>
-                <!--<script type="text/javascript">
-                  (function() {
-                    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
-                    po.src = 'https://apis.google.com/js/plusone.js';
-                    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
-                  })();
-                </script>
-            -->
-            </div>
 
+        </div>
+        <div class="row" style="height:30px;">
+            <div class="span6">
+            </div>
+            <div class="span6">
+                <div id="snsBtn">
+                    <div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>
+                </div>
+            </div>
         </div>
         <div class="row">
             <div class="span6">
@@ -64,6 +62,7 @@
 <script src="./js/jquery.upload-1.0.2.min.js"></script>
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script> -->
 <script src="./js/jquery.svg.js"></script>
+<script src="./js/jquery.blockUI.js"></script>
 <script src="./js/drag-and-drop.js"></script>
 <script src="./js/rgbcolor.js"></script>
 <script src="./js/canvg.js"></script>

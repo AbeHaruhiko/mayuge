@@ -132,6 +132,9 @@ var mainCtrl = function($scope, $http) {
   }
 
   $scope.export2canvas = function() {
+    // SVGをレイヤでブロック
+    $("#svgArea").block({message: null});
+
     // CANVAS書き出し
     if (!$("#svg-mayuge").attr("xmlns:xlink")){
       $("#svg-mayuge").attr({"xmlns:xlink": $.svg.xlinkNS});
@@ -177,9 +180,12 @@ var mainCtrl = function($scope, $http) {
       $("#g-plus-share").attr({"data-href": '/?file=' + data});        
       gapi.plus.go();
 
+      $("#svgArea").unblock();
+
     })
     .fail(function(xhr, status, exception) {
       console.log(status);
+      $("#svgArea").unblock();
     });
 
   }
