@@ -27,7 +27,11 @@
                 <input id="filePath" class="input-large" type="text">
                 <a class="btn" onclick="$('input[id=imageSelector]').click();">ファイル選択</a>
             </span>
-
+            <span>
+                <label class="checkbox" style="margin-left:20px;">
+                  <input type="checkbox" ng-model="autoSave"> 自動保存する
+                </label>
+            </span>
         </div>
         <div class="row" style="height:30px;">
             <div class="span6">
@@ -43,12 +47,14 @@
                 <div id="svgArea" style="display: inline-block;"></div>
                 <canvas id="canvasArea" style="display: none;"></canvas>
                 <div style="display: inline-block;">
-                    <label class="radio">
-                        <input type="radio" ng-model="optionsLR" name="optionsLR" id="optionsR" value="r">右まゆ
-                    </label>
-                    <label class="radio">
-                        <input type="radio" ng-model="optionsLR" name="optionsLR" id="optionsL" value="l">左まゆ
-                    </label>
+                    <form class="form-horizontal">
+                        <label class="radio">
+                            <input type="radio" ng-model="optionsLR" name="optionsLR" id="optionsR" value="r">右まゆ
+                        </label>
+                        <label class="radio">
+                            <input type="radio" ng-model="optionsLR" name="optionsLR" id="optionsL" value="l">左まゆ
+                        </label>
+                    </form>
                 </div>
             </div>
             <div class="span6">

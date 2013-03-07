@@ -149,7 +149,10 @@ var mainCtrl = function($scope, $http) {
 
   $scope.export2canvas = function() {
     // SVGをレイヤでブロック
-    $("#svgArea").block({message: null});
+    if ($scope.autoSave) {
+      $("#svgArea").block({message: null});
+    }
+
 
     // CANVAS書き出し
     if (!$("#svg-mayuge").attr("xmlns:xlink")){
@@ -170,39 +173,41 @@ var mainCtrl = function($scope, $http) {
     $("#pngArea > img").attr({src: dataURL});
 
     // サーバに投げる。
-    var fd = new FormData();
-    fd.append('mayugedImage', $scope.dataURItoBlob(dataURL));
-    fd.append('currentFile', currentFile);
+    if ($scope.autoSave) {
+      var fd = new FormData();
+      fd.append('mayugedImage', $scope.dataURItoBlob(dataURL));
+      fd.append('currentFile', currentFile);
 
-    $.ajax({
-      url: './save.php',
-      type: 'POST',
-      data: fd,
-      dataType: 'text',
-      contentType: false, // デフォルトの値は application/x-www-form-urlencoded; charset=UTF-8'
-      processData: false  // デフォルトの値は application/x-www-form-urlencoded
-    })
-    .done(function(data) {
-      console.log(data);
-      //history.replaceState("index");
-      if (currentFile == null) {
-        history.pushState(data, null, "?file=" + data);
-      } else {
-        history.replaceState(data, null, "?file=" + data);
-      }
-      currentFile = data;
-      $("#snsBtn > div").remove();
-      $("#snsBtn").append('<div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>');
-      $("#g-plus-share").attr({"data-href": '/?file=' + data});        
-      gapi.plus.go();
+      $.ajax({
+        url: './save.php',
+        type: 'POST',
+        data: fd,
+        dataType: 'text',
+        contentType: false, // デフォルトの値は application/x-www-form-urlencoded; charset=UTF-8'
+        processData: false  // デフォルトの値は application/x-www-form-urlencoded
+      })
+      .done(function(data) {
+        console.log(data);
+        //history.replaceState("index");
+        if (currentFile == null) {
+          history.pushState(data, null, "?file=" + data);
+        } else {
+          history.replaceState(data, null, "?file=" + data);
+        }
+        currentFile = data;
+        $("#snsBtn > div").remove();
+        $("#snsBtn").append('<div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>');
+        $("#g-plus-share").attr({"data-href": '/?file=' + data});        
+        gapi.plus.go();
 
-      $("#svgArea").unblock();
+        $("#svgArea").unblock();
 
-    })
-    .fail(function(xhr, status, exception) {
-      console.log(status);
-      $("#svgArea").unblock();
-    });
+      })
+      .fail(function(xhr, status, exception) {
+        console.log(status);
+        $("#svgArea").unblock();
+      });
+    }
 
   }
 
@@ -313,7 +318,6 @@ angular.element(document).ready(function() {
     reader.readAsDataURL(file);
 
     // アップロード
-    // $(this).upload('./proxy.php', onUploadCompleted, 'xml');
     var $scope = angular.element('#content').scope();
     $scope.upload();
   });
