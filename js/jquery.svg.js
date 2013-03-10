@@ -1037,7 +1037,8 @@ $.extend(SVGWrapper.prototype, {
 					loadSVG(!$.support.opacity ? loadXML4IE(xml) : xml);
 				}, error: function(http, message, exc) {
 					reportError(message + (exc ? ' ' + exc.message : ''));
-				}});
+				// }});
+				}, cache: false});
 		}
 		return this;
 	},

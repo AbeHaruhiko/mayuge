@@ -1,9 +1,11 @@
 var mainCtrl = function($scope, $http) {
 
   // モデルの初期化など
-  $scope.optionsLR = "r";
+  $scope.conf = {};
+  $scope.conf.optionsLR = "r";
+  $scope.conf.showToolBox = false;
 
-
+  $('[rel=tooltip]:not(#svgArea)').tooltip("show");
 
   $scope.setFiles = function(element) {
       $scope.$apply(function($scope) {
@@ -51,18 +53,17 @@ var mainCtrl = function($scope, $http) {
 
     svgWrapper.load("./svg/golgo3.svg",   
     {  
-        onLoad: $scope.loadSvgCompleteHandler  
+        onLoad: $scope.loadSvgCompleteHandler,
     });
   }
 
   $scope.loadSvgCompleteHandler = function(svgXml) {
 
-    // 手描き準備
-    //sketchpad = svgWrapper; 
-    // var surface = svgWrapper.rect(0, 0, '100%', '100%', {id: 'surface', fill: 'white'}); 
-    //$(svgWrapper).mousedown(startDrag).mousemove(dragging).mouseup(endDrag); 
-    //resetSize(svgWrapper, '100%', '100%'); 
+    // 表示
+    $scope.$apply('conf.showToolBox = true');
+    $('#svgArea').tooltip('show');
 
+    // 手描き準備
     $("#svgArea").on("mousedown", "image", startDrag).on("mousemove", "image", dragging).on("mouseup", "image", endDrag);
 
 
@@ -104,7 +105,7 @@ var mainCtrl = function($scope, $http) {
       // jquery-svg使用時
       var grpRMayuge = svgWrapper.group({class_: "draggable", transform: "translate(" + ((xBR1 + xER1)/2) + "," + ((yBR1 + yER1)/2) + ")"});
       // svgWrapper.use(grpRMayuge, "#path-r-mayuge", {fill: "black", transform: "scale(" + scaleBR + "),rotate(" + dgr + ")", strokeWidth: "1"})
-      svgWrapper.use(grpRMayuge, "#path-r-mayuge", {fill: "black", transform: "scale(" + scaleBR + ")", strokeWidth: "1"})
+      svgWrapper.use(grpRMayuge, "#path-r-mayuge", {fill: "black", transform: "scale(" + scaleBR + ")", strokeWidth: "0"})
 
       // 左目
       var pointEL1 = $(this).find("#EL1");
@@ -131,7 +132,7 @@ var mainCtrl = function($scope, $http) {
 
       // jquery-svg使用時  
       var grpLMayuge = svgWrapper.group({class_: "draggable", transform: "translate(" + ((xBL1 + xEL1)/2) + "," + ((yBL1 + yEL1)/2) + ")"});
-      svgWrapper.use(grpLMayuge, "#path-r-mayuge", {fill: "black", transform: "scale(-" + scaleBL + "," + scaleBL + ")", strokeWidth: "1"})
+      svgWrapper.use(grpLMayuge, "#path-r-mayuge", {fill: "black", transform: "scale(-" + scaleBL + "," + scaleBL + ")", strokeWidth: "0"})
 
 
 
@@ -159,7 +160,7 @@ var mainCtrl = function($scope, $http) {
       $("#svg-mayuge").attr({"xmlns:xlink": $.svg.xlinkNS});
     }
     var xml = svgWrapper.toSVG();
-    console.log(xml);
+    // console.log(xml);
     // PNG書き出しはレンダリング完了後に行なう
     canvg($("#canvasArea")[0], xml, {renderCallback: $scope.export2pngAndServer});
 
@@ -174,41 +175,51 @@ var mainCtrl = function($scope, $http) {
 
     // サーバに投げる。
     if ($scope.autoSave) {
-      var fd = new FormData();
-      fd.append('mayugedImage', $scope.dataURItoBlob(dataURL));
-      fd.append('currentFile', currentFile);
-
-      $.ajax({
-        url: './save.php',
-        type: 'POST',
-        data: fd,
-        dataType: 'text',
-        contentType: false, // デフォルトの値は application/x-www-form-urlencoded; charset=UTF-8'
-        processData: false  // デフォルトの値は application/x-www-form-urlencoded
-      })
-      .done(function(data) {
-        console.log(data);
-        //history.replaceState("index");
-        if (currentFile == null) {
-          history.pushState(data, null, "?file=" + data);
-        } else {
-          history.replaceState(data, null, "?file=" + data);
-        }
-        currentFile = data;
-        $("#snsBtn > div").remove();
-        $("#snsBtn").append('<div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>');
-        $("#g-plus-share").attr({"data-href": '/?file=' + data});        
-        gapi.plus.go();
-
-        $("#svgArea").unblock();
-
-      })
-      .fail(function(xhr, status, exception) {
-        console.log(status);
-        $("#svgArea").unblock();
-      });
+      $scope.savePNG();
     }
 
+  }
+
+  $scope.savePNG = function() {
+    var dataURL = $("#canvasArea")[0].toDataURL();
+    var fd = new FormData();
+    fd.append('mayugedImage', $scope.dataURItoBlob(dataURL));
+    fd.append('currentFile', currentFile);
+
+    $.ajax({
+      url: './save.php',
+      type: 'POST',
+      data: fd,
+      dataType: 'text',
+      contentType: false, // デフォルトの値は application/x-www-form-urlencoded; charset=UTF-8'
+      processData: false  // デフォルトの値は application/x-www-form-urlencoded
+    })
+    .done(function(data) {
+      console.log(data);
+      //history.replaceState("index");
+      if (currentFile == null) {
+        history.pushState(data, null, "?file=" + data);
+      } else {
+        history.replaceState(data, null, "?file=" + data);
+      }
+      currentFile = data;
+      $("#snsBtn > div").remove();
+      $("#snsBtn").append('<div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>');
+      $("#g-plus-share").attr({"data-href": '/?file=' + data});        
+      gapi.plus.go();
+
+      $("#svgArea").unblock();
+
+    })
+    .fail(function(xhr, status, exception) {
+      console.log(status);
+      $("#svgArea").unblock();
+    });
+  }
+
+  $scope.openPNG = function() {
+    var dataURL = $("#canvasArea")[0].toDataURL();
+    window.open(dataURL, 'save');
   }
 
   $scope.dataURItoBlob = function(dataURI) {
@@ -233,7 +244,7 @@ var mainCtrl = function($scope, $http) {
       gapi.plus.go();
     } else {
       $("#pngArea > img").remove();
-      $("#pngArea").append("<img/>");
+      $("#pngArea").append('<img itemprop="image"/>');
     }
     $("#svgArea").svg('destroy'); 
   }

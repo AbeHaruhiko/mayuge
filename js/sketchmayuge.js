@@ -53,12 +53,12 @@ function endDrag(event) {
     if (start.X != end.X) {
         // 開始／終了の予定X座標が同じ場合はなにもしない（幅がない）
         drawShape(start.X, start.Y, end.X, end.Y); 
-        start = null; 
-        event.preventDefault(); 
 
         var $scope = angular.element('#content').scope();
         $scope.export2canvas();
     }
+    start = null; 
+    event.preventDefault(); 
 
 } 
  
@@ -78,10 +78,10 @@ function drawShape(x1, y1, x2, y2) {
     var $scope = angular.element('#content').scope();
     if ($scope.optionsLR == "r") {
         node = svgWrapper.group({class_: "draggable", transform: "translate(" + right + "," + bottom + ")"});
-        svgWrapper.use(node, "#path-r-mayuge", {fill: "black", transform: "scale(" + scale + ")", strokeWidth: "1"});
+        svgWrapper.use(node, "#path-r-mayuge", {fill: "black", transform: "scale(" + scale + ")", strokeWidth: "0"});
     } else {
         node = svgWrapper.group({class_: "draggable", transform: "translate(" + (right - (right - left)) + "," + bottom + ")"});
-        svgWrapper.use(node, "#path-r-mayuge", {fill: "black", transform: "scale(-" + scale + "," + scale + ")", strokeWidth: "1"});
+        svgWrapper.use(node, "#path-r-mayuge", {fill: "black", transform: "scale(-" + scale + "," + scale + ")", strokeWidth: "0"});
     }
 
 

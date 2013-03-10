@@ -12,7 +12,7 @@ class Image {
     private $name;
     private $type;
     private $extension = array(
-        'gif'=>'gif', 'jpg'=>'jpeg', 'png'=>'png'
+        'gif'=>'gif', 'jpg'=>'jpeg', 'jpeg'=>'jpeg', 'png'=>'png'
     );
     
     public function __construct($file) {
