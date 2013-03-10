@@ -63,8 +63,9 @@
                 <div class="row">
                     <button class="btn" ng-click="savePNG()"><i class="icon-upload"></i>サーバに保存</button>
                     <button class="btn" ng-click="openPNG()"><i class="icon-download"></i>ローカルに保存</button>
+                    <a href="" rel="tooltip" data-title="サーバに保存すると最新のまゆげ画像をshareできるようになります（SNSボタンが表示されます）。画像を編集したら共有する前にサーバに保存しましょう。ローカルに保存ボタンを押すと別ウインドウでPNG画像が開くので右クリックで保存してください。。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a>
                     <div id="snsBtn" style="margin-top:10px;">
-                        <div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24" rel="tooltip" data-title="先に保存" data-placement="bottom" data-trigger="hover"></div>
+                        <div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>
                     </div>
                 </div>
             </div>
@@ -92,5 +93,6 @@
 <script type="text/javascript" src="https://apis.google.com/js/plusone.js">
   {lang: 'ja', parsetags: 'explicit'}
 </script>
+<script src="//platform.twitter.com/widgets.js" type="text/javascript"></script>
 </body>
 </html>
