@@ -2,6 +2,8 @@
 <html lang="ja" ng-app>
 <head>
 <meta charset="UTF-8">
+<meta property="og:title" content="まゆげジェネレーター" />
+<meta property="og:description" content="あなたの写真に手軽にまゆげを。" />
 <meta property="og:image" content="<?echo is_null($_GET['file']) ? '' : './imgstore/'.$_GET['file'].'.png' ?>" />
 <link href="css/bootstrap.min.css" rel="stylesheet">
 <link href="css/docs.css" rel="stylesheet">
@@ -28,14 +30,17 @@
                     <input id="imageSelector" name="imageSelector" type="file" style="display:none" onchange="angular.element(this).scope().setFiles(this);">
                     <span class="input-append">
                         <input id="filePath" class="input-large" type="text">
-                        <a class="btn" onclick="$('input[id=imageSelector]').click();" rel="tooltip" data-title="まゆげを描きたい画像を選びます。" data-placement="bottom" data-trigger="hover">ファイル選択</a>
+                        <a class="btn" onclick="$('input[id=imageSelector]').click();" rel="tooltip" data-default-show="true" data-title="まゆげを描きたい画像を選びます。" data-placement="bottom" data-trigger="hover">ファイル選択</a>
                     </span>
                 </form>
             </div>
             <div class="span6">
                 <form class="form-inline">
                     <label class="checkbox">
-                      <input type="checkbox" ng-model="autoSave"> 自動保存する <a href="" rel="tooltip" data-title="まゆげを移動したり消した時に自動的にサーバに保存します。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a>
+                      <input type="checkbox" ng-model="conf.faceDetect"> 顔認識する <a href="" rel="tooltip" data-title="アップロードすると自動的に顔認識してまゆげを描画します。" data-placement="bottom" data-trigger="hover"><i class="icon-question-sign"></i></a>
+                    </label>
+                    <label class="checkbox">
+                      <input type="checkbox" ng-model="conf.autoSave"> 自動保存する <a href="" rel="tooltip" data-title="まゆげを移動したり消した時に自動的にサーバに保存します。" data-placement="bottom" data-trigger="hover"><i class="icon-question-sign"></i></a>
                     </label>
                 </form>
             </div>
@@ -63,14 +68,14 @@
                 <div class="row">
                     <button class="btn" ng-click="savePNG()"><i class="icon-upload"></i>サーバに保存</button>
                     <button class="btn" ng-click="openPNG()"><i class="icon-download"></i>ローカルに保存</button>
-                    <a href="" rel="tooltip" data-title="サーバに保存すると最新のまゆげ画像をshareできるようになります（SNSボタンが表示されます）。画像を編集したら共有する前にサーバに保存しましょう。ローカルに保存ボタンを押すと別ウインドウでPNG画像が開くので右クリックで保存してください。。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a>
+                    <a href="" rel="tooltip" data-default-show="true" data-title="画像を編集したら共有する前にサーバに保存しましょう。サーバに保存すると最新のまゆげ画像をshareできるようになります（SNSボタンが表示されます）。ローカルに保存ボタンを押すと別ウインドウでPNG画像が開くので右クリックで保存してください。。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a>
                     <div id="snsBtn" style="margin-top:10px;">
                         <div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <pre>{{conf.optionsLR|json}} {{conf.showToolBox|json}}</pre>
+        <!-- <pre>{{conf.optionsLR|json}} {{conf.showToolBox|json}}</pre> -->
 
     </div>
 
