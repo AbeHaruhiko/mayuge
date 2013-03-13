@@ -76,12 +76,13 @@ function drawShape(x1, y1, x2, y2) {
 
     var scale = ((right - left)/95);
     var $scope = angular.element('#content').scope();
-    if ($scope.optionsLR == "r") {
+    var pickedColor = $('select[name="colorpicker"]').val();
+    if ($scope.conf.optionsLR == "r") {
         node = svgWrapper.group({class_: "draggable", transform: "translate(" + right + "," + bottom + ")"});
-        svgWrapper.use(node, "#path-r-mayuge", {fill: "black", transform: "scale(" + scale + ")", strokeWidth: "0"});
+        svgWrapper.use(node, "#path-r-mayuge", {fill: pickedColor, transform: "scale(" + scale + ")", strokeWidth: "0"});
     } else {
         node = svgWrapper.group({class_: "draggable", transform: "translate(" + (right - (right - left)) + "," + bottom + ")"});
-        svgWrapper.use(node, "#path-r-mayuge", {fill: "black", transform: "scale(-" + scale + "," + scale + ")", strokeWidth: "0"});
+        svgWrapper.use(node, "#path-r-mayuge", {fill: pickedColor, transform: "scale(-" + scale + "," + scale + ")", strokeWidth: "0"});
     }
 
 

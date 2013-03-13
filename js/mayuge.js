@@ -7,9 +7,22 @@ var mainCtrl = function($scope, $http) {
   $scope.conf.faceDetect = true;
   $scope.conf.showToolBox = false;
 
+  // ツールチップの準備
   // $('[rel=tooltip]:not(#svgArea)').tooltip("show");
   $('[rel=tooltip][data-default-show=true]').tooltip("show");
   $('[rel=tooltip]').tooltip();
+
+  // カラーピッカーの準備
+  $('select[name="colorpicker"]').simplecolorpicker({
+    // picker: true
+  }).on('change', function() {
+    // $(document.body).css('background-color', $('select[name="colorpicker"]').val());
+    $(".draggable > use", svgWrapper.root()).each(function(index, element) {
+
+      $(element).attr('fill', $('select[name="colorpicker"]').val());
+    })
+
+  });
 
   $scope.setFiles = function(element) {
       $scope.$apply(function($scope) {
@@ -213,8 +226,8 @@ var mainCtrl = function($scope, $http) {
       currentFile = data;
       $("#snsBtn > div").remove();
       $("#snsBtn").append('<div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>');
-      // $("#g-plus-share").attr({"data-href": '/?file=' + data});        
-      $("#g-plus-share").attr({"data-href": location.href});        
+      $("#g-plus-share").attr({"data-href": '/?file=' + data});        
+      // $("#g-plus-share").attr({"data-href": location.href});        
       gapi.plus.go();
       $("#snsBtn > iframe").remove();
       $("#snsBtn > a").remove();
@@ -258,8 +271,8 @@ var mainCtrl = function($scope, $http) {
     if (urlGetParams && urlGetParams.length) {
       var remoteFileName = urlGetParams['file'];
       $("#pngArea > img").attr({src: './imgstore/' + remoteFileName + '.png'});
-      // $("#g-plus-share").attr({"data-href": '/?file=' + remoteFileName});        
-      $("#g-plus-share").attr({"data-href": location.href});        
+      $("#g-plus-share").attr({"data-href": '/?file=' + remoteFileName});        
+      // $("#g-plus-share").attr({"data-href": location.href});        
       gapi.plus.go();
       // $("#tw-share").attr({"data-url": '/?file=' + remoteFileName});        
       $("#tw-share").attr({"data-url": location.href});        
@@ -294,6 +307,11 @@ var mainCtrl = function($scope, $http) {
 
 // DOMの準備完了時
 angular.element(document).ready(function() {
+// setTimeout(function() {
+//     $('#colorpicker-inline').simplecolorpicker('selectColor', '#fbd75b');
+//   }, 1000);
+
+
 
   //ファイル選択時にテキストボックスにパスをコピー
   $('input[id=imageSelector]').change(function() {

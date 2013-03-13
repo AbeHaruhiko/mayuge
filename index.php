@@ -4,9 +4,10 @@
 <meta charset="UTF-8">
 <meta property="og:title" content="まゆげジェネレーター" />
 <meta property="og:description" content="あなたの写真に手軽にまゆげを。" />
-<meta property="og:image" content="<?echo is_null($_GET['file']) ? '' : './imgstore/'.$_GET['file'].'.png' ?>" />
-<link href="css/bootstrap.min.css" rel="stylesheet">
-<link href="css/docs.css" rel="stylesheet">
+<!-- <meta property="og:image" content="<?echo is_null($_GET['file']) ? '' : './imgstore/'.$_GET['file'].'.png' ?>" /> -->
+<link href="css/bootstrap.min.css" rel="stylesheet"/>
+<link href="css/docs.css" rel="stylesheet"/>
+<link href="css/jquery.simplecolorpicker.css" rel="stylesheet" type="text/css"/>
 <!-- <link rel="stylesheet" type="text/css" href="./css/jquery.svg.css"> -->
 </head>
 <body id="content" ng-controller="mainCtrl" style="padding-top:40px">
@@ -49,7 +50,7 @@
             <div class="span6">
                 <div id="svgArea" rel="tooltip" data-title="ドラッグ&ドロップでまゆげを描けます。まゆげは移動したり、ダブルクリックで削除もできます。" data-placement="right" data-trigger="hover"></div>
                 <canvas id="canvasArea" style="display:none;"></canvas>
-                <div id="pngArea" style="display: none;">
+                <div id="pngArea" style="/*display: none;*/">
                     <img itemprop="image" src="<?echo is_null($_GET['file']) ? '' : './imgstore/'.$_GET['file'].'.png' ?>"/>
                 </div>
             </div>
@@ -64,6 +65,21 @@
                         </label>
                         <a href="" rel="tooltip" data-title="どちらのまゆげを描くか選びます。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a>
                     </form>
+                    <form>
+                      <div class="control-group">
+                        <label class="control-label" for="colorpicker">まゆ毛の色　<a href="" rel="tooltip" data-title="すべてのまゆげがこの色になります。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a></label>
+                        
+                        <div class="controls">
+                          <select name="colorpicker" id="colorpicker">
+                            <!-- Colors from Google Calendar -->
+                            <option value="black">黒</option>
+                            <option value="brown">茶色</option>
+                            <option value="#5C4033">こげ茶色</option>
+                            <option value="gray">灰色</option>
+                          </select>
+                        </div>
+                      </div>
+                  </form>
                 </div>
                 <div class="row">
                     <button class="btn" ng-click="savePNG()"><i class="icon-upload"></i>サーバに保存</button>
@@ -99,5 +115,6 @@
   {lang: 'ja', parsetags: 'explicit'}
 </script>
 <script src="//platform.twitter.com/widgets.js" type="text/javascript"></script>
+<script src="./js/jquery.simplecolorpicker.js"></script>
 </body>
 </html>
