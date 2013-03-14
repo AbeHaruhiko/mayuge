@@ -50,7 +50,7 @@
             <div class="span6">
                 <div id="svgArea" rel="tooltip" data-title="ドラッグ&ドロップでまゆげを描けます。まゆげは移動したり、ダブルクリックで削除もできます。" data-placement="right" data-trigger="hover"></div>
                 <canvas id="canvasArea" style="display:none;"></canvas>
-                <div id="pngArea" style="/*display: none;*/">
+                <div id="pngArea" style="display: none;">
                     <img itemprop="image" src="<?echo is_null($_GET['file']) ? '' : './imgstore/'.$_GET['file'].'.png' ?>"/>
                 </div>
             </div>

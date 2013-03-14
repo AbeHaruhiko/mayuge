@@ -20,9 +20,26 @@ var mainCtrl = function($scope, $http) {
     $(".draggable > use", svgWrapper.root()).each(function(index, element) {
 
       $(element).attr('fill', $('select[name="colorpicker"]').val());
+      // $scope.export2canvas();
+      if ($scope.conf.autoSave) {
+        $scope.savePNG();
+      }
     })
 
   });
+
+  $scope.changeMayugeColor = function() {
+    // $(document.body).css('background-color', $('select[name="colorpicker"]').val());
+    $(".draggable > use", svgWrapper.root()).each(function(index, element) {
+
+      $(element).attr('fill', $('select[name="colorpicker"]').val());
+      // $scope.export2canvas();
+      if ($scope.conf.autoSave) {
+        $scope.savePNG();
+      }
+    })
+
+  }
 
   $scope.setFiles = function(element) {
       $scope.$apply(function($scope) {
@@ -166,15 +183,15 @@ var mainCtrl = function($scope, $http) {
 
     }
     detectedFaces = null;
-    $scope.export2canvas();
+
+    // $scope.export2canvas();
+    if ($scope.conf.autoSave) {
+      $scope.savePNG();
+    }
+    
   }
 
   $scope.export2canvas = function() {
-    // SVGをレイヤでブロック
-    if ($scope.conf.autoSave) {
-      $("#svgArea").block({message: null});
-    }
-
 
     // CANVAS書き出し
     if (!$("#svg-mayuge").attr("xmlns:xlink")){
@@ -195,14 +212,17 @@ var mainCtrl = function($scope, $http) {
     $("#pngArea > img").attr({src: dataURL});
 
     // サーバに投げる。
-    if ($scope.conf.autoSave) {
-      $scope.savePNG();
-    }
+    $scope.savePNG();
 
   }
 
   $scope.savePNG = function() {
-    var dataURL = $("#canvasArea")[0].toDataURL();
+     // SVGをレイヤでブロック
+    // if ($scope.conf.autoSave) {
+      $("#svgArea").block({message: null});
+    // }
+
+   var dataURL = $("#canvasArea")[0].toDataURL();
     var fd = new FormData();
     fd.append('mayugedImage', $scope.dataURItoBlob(dataURL));
     fd.append('currentFile', currentFile);
@@ -260,17 +280,21 @@ var mainCtrl = function($scope, $http) {
   }
 
   $scope.popstate = function(event) {
-    // Getパラメータにファイルが指定されてたら読み込む
+
     $("#snsBtn > div").remove();
     $("#snsBtn").append('<div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>');
     $("#snsBtn > iframe").remove();
     $("#snsBtn > a").remove();
     $("#snsBtn").append('<a id="tw-share" href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-size="large"></a>');
 
+    // Getパラメータにファイルが指定されてたら読み込む
     var urlGetParams = $scope.getUrlGetParams();
     if (urlGetParams && urlGetParams.length) {
       var remoteFileName = urlGetParams['file'];
       $("#pngArea > img").attr({src: './imgstore/' + remoteFileName + '.png'});
+      $("#pngArea").css("display", "");
+
+      // snsボタン
       $("#g-plus-share").attr({"data-href": '/?file=' + remoteFileName});        
       // $("#g-plus-share").attr({"data-href": location.href});        
       gapi.plus.go();
@@ -301,7 +325,10 @@ var mainCtrl = function($scope, $http) {
 
   $scope.removeMayuge = function(element) {
     element.remove();
-    $scope.export2canvas();
+    // $scope.export2canvas();
+    if ($scope.conf.autoSave) {
+      $scope.savePNG();
+    }
   }
 }
 
@@ -321,15 +348,19 @@ angular.element(document).ready(function() {
   // ファイル選択時イベントハンドラ
   $("#imageSelector").change(function() {
 
-    // サーバ側保存済みファイルIDをクリア
-    currentFile = null;
-
     // 選択されたファイルを取得
     var file = this.files[0];
 
     // 画像ファイル以外は処理中止
     if (!file || !file.type || !file.type.match(/^image\/(png|jpeg|jpg|gif)$/)) return;
 
+    // サーバ側保存済みファイルIDをクリア
+    currentFile = null;
+
+    // PNGが表示されていたら非表示に（外部リンクから飛んできた場合）
+    $("#pngArea").css("display", "none");
+
+    // ファイル読み込み
     localImage = new Image();
     var reader = new FileReader();
     // var imageWidth;

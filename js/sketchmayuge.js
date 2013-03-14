@@ -55,7 +55,10 @@ function endDrag(event) {
         drawShape(start.X, start.Y, end.X, end.Y); 
 
         var $scope = angular.element('#content').scope();
-        $scope.export2canvas();
+        // $scope.export2canvas();
+        if ($scope.conf.autoSave) {
+          $scope.savePNG();
+        }
     }
     start = null; 
     event.preventDefault(); 
@@ -90,7 +93,11 @@ function drawShape(x1, y1, x2, y2) {
     makeSVGElementDraggable(node);
     // node.addEventListener("mouseup", $scope.export2canvas);
     node.addEventListener("dblclick", function() {$scope.removeMayuge($(node));});
-    $scope.export2canvas();
+    // $scope.export2canvas();
+    if ($scope.conf.autoSave) {
+      $scope.savePNG();
+    }
+
 
     drawNodes[drawNodes.length] = node; 
     // $(node).mousedown(startDrag).mousemove(dragging).mouseup(endDrag); 

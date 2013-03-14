@@ -107,7 +107,10 @@ svgDrag = (function() {
           // mayuge customize
           if (tDeltaX != 0 || tDeltaY != 0) {
             var $scope = angular.element('#content').scope();
-            $scope.export2canvas();
+            // $scope.export2canvas();
+            if ($scope.conf.autoSave) {
+              $scope.savePNG();
+            }
           }
           // mayuge customize
 
