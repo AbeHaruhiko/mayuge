@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta property="og:title" content="まゆげジェネレーター" />
 <meta property="og:description" content="あなたの写真に手軽にまゆげを。" />
-<!-- <meta property="og:image" content="<?echo is_null($_GET['file']) ? '' : './imgstore/'.$_GET['file'].'.png' ?>" /> -->
 <link href="css/bootstrap.min.css" rel="stylesheet"/>
 <link href="css/docs.css" rel="stylesheet"/>
 <link href="css/jquery.simplecolorpicker.css" rel="stylesheet" type="text/css"/>
@@ -16,7 +15,7 @@
     <div class="navbar navbar-fixed-top">
         <div class="navbar-inner">
             <div class="container">
-               <a href="#" class="brand">Mayuge Generator</a>
+               <a href="/" class="brand">Mayuge Generator</a>
             </div>
         </div>
     </div>
@@ -48,10 +47,10 @@
         </div>
         <div class="row">
             <div class="span6">
-                <div id="svgArea" rel="tooltip" data-title="ドラッグ&ドロップでまゆげを描けます。まゆげは移動したり、ダブルクリックで削除もできます。" data-placement="right" data-trigger="hover"></div>
+                <div id="svgArea" rel="tooltip" data-title="まゆげを描きたいところでドラッグ&ドロップするとまゆげが追加されます。まゆげは移動したり、ダブルクリックで削除もできます。" data-placement="right" data-trigger="hover"></div>
                 <canvas id="canvasArea" style="display:none;"></canvas>
                 <div id="pngArea" style="display: none;">
-                    <img itemprop="image" src="<?echo is_null($_GET['file']) ? '' : './imgstore/'.$_GET['file'].'.png' ?>"/>
+                    <img itemprop="image" src="<?echo is_null($_GET['file']) ? '' : './imgstore/'.$_GET['file'].'.png?'.time() /* この画像はG+ボタン用。G+ボタンで画像キャッシュさせないために?time()を付加 */ ?>"/>
                 </div>
             </div>
             <div class="span6" ng-show="conf.showToolBox">
@@ -82,10 +81,10 @@
                   </form>
                 </div>
                 <div class="row">
-                    <button class="btn" ng-click="savePNG()"><i class="icon-upload"></i>サーバに保存</button>
+                    <button class="btn" ng-click="export2canvas(true)"><i class="icon-upload"></i>サーバに保存</button>
                     <button class="btn" ng-click="openPNG()"><i class="icon-download"></i>ローカルに保存</button>
                     <a href="" rel="tooltip" data-default-show="true" data-title="画像を編集したら共有する前にサーバに保存しましょう。サーバに保存すると最新のまゆげ画像をshareできるようになります（SNSボタンが表示されます）。ローカルに保存ボタンを押すと別ウインドウでPNG画像が開くので右クリックで保存してください。。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a>
-                    <div id="snsBtn" style="margin-top:10px;">
+                    <div id="snsBtn" style="margin:10px 0 10px 0;">
                         <div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>
                     </div>
                 </div>

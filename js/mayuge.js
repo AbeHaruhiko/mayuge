@@ -16,14 +16,13 @@ var mainCtrl = function($scope, $http) {
   $('select[name="colorpicker"]').simplecolorpicker({
     // picker: true
   }).on('change', function() {
-    // $(document.body).css('background-color', $('select[name="colorpicker"]').val());
     $(".draggable > use", svgWrapper.root()).each(function(index, element) {
 
       $(element).attr('fill', $('select[name="colorpicker"]').val());
-      // $scope.export2canvas();
-      if ($scope.conf.autoSave) {
-        $scope.savePNG();
-      }
+      $scope.export2canvas();
+      // if ($scope.conf.autoSave) {
+      //   $scope.savePNG();
+      // }
     })
 
   });
@@ -33,10 +32,10 @@ var mainCtrl = function($scope, $http) {
     $(".draggable > use", svgWrapper.root()).each(function(index, element) {
 
       $(element).attr('fill', $('select[name="colorpicker"]').val());
-      // $scope.export2canvas();
-      if ($scope.conf.autoSave) {
-        $scope.savePNG();
-      }
+      $scope.export2canvas();
+      // if ($scope.conf.autoSave) {
+      //   $scope.savePNG();
+      // }
     })
 
   }
@@ -80,6 +79,7 @@ var mainCtrl = function($scope, $http) {
   $scope.getSVG = function() {
 
     // jquery-svg使用時
+    $("#svgArea").css("display", "");
     $("#svgArea").svg('destroy');
     $("#svgArea").width(selectedImageWidth).height(selectedImageHeight);
     $("#svgArea").svg();
@@ -175,7 +175,7 @@ var mainCtrl = function($scope, $http) {
 
         $(".draggable", svgWrapper.root()).each(function(index, element) {
           makeSVGElementDraggable(element);
-          // element.addEventListener("mouseup", $scope.export2canvas);
+
           var $scope = angular.element('#content').scope();
           element.addEventListener("dblclick", function() {$scope.removeMayuge($(element));});
         })
@@ -184,14 +184,14 @@ var mainCtrl = function($scope, $http) {
     }
     detectedFaces = null;
 
-    // $scope.export2canvas();
-    if ($scope.conf.autoSave) {
-      $scope.savePNG();
-    }
+    $scope.export2canvas();
+    // if ($scope.conf.autoSave) {
+    //   $scope.savePNG();
+    // }
     
   }
 
-  $scope.export2canvas = function() {
+  $scope.export2canvas = function(doSave) {
 
     // CANVAS書き出し
     if (!$("#svg-mayuge").attr("xmlns:xlink")){
@@ -200,11 +200,11 @@ var mainCtrl = function($scope, $http) {
     var xml = svgWrapper.toSVG();
     // console.log(xml);
     // PNG書き出しはレンダリング完了後に行なう
-    canvg($("#canvasArea")[0], xml, {renderCallback: $scope.export2pngAndServer});
+    canvg($("#canvasArea")[0], xml, {renderCallback: function() {$scope.export2pngAndServer(doSave);}});
 
   }
 
-  $scope.export2pngAndServer = function() {
+  $scope.export2pngAndServer = function(doSave) {
 
     var dataURL = $("#canvasArea")[0].toDataURL();
     // PNG書き出し
@@ -212,17 +212,17 @@ var mainCtrl = function($scope, $http) {
     $("#pngArea > img").attr({src: dataURL});
 
     // サーバに投げる。
-    $scope.savePNG();
+    if ($scope.conf.autoSave || doSave) {
+      $scope.savePNG();
+    }
 
   }
 
   $scope.savePNG = function() {
-     // SVGをレイヤでブロック
-    // if ($scope.conf.autoSave) {
-      $("#svgArea").block({message: null});
-    // }
+    // SVGをレイヤでブロック
+    $("#svgArea").block({message: null});
 
-   var dataURL = $("#canvasArea")[0].toDataURL();
+    var dataURL = $("#canvasArea")[0].toDataURL();
     var fd = new FormData();
     fd.append('mayugedImage', $scope.dataURItoBlob(dataURL));
     fd.append('currentFile', currentFile);
@@ -246,10 +246,8 @@ var mainCtrl = function($scope, $http) {
       currentFile = data;
       $("#snsBtn > div").remove();
       $("#snsBtn").append('<div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>');
-      $("#g-plus-share").attr({"data-href": '/?file=' + data});        
-      // $("#g-plus-share").attr({"data-href": location.href});        
       gapi.plus.go();
-      $("#snsBtn > iframe").remove();
+      $("#snsBtn > iframe").remove(); // twボタンのiframe用
       $("#snsBtn > a").remove();
       $("#snsBtn").append('<a id="tw-share" href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-size="large"></a>');
       // $("#tw-share").attr({"data-url": '/?file=' + data});        
@@ -293,10 +291,11 @@ var mainCtrl = function($scope, $http) {
       var remoteFileName = urlGetParams['file'];
       $("#pngArea > img").attr({src: './imgstore/' + remoteFileName + '.png'});
       $("#pngArea").css("display", "");
+      $("#svgArea").css("display", "none");
+      $scope.$apply('conf.showToolBox = false');
+
 
       // snsボタン
-      $("#g-plus-share").attr({"data-href": '/?file=' + remoteFileName});        
-      // $("#g-plus-share").attr({"data-href": location.href});        
       gapi.plus.go();
       // $("#tw-share").attr({"data-url": '/?file=' + remoteFileName});        
       $("#tw-share").attr({"data-url": location.href});        
@@ -305,7 +304,7 @@ var mainCtrl = function($scope, $http) {
       $("#pngArea > img").remove();
       $("#pngArea").append('<img itemprop="image"/>');
     }
-    $("#svgArea").svg('destroy'); 
+    $("#svgArea").svg('destroy');
   }
 
   $scope.getUrlGetParams = function()
@@ -325,10 +324,10 @@ var mainCtrl = function($scope, $http) {
 
   $scope.removeMayuge = function(element) {
     element.remove();
-    // $scope.export2canvas();
-    if ($scope.conf.autoSave) {
-      $scope.savePNG();
-    }
+    $scope.export2canvas();
+    // if ($scope.conf.autoSave) {
+    //   $scope.savePNG();
+    // }
   }
 }
 
@@ -350,6 +349,8 @@ angular.element(document).ready(function() {
 
     // 選択されたファイルを取得
     var file = this.files[0];
+    $("#imageSelector").val("");
+    $("#filePath").val("");
 
     // 画像ファイル以外は処理中止
     if (!file || !file.type || !file.type.match(/^image\/(png|jpeg|jpg|gif)$/)) return;
