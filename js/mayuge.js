@@ -13,32 +13,19 @@ var mainCtrl = function($scope, $http) {
   $('[rel=tooltip]').tooltip();
 
   // カラーピッカーの準備
-  $('select[name="colorpicker"]').simplecolorpicker({
-    // picker: true
-  }).on('change', function() {
-    $(".draggable > use", svgWrapper.root()).each(function(index, element) {
-
-      $(element).attr('fill', $('select[name="colorpicker"]').val());
-      $scope.export2canvas();
-      // if ($scope.conf.autoSave) {
-      //   $scope.savePNG();
-      // }
-    })
-
-  });
-
   $scope.changeMayugeColor = function() {
     // $(document.body).css('background-color', $('select[name="colorpicker"]').val());
     $(".draggable > use", svgWrapper.root()).each(function(index, element) {
 
       $(element).attr('fill', $('select[name="colorpicker"]').val());
       $scope.export2canvas();
-      // if ($scope.conf.autoSave) {
-      //   $scope.savePNG();
-      // }
     })
 
-  }
+  };
+
+  $('select[name="colorpicker"]').simplecolorpicker({
+    // picker: true
+  }).on('change', $scope.changeMayugeColor);
 
   $scope.setFiles = function(element) {
       $scope.$apply(function($scope) {
