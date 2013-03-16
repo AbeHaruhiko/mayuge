@@ -14,18 +14,43 @@ var mainCtrl = function($scope, $http) {
 
   // カラーピッカーの準備
   $scope.changeMayugeColor = function() {
-    // $(document.body).css('background-color', $('select[name="colorpicker"]').val());
     $(".draggable > use", svgWrapper.root()).each(function(index, element) {
 
-      $(element).attr('fill', $('select[name="colorpicker"]').val());
-      $scope.export2canvas();
+      $(element).attr('fill', $('select[name="colorpicker4mayuge"]').val());
     })
+    $scope.export2canvas();
+  };
+
+  $scope.changeRinkakuColor = function() {
+    $(".draggable > use", svgWrapper.root()).each(function(index, element) {
+
+      $(element).attr('stroke', $('select[name="colorpicker4rinkaku"]').val());
+    })
+    $scope.export2canvas();
 
   };
 
-  $('select[name="colorpicker"]').simplecolorpicker({
+  $scope.changeRinkakuWidth = function() {
+    $(".draggable > use", svgWrapper.root()).each(function(index, element) {
+
+      $(element).attr('stroke-width', $('select[name="rinkakuWidth"]').val());
+    })
+    $scope.export2canvas();
+
+  };
+
+  // まゆげのいろ変更
+  $('select[name="colorpicker4mayuge"]').simplecolorpicker({
     // picker: true
   }).on('change', $scope.changeMayugeColor);
+
+  // まゆげのりんかくのいろ変更
+  $('select[name="colorpicker4rinkaku"]').simplecolorpicker({
+    // picker: true
+  }).on('change', $scope.changeRinkakuColor);
+
+  // まゆげのりんかくの太さ変更
+  $('select[name="rinkakuWidth"]').on('change', $scope.changeRinkakuWidth);
 
   $scope.setFiles = function(element) {
       $scope.$apply(function($scope) {
@@ -97,6 +122,11 @@ var mainCtrl = function($scope, $http) {
 
     // 認識された顔
     if ($scope.conf.faceDetect) {
+
+      var mayugeColor = $('select[name="colorpicker4mayuge"]').val();
+      var rinkakuColor = $('select[name="colorpicker4rinkaku"]').val();
+      var rinkakuWidth = $('select[name="rinkakuWidth"]').val();
+
       $(detectedFaces).find("face").each(function () {
 
         // 左目
@@ -127,7 +157,7 @@ var mainCtrl = function($scope, $http) {
         // jquery-svg使用時
         var grpRMayuge = svgWrapper.group({class_: "draggable", transform: "translate(" + ((xBR1 + xER1)/2) + "," + ((yBR1 + yER1)/2) + ")"});
         // svgWrapper.use(grpRMayuge, "#path-r-mayuge", {fill: "black", transform: "scale(" + scaleBR + "),rotate(" + dgr + ")", strokeWidth: "1"})
-        svgWrapper.use(grpRMayuge, "#path-r-mayuge", {fill: "black", transform: "scale(" + scaleBR + ")", strokeWidth: "0"})
+        svgWrapper.use(grpRMayuge, "#path-r-mayuge", {fill: mayugeColor, transform: "scale(" + scaleBR + ")", stroke: rinkakuColor, strokeWidth: rinkakuWidth})
 
         // 左目
         var pointEL1 = $(this).find("#EL1");
@@ -154,7 +184,7 @@ var mainCtrl = function($scope, $http) {
 
         // jquery-svg使用時  
         var grpLMayuge = svgWrapper.group({class_: "draggable", transform: "translate(" + ((xBL1 + xEL1)/2) + "," + ((yBL1 + yEL1)/2) + ")"});
-        svgWrapper.use(grpLMayuge, "#path-r-mayuge", {fill: "black", transform: "scale(-" + scaleBL + "," + scaleBL + ")", strokeWidth: "0"})
+        svgWrapper.use(grpLMayuge, "#path-r-mayuge", {fill: mayugeColor, transform: "scale(-" + scaleBL + "," + scaleBL + ")", stroke: rinkakuColor, strokeWidth: rinkakuWidth})
 
 
 
@@ -320,11 +350,6 @@ var mainCtrl = function($scope, $http) {
 
 // DOMの準備完了時
 angular.element(document).ready(function() {
-// setTimeout(function() {
-//     $('#colorpicker-inline').simplecolorpicker('selectColor', '#fbd75b');
-//   }, 1000);
-
-
 
   //ファイル選択時にテキストボックスにパスをコピー
   $('input[id=imageSelector]').change(function() {

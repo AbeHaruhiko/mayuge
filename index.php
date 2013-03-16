@@ -55,30 +55,58 @@
             </div>
             <div class="span6" ng-show="conf.showToolBox">
                 <div class="row">
-                    <form>
-                        <label class="radio">
-                            <input type="radio" ng-model="conf.optionsLR" name="optionsLR" id="optionsR" value="r"> 右まゆ
-                        </label>
-                        <label class="radio">
-                            <input type="radio" ng-model="conf.optionsLR" name="optionsLR" id="optionsL" value="l"> 左まゆ
-                        </label>
-                        <a href="" rel="tooltip" data-title="どちらのまゆげを描くか選びます。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a>
-                    </form>
-                    <form>
-                      <div class="control-group">
-                        <label class="control-label" for="colorpicker">まゆ毛の色　<a href="" rel="tooltip" data-title="すべてのまゆげがこの色になります。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a></label>
-                        
-                        <div class="controls">
-                          <select name="colorpicker" id="colorpicker">
-                            <!-- Colors from Google Calendar -->
-                            <option value="black">黒</option>
-                            <option value="brown">茶色</option>
-                            <option value="#5C4033">こげ茶色</option>
-                            <option value="gray">灰色</option>
-                          </select>
+                    <!-- <form class="form-inline"> -->
+                    <form class="form-horizontal">
+                        <div class="control-group">
+                            <label class="control-label" for="colorpicker4mayuge" style="width: 140px;">左右 <a href="" rel="tooltip" data-title="どちらのまゆげを描くか選びます。" data-placement="bottom" data-trigger="hover"><i class="icon-question-sign"></i></a></label>
+                            <span class="controls" style="margin-left: 20px;">
+                                <label class="radio inline" style="white-space: nowrap;">
+                                    <input type="radio" ng-model="conf.optionsLR" name="optionsLR" id="optionsR" value="r"> 右まゆ
+                                </label>
+                                <label class="radio inline" style="white-space: nowrap;">
+                                    <input type="radio" ng-model="conf.optionsLR" name="optionsLR" id="optionsL" value="l"> 左まゆ
+                                </label>
+                            </span>
                         </div>
-                      </div>
-                  </form>
+                        <div class="control-group">
+                            <label class="control-label" for="colorpicker4mayuge" style="width: 140px;">まゆ毛の色 <a href="" rel="tooltip" data-title="すべてのまゆげが選んだ色になります。" data-placement="bottom" data-trigger="hover"><i class="icon-question-sign"></i></a></label>
+                            <span class="controls" style="margin-left: 20px;">
+                                <select name="colorpicker4mayuge" id="colorpicker4mayuge">
+                                    <!-- Colors from Google Calendar -->
+                                    <option value="black">黒</option>
+                                    <option value="brown">茶色</option>
+                                    <option value="#5C4033">こげ茶色</option>
+                                    <option value="gray">灰色</option>
+                                    <option value="white">白</option>
+                                </select>
+                            </span>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="colorpicker4rinkaku" style="width: 140px;">まゆ毛のりんかく <a href="" rel="tooltip" data-title="すべてのりんかくが選んだ色になります。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a></label>
+                            <span class="controls" style="margin-left: 20px;">
+                                <select name="colorpicker4rinkaku" id="colorpicker4rinkaku">
+                                    <!-- Colors from Google Calendar -->
+                                    <option value="black">黒</option>
+                                    <option value="brown">茶色</option>
+                                    <option value="#5C4033">こげ茶色</option>
+                                    <option value="gray">灰色</option>
+                                    <option value="white">白</option>
+                                </select>
+                            </span>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label" for="colorpicker4rinkaku" style="width: 140px;">りんかくの太さ <a href="" rel="tooltip" data-title="りんかくの太さを選びます。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a></label>
+                            <span class="controls" style="margin-left: 20px;">
+                                <select name="rinkakuWidth" id="rinkakuWidth" class="span1">
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </span>
+                        </div>
+                    </form>
                 </div>
                 <div class="row">
                     <button class="btn" ng-click="export2canvas(true)"><i class="icon-upload"></i>サーバに保存</button>
