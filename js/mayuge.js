@@ -1,4 +1,4 @@
-var mainCtrl = function($scope, $http, $compile) {
+var mainCtrl = function($scope, $http, $compile, $routeParams) {
 
   $scope.changeAllMayugeColor = function() {
     $(".draggable > use", svgWrapper.root()).each(function(index, element) {
