@@ -1,15 +1,19 @@
 angular.module('mayuge', [], function($routeProvider, $locationProvider) {
   $routeProvider.when('/', {
-    // templateUrl: 'home.php',
-    template: 'test',
-    controller: mainCntl
-    }
+    templateUrl: '/home.php',
+    controller: mayugeCtrl
   });
-  // $routeProvider.when('/about', {
-  //   templateUrl: 'about.html',
-  //   controller: mainCntl
-  // });
+  $routeProvider.when('/about', {
+    templateUrl: '/about.html',
+    controller: aboutCtrl
+  });
  
   // configure html5 to get links working on jsfiddle
   $locationProvider.html5Mode(true);
 });
+
+function aboutCtrl($scope, $route, $routeParams, $location) {
+  $scope.$route = $route;
+  $scope.$location = $location;
+  $scope.$routeParams = $routeParams;
+}

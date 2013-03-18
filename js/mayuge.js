@@ -1,4 +1,6 @@
-var mainCtrl = function($scope, $http, $compile, $routeParams) {
+var mainCtrl = function() {};
+
+var mayugeCtrl = function($scope, $http, $compile, $routeParams) {
 
   $scope.changeAllMayugeColor = function() {
     $(".draggable > use", svgWrapper.root()).each(function(index, element) {
@@ -166,7 +168,7 @@ var mainCtrl = function($scope, $http, $compile, $routeParams) {
         $(".draggable", svgWrapper.root()).each(function(index, element) {
           makeSVGElementDraggable(element);
 
-          var $scope = angular.element('#content').scope();
+          // var $scope = angular.element('#content').scope();
           element.addEventListener("dblclick", function() {$scope.removeMayuge($(element));});
         })
       });
@@ -441,7 +443,6 @@ var mainCtrl = function($scope, $http, $compile, $routeParams) {
             }
           }
 
-          var $scope = angular.element('#content').scope();
           if ($scope.conf.faceDetect) {
             // アップロード
             $scope.upload();

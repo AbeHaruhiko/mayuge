@@ -13,7 +13,7 @@
 <script src="./js/app.js"></script>
 <script src="./js/mayuge.js"></script>
 </head>
-<body id="content" ng-controller="" style="padding-top:40px">
+<body id="content" ng-controller="mainCtrl" style="padding-top:40px">
 <div class="container">
 <?php include('./nav.php');?>
  
