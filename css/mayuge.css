@@ -1,0 +1,15 @@
+#toolBox .form-horizontal .control-label{
+	width: 140px;
+}
+
+#toolBox .form-horizontal .controls{
+	margin-left: 20px;
+}
+
+#toolBox .form-horizontal .controls .inline{
+	white-space: nowrap;
+}
+
+#snsBtn {
+	margin:10px 0 10px 0;
+}

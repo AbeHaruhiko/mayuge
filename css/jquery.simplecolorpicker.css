@@ -86,7 +86,8 @@
        -moz-border-radius: 3px;
             border-radius: 3px;
 
-    border: 1px solid transparent;
+    /* mayuge 白が見えないので変更 border: 1px solid transparent;*/
+    border: 1px solid gray;
   }
   .simplecolorpicker div {
     margin: 0 4px 4px 0;
