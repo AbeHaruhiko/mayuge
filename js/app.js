@@ -12,8 +12,3 @@ angular.module('mayuge', [], function($routeProvider, $locationProvider) {
   $locationProvider.html5Mode(true);
 });
 
-function aboutCtrl($scope, $route, $routeParams, $location) {
-  $scope.$route = $route;
-  $scope.$location = $location;
-  $scope.$routeParams = $routeParams;
-}
