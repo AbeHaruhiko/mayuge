@@ -1,6 +1,19 @@
-var mainCtrl = function($scope, $http, $compile) {
+var mainCtrl = function($scope, $http) {
 
-  $scope.changeAllMayugeColor = function() {
+  // モデルの初期化など
+  $scope.conf = {};
+  $scope.conf.optionsLR = "r";
+  $scope.conf.autoSave = true;
+  $scope.conf.faceDetect = true;
+  $scope.conf.showToolBox = false;
+
+  // ツールチップの準備
+  // $('[rel=tooltip]:not(#svgArea)').tooltip("show");
+  $('[rel=tooltip][data-default-show=true]').tooltip("show");
+  $('[rel=tooltip]').tooltip();
+
+  // カラーピッカーの準備
+  $scope.changeMayugeColor = function() {
     $(".draggable > use", svgWrapper.root()).each(function(index, element) {
 
       $(element).attr('fill', $('select[name="colorpicker4mayuge"]').val());
@@ -8,22 +21,36 @@ var mainCtrl = function($scope, $http, $compile) {
     $scope.export2canvas();
   };
 
-  $scope.changeAllRinkakuColor = function() {
+  $scope.changeRinkakuColor = function() {
     $(".draggable > use", svgWrapper.root()).each(function(index, element) {
 
       $(element).attr('stroke', $('select[name="colorpicker4rinkaku"]').val());
     })
     $scope.export2canvas();
+
   };
 
-  $scope.changeAllRinkakuWidth = function() {
+  $scope.changeRinkakuWidth = function() {
     $(".draggable > use", svgWrapper.root()).each(function(index, element) {
 
       $(element).attr('stroke-width', $('select[name="rinkakuWidth"]').val());
     })
     $scope.export2canvas();
+
   };
 
+  // まゆげのいろ変更
+  $('select[name="colorpicker4mayuge"]').simplecolorpicker({
+    // picker: true
+  }).on('change', $scope.changeMayugeColor);
+
+  // まゆげのりんかくのいろ変更
+  $('select[name="colorpicker4rinkaku"]').simplecolorpicker({
+    // picker: true
+  }).on('change', $scope.changeRinkakuColor);
+
+  // まゆげのりんかくの太さ変更
+  $('select[name="rinkakuWidth"]').on('change', $scope.changeRinkakuWidth);
 
   $scope.setFiles = function(element) {
       $scope.$apply(function($scope) {
@@ -319,154 +346,82 @@ var mainCtrl = function($scope, $http, $compile) {
     //   $scope.savePNG();
     // }
   }
-
-  $scope.clickFileSelectBtn = function() {
-    $('#imageSelector').val('');  // 同じ画像を選択するのに備えクリアする
-    $('input[id=imageSelector]').click(); // fileインプットを呼び出す。
-  }
-
-  $scope.loadAbout = function() {
-    $.ajax({
-      url: './about.html',
-      type: 'GET',
-      dataType: 'html'
-    })
-    .done(function(res) {
-      $("#navhome").removeClass("active");
-      $("#navabout").addClass("active");
-      mainContent = $("#mainContent");
-      mainContent.replaceWith(res);
-    })
-
-  }
-
-  $scope.loadHome =function() {
-    $.ajax({
-      url: './home.php',
-      type: 'GET',
-      dataType: 'html'
-    })
-    .done(function(res) {
-      $("#navhome").addClass("active");
-      $("#navabout").removeClass("active");
-
-      $compile(res)($scope)
-      mainContent = $("#mainContent");
-      $scope.$apply(function($scope) {
-        mainContent.replaceWith($compile(res)($scope));
-        $scope.init();
-      })
-    })
-
-  }
-
-  $scope.init = function() {
-     // モデルの初期化など
-    $scope.conf = {};
-    $scope.conf.optionsLR = "r";
-    $scope.conf.autoSave = true;
-    $scope.conf.faceDetect = true;
-    $scope.conf.showToolBox = false;
-    $scope.conf.changeAllMayugeColor = false;
-
-    // ツールチップの準備
-    // $('[rel=tooltip]:not(#svgArea)').tooltip("show");
-    $('[rel=tooltip][data-default-show=true]').tooltip("show");
-    $('[rel=tooltip]').tooltip();
-
-    // まゆげのいろ変更
-    $('select[name="colorpicker4mayuge"]').simplecolorpicker({
-      // picker: true
-    })//.on('change', $scope.changeMayugeColor);
-
-    // まゆげのりんかくのいろ変更
-    $('select[name="colorpicker4rinkaku"]').simplecolorpicker({
-      // picker: true
-    })//.on('change', $scope.changeRinkakuColor);
-
-
-
-
-
-
-    //ファイル選択時にテキストボックスにパスをコピー
-    $('input[id=imageSelector]').change(function() {
-         $('#filePath').val($(this).val());
-    });
-
-    // ファイル選択時イベントハンドラ
-    $("#imageSelector").change(function() {
-
-      // 選択されたファイルを取得
-      var file = this.files[0];
-      // $("#imageSelector").val("");
-      // $("#filePath").val("");
-
-      // 画像ファイル以外は処理中止
-      if (!file || !file.type || !file.type.match(/^image\/(png|jpeg|jpg|gif)$/)) return;
-
-      // サーバ側保存済みファイルIDをクリア
-      currentFile = null;
-
-      // PNGが表示されていたら非表示に（外部リンクから飛んできた場合）
-      $("#pngArea").css("display", "none");
-
-      // ファイル読み込み
-      localImage = new Image();
-      var reader = new FileReader();
-      // var imageWidth;
-      // var imageHeight;
-
-      // File APIを使用し、ローカルファイルを読み込む
-      reader.onload = function(evt) {
-
-        // 画像がloadされた後に、canvasに描画する
-        localImage.onload = function() {
-          selectedImageWidth = localImage.width;
-          selectedImageHeight = localImage.height;
-
-
-          var limitSize = 400;
-          if (selectedImageWidth > limitSize || selectedImageHeight > limitSize) {
-
-            if (selectedImageWidth > selectedImageHeight) {
-              selectedImageHeight = Math.round(selectedImageHeight * limitSize / selectedImageWidth);
-              selectedImageWidth = limitSize;
-            } else if (selectedImageWidth < selectedImageHeight) {
-              selectedImageWidth = Math.round(selectedImageWidth * limitSize / selectedImageHeight);
-              selectedImageHeight = limitSize;
-            } else {
-              selectedImageWidth = limitSize;
-              selectedImageHeight = limitSize;
-            }
-          }
-
-          var $scope = angular.element('#content').scope();
-          if ($scope.conf.faceDetect) {
-            // アップロード
-            $scope.upload();
-          } else {
-            // SVG描画
-            $scope.getSVG();
-          }
-        }
-
-        // 画像のURLをソースに設定
-        localImage.src = evt.target.result;
-
-      }
-
-      // ファイルを読み込み、データをBase64でエンコードされたデータURLにして返す
-      reader.readAsDataURL(file);
-
-    });
-
-  }
-
-  $scope.init();
-
 }
 
 // DOMの準備完了時
-angular.element(document).ready(function() {});
+angular.element(document).ready(function() {
 
+  //ファイル選択時にテキストボックスにパスをコピー
+  $('input[id=imageSelector]').change(function() {
+       $('#filePath').val($(this).val());
+  });
+
+  // ファイル選択時イベントハンドラ
+  $("#imageSelector").change(function() {
+
+    // 選択されたファイルを取得
+    var file = this.files[0];
+    $("#imageSelector").val("");
+    $("#filePath").val("");
+
+    // 画像ファイル以外は処理中止
+    if (!file || !file.type || !file.type.match(/^image\/(png|jpeg|jpg|gif)$/)) return;
+
+    // サーバ側保存済みファイルIDをクリア
+    currentFile = null;
+
+    // PNGが表示されていたら非表示に（外部リンクから飛んできた場合）
+    $("#pngArea").css("display", "none");
+
+    // ファイル読み込み
+    localImage = new Image();
+    var reader = new FileReader();
+    // var imageWidth;
+    // var imageHeight;
+
+    // File APIを使用し、ローカルファイルを読み込む
+    reader.onload = function(evt) {
+
+      // 画像がloadされた後に、canvasに描画する
+      localImage.onload = function() {
+        selectedImageWidth = localImage.width;
+        selectedImageHeight = localImage.height;
+
+
+        var limitSize = 400;
+        if (selectedImageWidth > limitSize || selectedImageHeight > limitSize) {
+
+          if (selectedImageWidth > selectedImageHeight) {
+            selectedImageHeight = Math.round(selectedImageHeight * limitSize / selectedImageWidth);
+            selectedImageWidth = limitSize;
+          } else if (selectedImageWidth < selectedImageHeight) {
+            selectedImageWidth = Math.round(selectedImageWidth * limitSize / selectedImageHeight);
+            selectedImageHeight = limitSize;
+          } else {
+            selectedImageWidth = limitSize;
+            selectedImageHeight = limitSize;
+          }
+        }
+
+        var $scope = angular.element('#content').scope();
+        if ($scope.conf.faceDetect) {
+          // アップロード
+          $scope.upload();
+        } else {
+          // SVG描画
+          $scope.getSVG();
+        }
+      }
+
+      // 画像のURLをソースに設定
+      localImage.src = evt.target.result;
+
+    }
+
+    // ファイルを読み込み、データをBase64でエンコードされたデータURLにして返す
+    reader.readAsDataURL(file);
+
+  });
+});
+
+window.addEventListener('popstate', function(event) {angular.element('#content').scope().popstate(event);},false );
