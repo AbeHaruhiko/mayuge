@@ -37,6 +37,14 @@ var mainCtrl = function($scope, $http, $compile) {
         });
       };
   $scope.upload = function() {
+
+      // メッセージボックス表示
+      $scope.alertboxdata.status = 'info';
+      $scope.alertboxdata.message = 'uploading...';
+      $scope.alertboxdata.show = true;
+      // $('#alertbox').alert();
+      // $('#alertbox').show();
+
       var fd = new FormData()
       for (var i = 0; i < $scope.files.length; i++) {
           fd.append("imageSelector", $scope.files[i])
@@ -53,10 +61,12 @@ var mainCtrl = function($scope, $http, $compile) {
       .fail(function(xhr, status, exception) {
         console.log(status);
       });
+
   }
 
   $scope.onUploadCompleted = function(res) {
     console.log(res);
+    // $('#alertbox').alert('close');
     detectedFaces = res;
     $scope.getSVG();
   }
@@ -368,6 +378,11 @@ var mainCtrl = function($scope, $http, $compile) {
     $scope.conf.faceDetect = true;
     $scope.conf.showToolBox = false;
     $scope.conf.changeAllMayugeColor = false;
+    $scope.alertboxdata = {};
+    $scope.alertboxdata.status = '';
+    $scope.alertboxdata.message = '';
+    $scope.alertboxdata.show = false;
+
 
     // ツールチップの準備
     // $('[rel=tooltip]:not(#svgArea)').tooltip("show");
@@ -385,6 +400,10 @@ var mainCtrl = function($scope, $http, $compile) {
     })//.on('change', $scope.changeRinkakuColor);
 
 
+    // クリックでアラートボックスを非表示にする
+    $('.alert .close').on('click', function(){
+        $(this).parent().hide();
+    });
 
 
 
@@ -468,5 +487,5 @@ var mainCtrl = function($scope, $http, $compile) {
 }
 
 // DOMの準備完了時
-angular.element(document).ready(function() {});
+angular.element(document).ready(function() {window.addEventListener('popstate', function(event) {angular.element('#content').scope().popstate(event);},false );});
 

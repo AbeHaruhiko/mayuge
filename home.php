@@ -21,6 +21,13 @@
             </form>
         </div>
     </div>
+    <div class="span12" style="height: 40px;">
+        <div id="alertbox" class="alert alert-{{alertboxdata.status}}" ng-show="{{alertboxdata.show}}">
+            <!-- <button type="button" class="close" data-dismiss="alert">&times;</button> -->
+            <button type="button" class="close">&times;</button>
+            {{alertboxdata.message}}
+        </div>
+    </div>
     <div class="row">
         <div class="span6">
             <div id="svgArea" rel="tooltip" data-title="まゆげを描きたいところでドラッグ&ドロップするとまゆげが追加されます。まゆげは移動したり、ダブルクリックで削除もできます。" data-placement="right" data-trigger="hover"></div>
@@ -97,6 +104,7 @@
             </div>
         </div>
     </div>
-    <pre>conf.changeAllRinkakuWidth:{{conf.changeAllRinkakuWidth|json}} conf.autoSave:{{conf.autoSave|json}} conf.changeAllMayugeColor:{{conf.changeAllMayugeColor|json}} conf.optionsLR:{{conf.optionsLR|json}} conf.showToolBox:{{conf.showToolBox|json}}</pre>
+    <pre>alertboxdata:{{alertboxdata|json}}</pre>
+    <pre> conf.autoSave:{{conf.autoSave|json}} conf.changeAllMayugeColor:{{conf.changeAllMayugeColor|json}} conf.optionsLR:{{conf.optionsLR|json}} conf.showToolBox:{{conf.showToolBox|json}}</pre>
 
 </div>
