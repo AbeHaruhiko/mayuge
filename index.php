@@ -3,11 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta property="og:title" content="まゆげジェネレーター" />
-<meta property="og:description" content="写真に美しいまゆげを。" />
+<meta property="og:description" content="写真にまゆげを。" />
 <link href="css/mayuge.css" rel="stylesheet"/>
 <link href="css/bootstrap.min.css" rel="stylesheet"/>
 <link href="css/docs.css" rel="stylesheet"/>
 <link href="css/jquery.simplecolorpicker.css" rel="stylesheet" type="text/css"/>
+<link href="css/egg.css" rel="stylesheet" type="text/css"/>
 <!-- <link rel="stylesheet" type="text/css" href="./css/jquery.svg.css"> -->
 </head>
 <body id="content" ng-controller="mainCtrl" style="padding-top:40px">
@@ -17,7 +18,7 @@
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-           <a href="/" class="brand">まゆげジェネレーター</a>
+           <a href="/" class="brand">ー</a>
            <ul class="nav">
                 <li class="active" id="navhome"><a href="" ng-click="loadHome()">Home</a></li>
                 <li id="navabout"><a href="" ng-click="loadAbout()">About</a></li>
@@ -49,5 +50,6 @@
 </script>
 <script src="//platform.twitter.com/widgets.js" type="text/javascript"></script>
 <script src="./js/jquery.simplecolorpicker.js"></script>
+<script src="./js/egg.js"></script>
 </body>
 </html>

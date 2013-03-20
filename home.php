@@ -1,5 +1,17 @@
 <div class="span12" id="mainContent">
 
+    <div class="row" style="height: 45px;">
+        <div class="span4">
+            <div id="progressbar" class="progress progress-striped active hide" >
+                <div class="bar" style="width: {{progressbar.progress}}%;"></div>
+            </div>
+            <div id="alertbox" class="alert alert-{{alertboxdata.status}}" ng-show="alertboxdata.show">
+                <!-- <button type="button" class="close" data-dismiss="alert">&times;</button> -->
+                <button type="button" class="close">&times;</button>
+                {{alertboxdata.message}}
+            </div>
+        </div>
+    </div>
     <div class="row">
         <div class="span6">
             <form class="form-inline">
@@ -19,13 +31,6 @@
                   <input type="checkbox" ng-model="conf.autoSave"> 自動保存する <a href="" rel="tooltip" data-title="まゆげを移動したり消した時に自動的にサーバに保存します。" data-placement="bottom" data-trigger="hover"><i class="icon-question-sign"></i></a>
                 </label>
             </form>
-        </div>
-    </div>
-    <div class="span12" style="height: 40px;">
-        <div id="alertbox" class="alert alert-{{alertboxdata.status}}" ng-show="{{alertboxdata.show}}">
-            <!-- <button type="button" class="close" data-dismiss="alert">&times;</button> -->
-            <button type="button" class="close">&times;</button>
-            {{alertboxdata.message}}
         </div>
     </div>
     <div class="row">
@@ -52,10 +57,9 @@
                         </span>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="colorpicker4mayuge">まゆ毛の色 <a href="" rel="tooltip" data-title="すべてのまゆげが選んだ色になります。" data-placement="bottom" data-trigger="hover"><i class="icon-question-sign"></i></a></label>
+                        <label class="control-label" for="colorpicker4mayuge">まゆ毛の色</label>
                         <span class="controls span2">
                             <select name="colorpicker4mayuge" id="colorpicker4mayuge">
-                                <!-- Colors from Google Calendar -->
                                 <option value="black">黒</option>
                                 <option value="brown">茶色</option>
                                 <option value="#5C4033">こげ茶色</option>
@@ -63,13 +67,12 @@
                                 <option value="white">白</option>
                             </select>
                         </span>
-                        <button ng-click="changeAllMayugeColor()" class="btn">全まゆに適用</button>
+                        <a href="" ng-click="changeAllMayugeColor()" class="btn">全まゆに適用</a>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="colorpicker4rinkaku">まゆ毛のりんかく <a href="" rel="tooltip" data-title="すべてのりんかくが選んだ色になります。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a></label>
+                        <label class="control-label" for="colorpicker4rinkaku">まゆ毛のりんかく</label>
                         <span class="controls span2">
                             <select name="colorpicker4rinkaku" id="colorpicker4rinkaku">
-                                <!-- Colors from Google Calendar -->
                                 <option value="black">黒</option>
                                 <option value="brown">茶色</option>
                                 <option value="#5C4033">こげ茶色</option>
@@ -77,10 +80,10 @@
                                 <option value="white">白</option>
                             </select>
                         </span>
-                        <button ng-click="changeAllRinkakuColor()" class="btn">全まゆに適用</button>
+                        <a href="" ng-click="changeAllRinkakuColor()" class="btn">全まゆに適用</a>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="colorpicker4rinkaku">りんかくの太さ <a href="" rel="tooltip" data-title="りんかくの太さを選びます。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a></label>
+                        <label class="control-label" for="colorpicker4rinkaku">りんかくの太さ</label>
                         <span class="controls span2">
                             <select name="rinkakuWidth" id="rinkakuWidth" class="span1">
                                 <option>1</option>
@@ -90,13 +93,13 @@
                                 <option>5</option>
                             </select>
                         </span>
-                        <button ng-click="changeAllRinkakuWidth()" class="btn">全まゆに適用</button>
+                        <a href="" ng-click="changeAllRinkakuWidth()" class="btn">全まゆに適用</a>
                     </div>
                 </form>
             </div>
             <div class="row">
                 <button class="btn" ng-click="export2canvas(true)"><i class="icon-upload"></i>サーバに保存</button>
-                <button class="btn" ng-click="openPNG()"><i class="icon-download"></i>ローカルに保存</button>
+                <button class="btn" ng-click="openPNG($event)"><i class="icon-download"></i>ローカルに保存</button>
                 <a href="" rel="tooltip" data-default-show="true" data-title="画像を編集したら共有する前にサーバに保存しましょう。サーバに保存すると最新のまゆげ画像をshareできるようになります（SNSボタンが表示されます）。ローカルに保存ボタンを押すと別ウインドウでPNG画像が開くので右クリックで保存してください。。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a>
                 <div id="snsBtn">
                     <div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>
@@ -104,7 +107,7 @@
             </div>
         </div>
     </div>
-    <pre>alertboxdata:{{alertboxdata|json}}</pre>
+<!--     <pre>alertboxdata:{{alertboxdata|json}}</pre>
     <pre> conf.autoSave:{{conf.autoSave|json}} conf.changeAllMayugeColor:{{conf.changeAllMayugeColor|json}} conf.optionsLR:{{conf.optionsLR|json}} conf.showToolBox:{{conf.showToolBox|json}}</pre>
-
+ -->
 </div>

@@ -27,7 +27,7 @@ var mainCtrl = function($scope, $http, $compile) {
 
   $scope.setFiles = function(element) {
       $scope.$apply(function($scope) {
-        console.log('files:', element.files);
+        // console.log('files:', element.files);
         // Turn the FileList object into an Array
           $scope.files = []
           for (var i = 0; i < element.files.length; i++) {
@@ -38,40 +38,44 @@ var mainCtrl = function($scope, $http, $compile) {
       };
   $scope.upload = function() {
 
-      // メッセージボックス表示
-      $scope.alertboxdata.status = 'info';
-      $scope.alertboxdata.message = 'uploading...';
-      $scope.alertboxdata.show = true;
-      // $('#alertbox').alert();
-      // $('#alertbox').show();
+    $scope.progressbar.progress = 10;
+    $scope.$apply('progressbar.show = true');
 
-      var fd = new FormData()
-      for (var i = 0; i < $scope.files.length; i++) {
-          fd.append("imageSelector", $scope.files[i])
-      }
-      $.ajax({
-        url: './proxy.php',
-        type: 'POST',
-        data: fd,
-        dataType: 'xml',
-        contentType: false, // デフォルトの値は application/x-www-form-urlencoded; charset=UTF-8'
-        processData: false  // デフォルトの値は application/x-www-form-urlencoded
-      })
-      .done($scope.onUploadCompleted)
-      .fail(function(xhr, status, exception) {
-        console.log(status);
-      });
+    var fd = new FormData()
+    for (var i = 0; i < $scope.files.length; i++) {
+        fd.append("imageSelector", $scope.files[i])
+    }
+    $.ajax({
+      url: './proxy.php',
+      type: 'POST',
+      data: fd,
+      dataType: 'xml',
+      contentType: false, // デフォルトの値は application/x-www-form-urlencoded; charset=UTF-8'
+      processData: false  // デフォルトの値は application/x-www-form-urlencoded
+    })
+    .done($scope.onUploadCompleted)
+    .fail(function(xhr, status, exception) {
+      console.log(status);
+    });
 
   }
 
   $scope.onUploadCompleted = function(res) {
-    console.log(res);
+
+    $scope.progressbar.progress = 20;
+    $scope.$apply('progressbar.show = true');
+
+    // console.log(res);
     // $('#alertbox').alert('close');
     detectedFaces = res;
+
     $scope.getSVG();
   }
 
   $scope.getSVG = function() {
+
+    $scope.progressbar.progress = 30;
+    $scope.$apply('progressbar.show = true');
 
     // jquery-svg使用時
     $("#svgArea").css("display", "");
@@ -80,6 +84,9 @@ var mainCtrl = function($scope, $http, $compile) {
     $("#svgArea").svg();
     svgWrapper = $("#svgArea").svg('get');
 
+    $scope.progressbar.progress = 40;
+    $scope.$apply('progressbar.show = true');
+
     svgWrapper.load("./svg/golgo3.svg",   
     {  
         onLoad: $scope.loadSvgCompleteHandler,
@@ -87,6 +94,10 @@ var mainCtrl = function($scope, $http, $compile) {
   }
 
   $scope.loadSvgCompleteHandler = function(svgXml) {
+
+    $scope.progressbar.progress = 50;
+    $scope.$apply('progressbar.show = true');
+
 
     // 表示
     $scope.$apply('conf.showToolBox = true');
@@ -193,6 +204,10 @@ var mainCtrl = function($scope, $http, $compile) {
 
   $scope.export2canvas = function(doSave) {
 
+    $scope.progressbar.progress = 70;
+    $scope.$apply('progressbar.show = true');
+
+
     // CANVAS書き出し
     if (!$("#svg-mayuge").attr("xmlns:xlink")){
       $("#svg-mayuge").attr({"xmlns:xlink": $.svg.xlinkNS});
@@ -206,19 +221,37 @@ var mainCtrl = function($scope, $http, $compile) {
 
   $scope.export2pngAndServer = function(doSave) {
 
+    $scope.progressbar.progress = 80;
+    $scope.$apply('progressbar.show = true');
+
     var dataURL = $("#canvasArea")[0].toDataURL();
     // PNG書き出し
     // console.log($("#canvasArea")[0].toDataURL());
     $("#pngArea > img").attr({src: dataURL});
 
+    // メッセージボックス表示
+    $scope.$apply('alertboxdata.show = false');
+
     // サーバに投げる。
     if ($scope.conf.autoSave || doSave) {
       $scope.savePNG();
+    } else {
+      $scope.progressbar.progress = 100;
+      $("#progressbar").fadeOut(1000);      
     }
 
   }
 
   $scope.savePNG = function() {
+
+    $scope.progressbar.progress = 90;
+    $scope.$apply('progressbar.show = true');
+
+    // メッセージボックス表示
+    $scope.alertboxdata.status = 'info';
+    $scope.alertboxdata.message = 'saving...';
+    $scope.alertboxdata.show = true;
+
     // SVGをレイヤでブロック
     $("#svgArea").block({message: null});
 
@@ -256,16 +289,28 @@ var mainCtrl = function($scope, $http, $compile) {
 
       $("#svgArea").unblock();
 
+      $scope.progressbar.progress = 100;
+      // $scope.$apply('progressbar.show = false');
+      $("#progressbar").fadeOut(1000);
+      $scope.$apply('alertboxdata.show = false');
+
+
     })
     .fail(function(xhr, status, exception) {
       console.log(status);
       $("#svgArea").unblock();
+
+      $scope.$apply('alertboxdata.show = false');
+
     });
   }
 
-  $scope.openPNG = function() {
+  $scope.openPNG = function(event) {
     var dataURL = $("#canvasArea")[0].toDataURL();
     window.open(dataURL, 'save');
+
+    // $('<a id="PNGLink" style="display: none;" href="' + dataURL + '"></a>').insertAfter($(event.target)).lightBox().click();
+
   }
 
   $scope.dataURItoBlob = function(dataURI) {
@@ -342,6 +387,7 @@ var mainCtrl = function($scope, $http, $compile) {
       dataType: 'html'
     })
     .done(function(res) {
+      history.pushState(res, null, "about"); 
       $("#navhome").removeClass("active");
       $("#navabout").addClass("active");
       mainContent = $("#mainContent");
@@ -357,6 +403,7 @@ var mainCtrl = function($scope, $http, $compile) {
       dataType: 'html'
     })
     .done(function(res) {
+      history.pushState(res, null, "/"); 
       $("#navhome").addClass("active");
       $("#navabout").removeClass("active");
 
@@ -382,12 +429,27 @@ var mainCtrl = function($scope, $http, $compile) {
     $scope.alertboxdata.status = '';
     $scope.alertboxdata.message = '';
     $scope.alertboxdata.show = false;
+    $scope.progressbar = {};
+    $scope.progressbar.show = false;
+
 
 
     // ツールチップの準備
     // $('[rel=tooltip]:not(#svgArea)').tooltip("show");
     $('[rel=tooltip][data-default-show=true]').tooltip("show");
     $('[rel=tooltip]').tooltip();
+
+    // まゆ毛の種類ドロップダウン準備
+    $scope.$apply(function($scope){
+
+      $('select[name=mayugeType]').EggImageDropdown({
+        width: 50,
+        height: 35,
+        dropdownWidth:50, //幅指定
+        dropdownHeight:100, //高さ指定
+        lock:'width'
+      });
+    });
 
     // まゆげのいろ変更
     $('select[name="colorpicker4mayuge"]').simplecolorpicker({
@@ -401,9 +463,9 @@ var mainCtrl = function($scope, $http, $compile) {
 
 
     // クリックでアラートボックスを非表示にする
-    $('.alert .close').on('click', function(){
-        $(this).parent().hide();
-    });
+    // $('.alert .close').on('click', function(){
+    //     $(this).parent().hide();
+    // });
 
 
 
@@ -416,19 +478,36 @@ var mainCtrl = function($scope, $http, $compile) {
     // ファイル選択時イベントハンドラ
     $("#imageSelector").change(function() {
 
+      // メッセージボックス表示
+      $scope.alertboxdata.status = 'info';
+      $scope.alertboxdata.message = 'loading...';
+      // $scope.$apply('alertboxdata.show = true');
+      $scope.progressbar.progress = 5;
+      $scope.$apply('progressbar.show = true');
+      $("#progressbar").show();
+
+
       // 選択されたファイルを取得
       var file = this.files[0];
       // $("#imageSelector").val("");
       // $("#filePath").val("");
 
       // 画像ファイル以外は処理中止
-      if (!file || !file.type || !file.type.match(/^image\/(png|jpeg|jpg|gif)$/)) return;
+      if (!file || !file.type || !file.type.match(/^image\/(png|jpeg|jpg|gif)$/)) {
+        $scope.$apply('alertboxdata.show = false')
+        return;
+      }
 
       // サーバ側保存済みファイルIDをクリア
       currentFile = null;
 
       // PNGが表示されていたら非表示に（外部リンクから飛んできた場合）
       $("#pngArea").css("display", "none");
+
+      if ($scope.conf.faceDetect) {
+        // アップロード
+        $scope.upload();
+      }
 
       // ファイル読み込み
       localImage = new Image();
@@ -441,6 +520,7 @@ var mainCtrl = function($scope, $http, $compile) {
 
         // 画像がloadされた後に、canvasに描画する
         localImage.onload = function() {
+
           selectedImageWidth = localImage.width;
           selectedImageHeight = localImage.height;
 
@@ -460,24 +540,20 @@ var mainCtrl = function($scope, $http, $compile) {
             }
           }
 
-          var $scope = angular.element('#content').scope();
           if ($scope.conf.faceDetect) {
-            // アップロード
-            $scope.upload();
           } else {
             // SVG描画
             $scope.getSVG();
           }
+          console.timeEnd("");
         }
 
         // 画像のURLをソースに設定
         localImage.src = evt.target.result;
-
       }
 
       // ファイルを読み込み、データをBase64でエンコードされたデータURLにして返す
       reader.readAsDataURL(file);
-
     });
 
   }
