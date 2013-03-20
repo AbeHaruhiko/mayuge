@@ -10,6 +10,8 @@
 <link href="css/jquery.simplecolorpicker.css" rel="stylesheet" type="text/css"/>
 <link href="css/egg.css" rel="stylesheet" type="text/css"/>
 <!-- <link rel="stylesheet" type="text/css" href="./css/jquery.svg.css"> -->
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
 </head>
 <body id="content" ng-controller="mainCtrl" style="padding-top:40px">
 <div class="container">
@@ -33,8 +35,6 @@
 </div>
 
 
-<script src="http://code.jquery.com/jquery-latest.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
 <script src="./js/bootstrap.min.js"></script>
 <script src="./js/jquery.upload-1.0.2.min.js"></script>
 <!-- <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script> -->
