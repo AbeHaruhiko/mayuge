@@ -439,17 +439,17 @@ var mainCtrl = function($scope, $http, $compile) {
     $('[rel=tooltip][data-default-show=true]').tooltip("show");
     $('[rel=tooltip]').tooltip();
 
-    // まゆ毛の種類ドロップダウン準備
-    $scope.$apply(function($scope){
+    // // まゆ毛の種類ドロップダウン準備
+    // $scope.$apply(function($scope){
 
-      $('select[name=mayugeType]').EggImageDropdown({
-        width: 50,
-        height: 35,
-        dropdownWidth:50, //幅指定
-        dropdownHeight:100, //高さ指定
-        lock:'width'
-      });
-    });
+    //   $('select[name=mayugeType]').EggImageDropdown({
+    //     width: 50,
+    //     height: 35,
+    //     dropdownWidth:50, //幅指定
+    //     dropdownHeight:100, //高さ指定
+    //     lock:'width'
+    //   });
+    // });
 
     // まゆげのいろ変更
     $('select[name="colorpicker4mayuge"]').simplecolorpicker({

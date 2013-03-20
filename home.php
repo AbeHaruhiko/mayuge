@@ -46,7 +46,7 @@
                 <!-- <form class="form-inline"> -->
                 <form class="form-horizontal">
                     <div class="control-group">
-                        <label class="control-label" for="colorpicker4mayuge">左右 <a href="" rel="tooltip" data-title="どちらのまゆげを描くか選びます。" data-placement="bottom" data-trigger="hover"><i class="icon-question-sign"></i></a></label>
+                        <label class="control-label" for="colorpicker4mayuge">左右</label>
                         <span class="controls">
                             <label class="radio inline">
                                 <input type="radio" ng-model="conf.optionsLR" name="optionsLR" id="optionsR" value="r"> 右まゆ
