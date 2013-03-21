@@ -1,20 +1,11 @@
 <?php
-function generateRandomString($length = 15) {
-    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    $randomString = '';
-    for ($i = 0; $i < $length; $i++) {
-        $randomString .= $characters[rand(0, strlen($characters) - 1)];
-    }
-    return $randomString;
-}
-
 //ini_set('error_log', '/virtual/calico/log/error.log') ;
 //$IMAGE_DIR_PTH = '/var/www/html/mayuge/img/';
 $IMAGE_STORE_PATH = './imgstore/';
 
 if (is_null($_POST['currentFile']) || $_POST['currentFile'] == "") {
     // 新規ファイルアップロード
-    $fileNameBase = generateRandomString();
+    $fileNameBase =  md5(uniqid(mt_rand(), TRUE));
 } else {
     $fileNameBase = $_POST['currentFile'];
 }
