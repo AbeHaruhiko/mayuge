@@ -149,7 +149,8 @@ var mainCtrl = function($scope, $http, $compile) {
 
 
         // jquery-svg使用時
-        var grpRMayuge = svgWrapper.group({class_: "draggable", transform: "translate(" + ((xBR1 + xER1)/2) + "," + ((yBR1 + yER1)/2) + ")"});
+        // var grpRMayuge = svgWrapper.group({class_: "draggable", transform: "translate(" + ((xBR1 + xER1)/2) + "," + ((yBR1 + yER1)/2) + ")"});
+        var grpRMayuge = svgWrapper.group({class_: "draggable", transform: "translate(" + xBR1 + "," + yBR1 + ")"});
         // svgWrapper.use(grpRMayuge, "#path-r-mayuge", {fill: "black", transform: "scale(" + scaleBR + "),rotate(" + dgr + ")", strokeWidth: "1"})
         svgWrapper.use(grpRMayuge, "#path-r-mayuge-" + $scope.conf.mayugeType, {fill: mayugeColor, transform: "scale(" + scaleBR + ")", stroke: rinkakuColor, strokeWidth: rinkakuWidth})
 
@@ -177,7 +178,8 @@ var mainCtrl = function($scope, $http, $compile) {
         dgr = dblRadian/(Math.PI/180);
 
         // jquery-svg使用時  
-        var grpLMayuge = svgWrapper.group({class_: "draggable", transform: "translate(" + ((xBL1 + xEL1)/2) + "," + ((yBL1 + yEL1)/2) + ")"});
+        // var grpLMayuge = svgWrapper.group({class_: "draggable", transform: "translate(" + ((xBL1 + xEL1)/2) + "," + ((yBL1 + yEL1)/2) + ")"});
+        var grpLMayuge = svgWrapper.group({class_: "draggable", transform: "translate(" + xBL1 + "," + yBL1 + ")"});
         svgWrapper.use(grpLMayuge, "#path-r-mayuge-" + $scope.conf.mayugeType, {fill: mayugeColor, transform: "scale(-" + scaleBL + "," + scaleBL + ")", stroke: rinkakuColor, strokeWidth: rinkakuWidth})
 
 
