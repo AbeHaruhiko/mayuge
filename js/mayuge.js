@@ -151,7 +151,7 @@ var mainCtrl = function($scope, $http, $compile) {
         // jquery-svg使用時
         var grpRMayuge = svgWrapper.group({class_: "draggable", transform: "translate(" + ((xBR1 + xER1)/2) + "," + ((yBR1 + yER1)/2) + ")"});
         // svgWrapper.use(grpRMayuge, "#path-r-mayuge", {fill: "black", transform: "scale(" + scaleBR + "),rotate(" + dgr + ")", strokeWidth: "1"})
-        svgWrapper.use(grpRMayuge, "#path-r-mayuge", {fill: mayugeColor, transform: "scale(" + scaleBR + ")", stroke: rinkakuColor, strokeWidth: rinkakuWidth})
+        svgWrapper.use(grpRMayuge, "#path-r-mayuge-" + $scope.conf.mayugeType, {fill: mayugeColor, transform: "scale(" + scaleBR + ")", stroke: rinkakuColor, strokeWidth: rinkakuWidth})
 
         // 左目
         var pointEL1 = $(this).find("#EL1");
@@ -178,7 +178,7 @@ var mainCtrl = function($scope, $http, $compile) {
 
         // jquery-svg使用時  
         var grpLMayuge = svgWrapper.group({class_: "draggable", transform: "translate(" + ((xBL1 + xEL1)/2) + "," + ((yBL1 + yEL1)/2) + ")"});
-        svgWrapper.use(grpLMayuge, "#path-r-mayuge", {fill: mayugeColor, transform: "scale(-" + scaleBL + "," + scaleBL + ")", stroke: rinkakuColor, strokeWidth: rinkakuWidth})
+        svgWrapper.use(grpLMayuge, "#path-r-mayuge-" + $scope.conf.mayugeType, {fill: mayugeColor, transform: "scale(-" + scaleBL + "," + scaleBL + ")", stroke: rinkakuColor, strokeWidth: rinkakuWidth})
 
 
 
@@ -420,6 +420,7 @@ var mainCtrl = function($scope, $http, $compile) {
   $scope.init = function() {
      // モデルの初期化など
     $scope.conf = {};
+    $scope.conf.mayugeType = "golgo";
     $scope.conf.optionsLR = "r";
     $scope.conf.autoSave = true;
     $scope.conf.faceDetect = true;

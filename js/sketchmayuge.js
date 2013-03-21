@@ -84,10 +84,10 @@ function drawShape(x1, y1, x2, y2) {
     var rinkakuWidth = $('select[name="rinkakuWidth"]').val();
     if ($scope.conf.optionsLR == "r") {
         node = svgWrapper.group({class_: "draggable", transform: "translate(" + right + "," + bottom + ")"});
-        svgWrapper.use(node, "#path-r-mayuge", {fill: mayugeColor, transform: "scale(" + scale + ")", stroke: rinkakuColor, strokeWidth: rinkakuWidth});
+        svgWrapper.use(node, "#path-r-mayuge-" + $scope.conf.mayugeType, {fill: mayugeColor, transform: "scale(" + scale + ")", stroke: rinkakuColor, strokeWidth: rinkakuWidth});
     } else {
         node = svgWrapper.group({class_: "draggable", transform: "translate(" + (right - (right - left)) + "," + bottom + ")"});
-        svgWrapper.use(node, "#path-r-mayuge", {fill: mayugeColor, transform: "scale(-" + scale + "," + scale + ")", stroke: rinkakuColor, strokeWidth: rinkakuWidth});
+        svgWrapper.use(node, "#path-r-mayuge-" + $scope.conf.mayugeType, {fill: mayugeColor, transform: "scale(-" + scale + "," + scale + ")", stroke: rinkakuColor, strokeWidth: rinkakuWidth});
     }
 
 

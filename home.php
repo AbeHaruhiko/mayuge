@@ -46,6 +46,17 @@
                 <!-- <form class="form-inline"> -->
                 <form class="form-horizontal">
                     <div class="control-group">
+                        <label class="control-label" for="colorpicker4mayuge">まゆげの種類</label>
+                        <span class="controls">
+                            <label class="radio inline">
+                                <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="golgo"><img src="/img/golgo.png" alt="ゴルゴ"/>
+                            </label>
+                            <label class="radio inline">
+                                <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="tare"> たれ
+                            </label>
+                        </span>
+                    </div>
+                    <div class="control-group">
                         <label class="control-label" for="colorpicker4mayuge">左右</label>
                         <span class="controls">
                             <label class="radio inline">
