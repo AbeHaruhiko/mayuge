@@ -17,7 +17,7 @@
             <form class="form-inline">
                 <input id="imageSelector" name="imageSelector" type="file" style="display:none" onchange="angular.element(this).scope().setFiles(this);">
                 <span class="input-append">
-                    <input id="filePath" class="input-large" type="text">
+                    <input id="filePath" class="input-large" type="text" readonly>
                     <a class="btn" ng-click="clickFileSelectBtn()" rel="tooltip" data-default-show="true" data-title="まゆげを描きたい画像を選びます。" data-placement="bottom" data-trigger="hover">ファイル選択</a>
                 </span>
             </form>
@@ -46,18 +46,18 @@
                 <!-- <form class="form-inline"> -->
                 <form class="form-horizontal">
                     <div class="control-group">
-                        <label class="control-label" for="colorpicker4mayuge">まゆげの種類</label>
+                        <label class="control-label">まゆげの形</label>
                         <span class="controls">
                             <label class="radio inline">
                                 <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="golgo"><img src="/img/golgo.png" alt="ゴルゴ"/>
                             </label>
                             <label class="radio inline">
-                                <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="tare"> たれ
+                                <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="tare"><img src="/img/tare.png" alt="たれ"/>
                             </label>
                         </span>
                     </div>
                     <div class="control-group">
-                        <label class="control-label" for="colorpicker4mayuge">左右</label>
+                        <label class="control-label">左右</label>
                         <span class="controls">
                             <label class="radio inline">
                                 <input type="radio" ng-model="conf.optionsLR" name="optionsLR" id="optionsR" value="r"> 右まゆ

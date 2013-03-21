@@ -20,7 +20,7 @@
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-           <a href="/" class="brand">まゆげジェネレーター</a>
+           <a href="/" class="brand">まゆげジェネレーター <small>ver. 0.1</small></a>
            <ul class="nav">
                 <li class="active" id="navhome"><a href="" ng-click="loadHome()">Home</a></li>
                 <li id="navabout"><a href="" ng-click="loadAbout()">About</a></li>
