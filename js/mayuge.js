@@ -332,34 +332,6 @@ var mainCtrl = function($scope, $http, $compile) {
       console.log(location.pathname);
       $scope.loadAbout();
     }
-
-
-    // $("#snsBtn > div").remove();
-    // $("#snsBtn").append('<div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>');
-    // $("#snsBtn > iframe").remove();
-    // $("#snsBtn > a").remove();
-    // $("#snsBtn").append('<a id="tw-share" href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-size="large"></a>');
-
-    // // Getパラメータにファイルが指定されてたら読み込む
-    // var urlGetParams = $scope.getUrlGetParams();
-    // if (urlGetParams && urlGetParams.length) {
-    //   var remoteFileName = urlGetParams['file'];
-    //   $("#pngArea > img").attr({src: './imgstore/' + remoteFileName + '.png'});
-    //   $("#pngArea").css("display", "");
-    //   $("#svgArea").css("display", "none");
-    //   $scope.$apply('conf.showToolBox = false');
-
-
-    //   // snsボタン
-    //   gapi.plus.go();
-    //   // $("#tw-share").attr({"data-url": '/?file=' + remoteFileName});        
-    //   $("#tw-share").attr({"data-url": location.href});        
-    //   twttr.widgets.load();
-    // } else {
-    //   $("#pngArea > img").remove();
-    //   $("#pngArea").append('<img itemprop="image"/>');
-    // }
-    // $("#svgArea").svg('destroy');
   }
 
   $scope.getUrlGetParams = function()
