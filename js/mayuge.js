@@ -184,16 +184,15 @@ var mainCtrl = function($scope, $http, $compile) {
 
 
 
-        var makeSVGElementDraggable = svgDrag.setupCanvasForDragging();
-
-        $(".draggable", svgWrapper.root()).each(function(index, element) {
-          makeSVGElementDraggable(element);
-
-          var $scope = angular.element('#content').scope();
-          element.addEventListener("dblclick", function() {$scope.removeMayuge($(element));});
-        })
       });
 
+      var makeSVGElementDraggable = svgDrag.setupCanvasForDragging();
+
+      $(".draggable", svgWrapper.root()).each(function(index, element) {
+        makeSVGElementDraggable(element);
+
+        element.addEventListener("dblclick", function() {$scope.removeMayuge($(element));});
+      })
     }
     detectedFaces = null;
 
