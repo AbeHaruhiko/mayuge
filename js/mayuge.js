@@ -328,7 +328,7 @@ var mainCtrl = function($scope, $http, $compile) {
     if (location.pathname == '' || location.pathname == '/') {
       console.log(location.pathname);
       $scope.loadHome();
-    } else if (location.pathname == '/about') {
+    } else if (location.pathname == '/about.php') {
       console.log(location.pathname);
       $scope.loadAbout();
     }
@@ -397,8 +397,8 @@ var mainCtrl = function($scope, $http, $compile) {
       dataType: 'html'
     })
     .done(function(res) {
-      if (location.pathname != "/about")
-        history.pushState(res, null, "about"); 
+      if (location.pathname != "/about.php")
+        history.pushState(res, null, "about.php"); 
       $("#navhome").removeClass("active");
       $("#navabout").addClass("active");
       mainContent = $("#mainContent");
