@@ -1,46 +1,75 @@
 <?php
-// ini_set('error_log', '/virtual/calico/log/error.log') ;
+require_once('config.php');
 
-//$IMAGE_DIR_PTH = '/var/www/html/mayuge/img/';
-$IMAGE_DIR_PATH = './tmpimg/';
+ini_set('error_log', '/virtual/calico/log/error.log') ;
 
-$filename = strtolower(basename($_FILES['imageSelector']['name']));
-if (move_uploaded_file($_FILES['imageSelector']['tmp_name'], $IMAGE_DIR_PATH . $filename)) {
+if ($_FILES['imageSelector']['error'] != UPLOAD_ERR_OK) {
+    error_log("エラーが発生しました : ".$_FILES['imageSelector']['error']);
+    exit;
+}
+
+$size = $_FILES['imageSelector']['size'];
+if (!$size || $size > MAX_FILE_SIZE) {
+    error_log("ファイルサイズが大きすぎます！");
+    exit;
+}
+
+
+$imagesize = getimagesize($_FILES['imageSelector']['tmp_name']);
+ 
+switch($imagesize['mime']){
+    case 'image/gif':
+        $ext = '.gif';
+        break;
+    case 'image/jpeg':
+        $ext = '.jpg';
+        break;
+    case 'image/png':
+        $ext = '.png';
+        break;
+    default:
+        echo "GIF/JPEG/PNG only!";
+        exit;
+}
+
+
+$filename = sha1(uniqid(mt_rand(), TRUE)).$ext;
+$filePath = TMP_IMG_DIR . $filename;
+if (move_uploaded_file($_FILES['imageSelector']['tmp_name'], $filePath)) {
     $data = array('filename' => $filename);
 } else {
     $data = array('error' => 'Failed to save');
 }
 
-//error_log($filename);
-// error_log('test');
+// error_log($filePath);
 
-list($width, $height) = getimagesize($IMAGE_DIR_PATH . $filename);
+list($width, $height) = getimagesize($filePath);
 
 // error_log($width.':'.$height);
 
-// 縦横800px以内に縮小
-$limitSize = 400;
-if ($width > $limitSize || $height > $limitSize) {
+// 縦横IMAGE_MAX_LENGTH以内に縮小
+// error_log(IMAGE_MAX_LENGTH);
+if ($width > IMAGE_MAX_LENGTH || $height > IMAGE_MAX_LENGTH) {
 
 	if ($width > $height) {
-		$height = round($height * $limitSize / $width);
-		$width = $limitSize;
+		$height = round($height * IMAGE_MAX_LENGTH / $width);
+		$width = IMAGE_MAX_LENGTH;
 	} elseif ($width < $height) {
-		$width = round($width * $limitSize / $height);
-		$height = $limitSize;
+		$width = round($width * IMAGE_MAX_LENGTH / $height);
+		$height = IMAGE_MAX_LENGTH;
 	} else {
-		$width = $limitSize;
-		$height = $limitSize;
+		$width = IMAGE_MAX_LENGTH;
+		$height = IMAGE_MAX_LENGTH;
 	}
 
 	include ('image.php');
-	$image = new Image($IMAGE_DIR_PATH . $filename);
+	$image = new Image($filePath);
 	$image->Resize($width, $height)->Save();
 }
 
 
 
-$postfields = array("image"=>"@".$IMAGE_DIR_PATH . $filename .";type=image/jpeg");
+$postfields = array("image"=>"@".$filePath .";type=image/jpeg");
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, "http://detectface.com/api/detect");
@@ -52,4 +81,4 @@ curl_exec($ch);
 //error_log(print_r(curl_exec($ch))); // Webサーバのエラーログに記述す
 curl_close ($ch);
 
-unlink($IMAGE_DIR_PATH . $filename);
+unlink($filePath);
