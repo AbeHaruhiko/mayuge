@@ -56,6 +56,9 @@
                             <label class="radio inline">
                                 <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="tare"><img src="/img/tare.png" alt="たれ"/>
                             </label>
+                            <label class="radio inline">
+                                <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="imoto"><img src="/img/imoto.png" alt="イモト"/>
+                            </label>
                         </span>
                     </div>
                     <div class="control-group">
