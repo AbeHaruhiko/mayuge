@@ -1,4 +1,6 @@
 <?php
+require_once('config.php');
+
 //ini_set('error_log', '/virtual/calico/log/error.log') ;
 
 if ($_FILES['image']['error'] != UPLOAD_ERR_OK) {

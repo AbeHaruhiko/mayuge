@@ -5,6 +5,8 @@
             <div id="progressbar" class="progress progress-striped active hide" >
                 <div class="bar" style="width: {{progressbar.progress}}%;"></div>
             </div>
+        </div>
+        <div class="span8">
             <div id="alertbox" class="alert alert-{{alertboxdata.status}}" ng-show="alertboxdata.show">
                 <!-- <button type="button" class="close" data-dismiss="alert">&times;</button> -->
                 <button type="button" class="close">&times;</button>

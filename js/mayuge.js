@@ -56,6 +56,10 @@ var mainCtrl = function($scope, $http, $compile) {
     .done($scope.onUploadCompleted)
     .fail(function(xhr, status, exception) {
       console.log(status);
+      $scope.alertboxdata.status = 'error';
+      $scope.alertboxdata.message = 'アップロードに失敗しました。' + exception;
+      $scope.$apply('alertboxdata.show = true');
+
     });
 
   }
@@ -67,6 +71,17 @@ var mainCtrl = function($scope, $http, $compile) {
 
     // console.log(res);
     // $('#alertbox').alert('close');
+
+    // 顔情報でなくメッセージが返ってきた場合
+    var message = $(res).find("message").attr("val");
+    if (message && message != "") {
+      $scope.alertboxdata.status = 'error';
+      $scope.alertboxdata.message = 'アップロードに失敗しました。' + message;
+      $scope.$apply('alertboxdata.show = true');
+      $("#progressbar").fadeOut(1000);
+      return;    
+    }
+
     detectedFaces = res;
 
     $scope.getSVG();
@@ -493,7 +508,7 @@ var mainCtrl = function($scope, $http, $compile) {
       // メッセージボックス表示
       $scope.alertboxdata.status = 'info';
       $scope.alertboxdata.message = 'loading...';
-      // $scope.$apply('alertboxdata.show = true');
+      $scope.$apply('alertboxdata.show = true');
       $scope.progressbar.progress = 5;
       $scope.$apply('progressbar.show = true');
       $("#progressbar").show();
@@ -506,8 +521,11 @@ var mainCtrl = function($scope, $http, $compile) {
 
       // 画像ファイル以外は処理中止
       if (!file || !file.type || !file.type.match(/^image\/(png|jpeg|jpg|gif)$/)) {
-        $scope.$apply('alertboxdata.show = false')
-        return;
+        $scope.alertboxdata.status = 'error';
+        $scope.alertboxdata.message = 'PNG/JPG/GIFファイルを選択してください。';
+        $scope.$apply('alertboxdata.show = true');
+        $("#progressbar").fadeOut(1000);
+        return;    
       }
 
       // サーバ側保存済みファイルIDをクリア

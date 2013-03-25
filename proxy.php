@@ -28,7 +28,7 @@ switch($imagesize['mime']){
         $ext = '.png';
         break;
     default:
-        echo "GIF/JPEG/PNG only!";
+        echo '<message val="GIF/JPEG/PNG only!"/>';
         exit;
 }
 
@@ -36,9 +36,11 @@ switch($imagesize['mime']){
 $filename = sha1(uniqid(mt_rand(), TRUE)).$ext;
 $filePath = TMP_IMG_DIR . $filename;
 if (move_uploaded_file($_FILES['imageSelector']['tmp_name'], $filePath)) {
-    $data = array('filename' => $filename);
+    // $data = array('filename' => $filename);
 } else {
-    $data = array('error' => 'Failed to save');
+    // $data = array('error' => 'Failed to save');
+    echo '<message val="一時保存に失敗しました。"/>';
+    exit;
 }
 
 // error_log($filePath);
