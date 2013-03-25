@@ -1,5 +1,13 @@
 var mainCtrl = function($scope, $http, $compile) {
 
+  $scope.changeAllMayugeType = function() {
+    $(".draggable > use", svgWrapper.root()).each(function(index, element) {
+
+      $(element).attr('href', "#path-r-mayuge-" + $scope.conf.mayugeType);
+    })
+    $scope.export2canvas();
+  };
+
   $scope.changeAllMayugeColor = function() {
     $(".draggable > use", svgWrapper.root()).each(function(index, element) {
 

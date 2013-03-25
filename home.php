@@ -43,82 +43,109 @@
                 <img itemprop="image" src="<?echo is_null($_GET['file']) ? '' : './imgstore/'.$_GET['file'].'.png?'.time() /* この画像はG+ボタン用。G+ボタンで画像キャッシュさせないために?time()を付加 */ ?>"/>
             </div>
         </div>
-        <div class="span6" ng-show="conf.showToolBox" id="toolBox">
+        <div class="span6">
             <div class="row">
-                <!-- <form class="form-inline"> -->
-                <form class="form-horizontal">
-                    <div class="control-group">
-                        <label class="control-label">まゆげの形</label>
-                        <span class="controls">
-                            <label class="radio inline">
-                                <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="golgo"><img src="/img/golgo.png" alt="ゴルゴ"/>
-                            </label>
-                            <label class="radio inline">
-                                <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="tare"><img src="/img/tare.png" alt="たれ"/>
-                            </label>
-                            <label class="radio inline">
-                                <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="imoto"><img src="/img/imoto.png" alt="イモト"/>
-                            </label>
-                        </span>
+                <div class="span6" id="mayugeTypeBox">
+                    <div class="row">
+                        <form class="form-horizontal">
+                            <div class="control-group">
+                                <label class="control-label">まゆげの形</label>
+                                <span class="controls">
+                                    <label class="radio inline">
+                                        <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="golgo"><img src="/img/golgo.png" alt="ゴルゴ"/>
+                                    </label>
+                                    <label class="radio inline">
+                                        <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="tare"><img src="/img/tare.png" alt="たれ"/>
+                                    </label>
+                                    <label class="radio inline">
+                                        <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="imoto"><img src="/img/imoto.png" alt="イモト"/>
+                                    </label>
+                                </span>
+                                <a href="" ng-click="changeAllMayugeType()" class="btn">全まゆに適用</a>
+                            </div>
+                        </form>
                     </div>
-                    <div class="control-group">
-                        <label class="control-label">左右</label>
-                        <span class="controls">
-                            <label class="radio inline">
-                                <input type="radio" ng-model="conf.optionsLR" name="optionsLR" id="optionsR" value="r"> 右まゆ
-                            </label>
-                            <label class="radio inline">
-                                <input type="radio" ng-model="conf.optionsLR" name="optionsLR" id="optionsL" value="l"> 左まゆ
-                            </label>
-                        </span>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="colorpicker4mayuge">まゆ毛の色</label>
-                        <span class="controls span2">
-                            <select name="colorpicker4mayuge" id="colorpicker4mayuge">
-                                <option value="black">黒</option>
-                                <option value="brown">茶色</option>
-                                <option value="#5C4033">こげ茶色</option>
-                                <option value="gray">灰色</option>
-                                <option value="white">白</option>
-                            </select>
-                        </span>
-                        <a href="" ng-click="changeAllMayugeColor()" class="btn">全まゆに適用</a>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="colorpicker4rinkaku">まゆ毛のりんかく</label>
-                        <span class="controls span2">
-                            <select name="colorpicker4rinkaku" id="colorpicker4rinkaku">
-                                <option value="black">黒</option>
-                                <option value="brown">茶色</option>
-                                <option value="#5C4033">こげ茶色</option>
-                                <option value="gray">灰色</option>
-                                <option value="white">白</option>
-                            </select>
-                        </span>
-                        <a href="" ng-click="changeAllRinkakuColor()" class="btn">全まゆに適用</a>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="colorpicker4rinkaku">りんかくの太さ</label>
-                        <span class="controls span2">
-                            <select name="rinkakuWidth" id="rinkakuWidth" class="span1">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
-                            </select>
-                        </span>
-                        <a href="" ng-click="changeAllRinkakuWidth()" class="btn">全まゆに適用</a>
-                    </div>
-                </form>
+                </div>
             </div>
             <div class="row">
-                <button class="btn" ng-click="export2canvas(true)"><i class="icon-upload"></i>サーバに保存</button>
-                <button class="btn" ng-click="openPNG($event)"><i class="icon-download"></i>ローカルに保存</button>
-                <a href="" rel="tooltip" data-default-show="true" data-title="画像を編集したらサーバに保存しましょう。サーバに保存すると最新のまゆげ画像をshareできるようになります（SNSボタンが表示されます）。ローカルに保存ボタンを押すと別ウインドウでPNG画像が開くので右クリックで保存してください。。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a>
-                <div id="snsBtn">
-                    <div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>
+                <div class="span6" ng-show="conf.showToolBox" id="toolBox">
+                    <div class="row">
+                        <!-- <form class="form-inline"> -->
+                        <form class="form-horizontal">
+<!--                             <div class="control-group">
+                                <label class="control-label">まゆげの形</label>
+                                <span class="controls">
+                                    <label class="radio inline">
+                                        <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="golgo"><img src="/img/golgo.png" alt="ゴルゴ"/>
+                                    </label>
+                                    <label class="radio inline">
+                                        <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="tare"><img src="/img/tare.png" alt="たれ"/>
+                                    </label>
+                                    <label class="radio inline">
+                                        <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="imoto"><img src="/img/imoto.png" alt="イモト"/>
+                                    </label>
+                                </span>
+                            </div> -->
+                            <div class="control-group">
+                                <label class="control-label">左右</label>
+                                <span class="controls">
+                                    <label class="radio inline">
+                                        <input type="radio" ng-model="conf.optionsLR" name="optionsLR" id="optionsR" value="r"> 右まゆ
+                                    </label>
+                                    <label class="radio inline">
+                                        <input type="radio" ng-model="conf.optionsLR" name="optionsLR" id="optionsL" value="l"> 左まゆ
+                                    </label>
+                                </span>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="colorpicker4mayuge">まゆ毛の色</label>
+                                <span class="controls span2">
+                                    <select name="colorpicker4mayuge" id="colorpicker4mayuge">
+                                        <option value="black">黒</option>
+                                        <option value="brown">茶色</option>
+                                        <option value="#5C4033">こげ茶色</option>
+                                        <option value="gray">灰色</option>
+                                        <option value="white">白</option>
+                                    </select>
+                                </span>
+                                <a href="" ng-click="changeAllMayugeColor()" class="btn">全まゆに適用</a>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="colorpicker4rinkaku">まゆ毛のりんかく</label>
+                                <span class="controls span2">
+                                    <select name="colorpicker4rinkaku" id="colorpicker4rinkaku">
+                                        <option value="black">黒</option>
+                                        <option value="brown">茶色</option>
+                                        <option value="#5C4033">こげ茶色</option>
+                                        <option value="gray">灰色</option>
+                                        <option value="white">白</option>
+                                    </select>
+                                </span>
+                                <a href="" ng-click="changeAllRinkakuColor()" class="btn">全まゆに適用</a>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label" for="colorpicker4rinkaku">りんかくの太さ</label>
+                                <span class="controls span2">
+                                    <select name="rinkakuWidth" id="rinkakuWidth" class="span1">
+                                        <option>1</option>
+                                        <option>2</option>
+                                        <option>3</option>
+                                        <option>4</option>
+                                        <option>5</option>
+                                    </select>
+                                </span>
+                                <a href="" ng-click="changeAllRinkakuWidth()" class="btn">全まゆに適用</a>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="row">
+                        <button class="btn" ng-click="export2canvas(true)"><i class="icon-upload"></i>サーバに保存</button>
+                        <button class="btn" ng-click="openPNG($event)"><i class="icon-download"></i>ローカルに保存</button>
+                        <a href="" rel="tooltip" data-default-show="true" data-title="画像を編集したらサーバに保存しましょう。サーバに保存すると最新のまゆげ画像をshareできるようになります（SNSボタンが表示されます）。ローカルに保存ボタンを押すと別ウインドウでPNG画像が開くので右クリックで保存してください。。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a>
+                        <div id="snsBtn">
+                            <div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
