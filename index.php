@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta property="og:title" content="まゆげジェネレーター" />
 <meta property="og:description" content="写真にまゆげを。" />
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
 <link href="css/mayuge.css" rel="stylesheet"/>
 <link href="css/bootstrap.min.css" rel="stylesheet"/>
 <link href="css/docs.css" rel="stylesheet"/>

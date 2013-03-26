@@ -71,7 +71,7 @@ if ($width > IMAGE_MAX_LENGTH || $height > IMAGE_MAX_LENGTH) {
 
 
 
-$postfields = array("image"=>"@".$filePath .";type=image/jpeg");
+$postfields = array("image"=>"@".$filePath);
 
 $ch = curl_init();
 curl_setopt($ch, CURLOPT_URL, "http://detectface.com/api/detect");

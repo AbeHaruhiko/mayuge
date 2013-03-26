@@ -431,7 +431,7 @@ var mainCtrl = function($scope, $http, $compile) {
       var urlGetParams = $scope.getUrlGetParams();
       if (urlGetParams && urlGetParams.length) {
         var remoteFileName = urlGetParams['file'];
-        $("#pngArea > img").attr({src: './imgstore/' + remoteFileName + '.png'});
+        $("#pngArea > img").attr({src: './imgstore/' + remoteFileName + '.png?' + (new Date()).getTime()});
         $("#pngArea").css("display", "");
         $("#svgArea").css("display", "none");
         $scope.$apply('conf.showToolBox = false');
