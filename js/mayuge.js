@@ -124,6 +124,7 @@ var mainCtrl = function($scope, $http, $compile) {
 
     // 表示
     $scope.$apply('conf.showToolBox = true');
+    $scope.toggleMayugeTypeBoxDisplay();
     $('#svgArea').tooltip('show');
 
     // 手描き準備
@@ -451,6 +452,18 @@ var mainCtrl = function($scope, $http, $compile) {
 
   }
 
+  $scope.toggleMayugeTypeBoxDisplay = function() {
+    if ($scope.conf.showToolBox) {
+      $scope.conf.showMayugeTypeBox = true;
+    } else {
+      if ($scope.conf.faceDetect) {
+        $scope.conf.showMayugeTypeBox = true;
+      } else {
+        $scope.conf.showMayugeTypeBox = false;
+      }
+    }
+  }
+
   $scope.init = function() {
      // モデルの初期化など
     $scope.conf = {};
@@ -466,7 +479,7 @@ var mainCtrl = function($scope, $http, $compile) {
     $scope.alertboxdata.show = false;
     $scope.progressbar = {};
     $scope.progressbar.show = false;
-
+    $scope.toggleMayugeTypeBoxDisplay();
 
 
     // ツールチップの準備
