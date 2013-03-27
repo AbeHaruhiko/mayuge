@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta property="og:title" content="まゆげジェネレーター" />
 <meta property="og:description" content="写真にまゆげを。" />
-<link rel="icon" type="image/x-icon" href="/favicon.ico" />
+<link rel="icon" type="image/x-icon" href="./favicon.ico" />
 <link href="css/mayuge.css" rel="stylesheet"/>
 <link href="css/bootstrap.min.css" rel="stylesheet"/>
 <link href="css/docs.css" rel="stylesheet"/>
@@ -13,6 +13,9 @@
 <!-- <link rel="stylesheet" type="text/css" href="./css/jquery.svg.css"> -->
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
 </head>
 <body id="content" ng-controller="mainCtrl" style="padding-top:40px">
 <div class="container">

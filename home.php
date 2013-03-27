@@ -40,7 +40,7 @@
             <div id="svgArea" rel="tooltip" data-title="まゆげを描きたいところでドラッグ&ドロップするとまゆげが追加されます。まゆげは移動したり、ダブルクリックで削除したりできます。" data-placement="right" data-trigger="hover"></div>
             <canvas id="canvasArea" style="display:none;"></canvas>
             <div id="pngArea" style="display: none;">
-                <img itemprop="image" src="<?echo is_null($_GET['file']) ? '' : './imgstore/'.$_GET['file'].'.pngg?'.time() /* この画像はG+ボタン用。G+ボタンで画像キャッシュさせないために?time()を付加 */ ?>"/>
+                <img itemprop="image" src="<?echo is_null($_GET['file']) ? '' : './imgstore/'.$_GET['file'].'.png?'.time() /* この画像はG+ボタン用。G+ボタンで画像キャッシュさせないために?time()を付加 */ ?>"/>
             </div>
         </div>
         <div class="span6">
@@ -59,6 +59,12 @@
                                     </label>
                                     <label class="radio inline">
                                         <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="imoto"><img src="/img/imoto.png" alt="イモト"/>
+                                    </label>
+                                    <label class="radio inline">
+                                        <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="imoto2"><img src="/img/imoto2.png" alt="イモト2"/>
+                                    </label>
+                                    <label class="radio inline">
+                                        <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="sankaku"><img src="/img/sankaku.png" alt="三角"/>
                                     </label>
                                 </span>
                                 <a href="" ng-click="changeAllMayugeType()" class="btn">全まゆに適用</a>
