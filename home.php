@@ -141,6 +141,19 @@
             </div>
         </div>
     </div>
+    <div class="row">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0206019164479134";
+/* mayuge */
+google_ad_slot = "8285175370";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+    </div>
 <!--     <pre>alertboxdata:{{alertboxdata|json}}</pre>
     <pre> conf.autoSave:{{conf.autoSave|json}} conf.changeAllMayugeColor:{{conf.changeAllMayugeColor|json}} conf.optionsLR:{{conf.optionsLR|json}} conf.showToolBox:{{conf.showToolBox|json}}</pre>
  -->
