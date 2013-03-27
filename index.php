@@ -2,11 +2,13 @@
 <html lang="ja" ng-app>
 <head>
 <meta charset="UTF-8">
-<meta property="og:title" content="まゆげジェネレーター" />
+<meta property="og:title" content="まゆげジェネレータ" />
 <meta property="og:description" content="写真にまゆげを。" />
 <link rel="icon" type="image/x-icon" href="./favicon.ico" />
 <link href="css/mayuge.css" rel="stylesheet"/>
 <link href="css/bootstrap.min.css" rel="stylesheet"/>
+<link href="css/todc-bootstrap.css" rel="stylesheet"/>
+<!-- <link href="css/bootstrap-cosmo.min.css" rel="stylesheet"/> -->
 <link href="css/docs.css" rel="stylesheet"/>
 <link href="css/jquery.simplecolorpicker.css" rel="stylesheet" type="text/css"/>
 <link href="css/egg.css" rel="stylesheet" type="text/css"/>
@@ -17,14 +19,14 @@
 <meta http-equiv="Cache-Control" content="no-cache">
 <meta http-equiv="Expires" content="Thu, 01 Dec 1994 16:00:00 GMT">
 </head>
-<body id="content" ng-controller="mainCtrl" style="padding-top:40px">
+<body id="content" ng-controller="mainCtrl" style="padding-top:60px">
 <div class="container">
  
 
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-           <a href="/" class="brand">まゆげジェネレーター <small>ver. 0.1</small></a>
+           <a href="/" class="brand">まゆげジェネレータ <small>ver. 0.1</small></a>
            <ul class="nav">
                 <li class="active" id="navhome"><a href="" ng-click="loadHome()">Home</a></li>
                 <li id="navabout"><a href="" ng-click="loadAbout()">About</a></li>
