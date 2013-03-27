@@ -23,7 +23,7 @@
                     <a class="btn" ng-click="clickFileSelectBtn()" rel="tooltip" data-default-show="true" data-title="まゆげを描きたい画像を選びます。" data-placement="bottom" data-trigger="hover">ファイル選択</a>
                 </span>
                  <label class="checkbox" style="height: 30px; margin-top: 8px;">
-                  <input type="checkbox" ng-model="conf.faceDetect"> 顔認識する <a href="" rel="tooltip" data-title="アップロードすると自動的に顔認識してまゆげを描画します。" data-placement="bottom" data-trigger="hover"><i class="icon-question-sign"></i></a>
+                  <input type="checkbox" ng-model="conf.faceDetect" ng-change="toggleMayugeTypeBoxDisplay()"> 顔認識する <a href="" rel="tooltip" data-title="アップロードすると自動的に顔認識してまゆげを描画します。" data-placement="bottom" data-trigger="hover"><i class="icon-question-sign"></i></a>
                 </label>
            </form>
         </div>
@@ -40,12 +40,12 @@
             <div id="svgArea" rel="tooltip" data-title="まゆげを描きたいところでドラッグ&ドロップするとまゆげが追加されます。まゆげは移動したり、ダブルクリックで削除したりできます。" data-placement="right" data-trigger="hover"></div>
             <canvas id="canvasArea" style="display:none;"></canvas>
             <div id="pngArea" style="display: none;">
-                <img itemprop="image" src="<?echo is_null($_GET['file']) ? '' : './imgstore/'.$_GET['file'].'.pngg?'.time() /* この画像はG+ボタン用。G+ボタンで画像キャッシュさせないために?time()を付加 */ ?>"/>
+                <img itemprop="image" src="<?echo is_null($_GET['file']) ? '' : './imgstore/'.$_GET['file'].'.png?'.time() /* この画像はG+ボタン用。G+ボタンで画像キャッシュさせないために?time()を付加 */ ?>"/>
             </div>
         </div>
         <div class="span6">
             <div class="row">
-                <div class="span6" id="mayugeTypeBox">
+                <div class="span6" ng-show="conf.showMayugeTypeBox" id="mayugeTypeBox">
                     <div class="row">
                         <form class="form-horizontal">
                             <div class="control-group">
