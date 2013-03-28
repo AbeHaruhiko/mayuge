@@ -14,10 +14,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
 </head>
 <body id="content" ng-controller="mainCtrl" style="padding-top:60px">
-<div class="container">
+<div class="container" id="container">
  
 
-<div class="navbar navbar-fixed-top navbar-googlenav">
+<div class="navbar  navbar-inverse navbar-fixed-top navbar-googlenav">
     <div class="navbar-inner">
         <div class="container">
            <a href="/" class="brand">まゆげジェネレータ <small>ver. 0.1</small></a>
@@ -33,6 +33,21 @@
 <?php include('./home.php');?>
 
 </div>
+<div class="" id="ad-bottom">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0206019164479134";
+/* mayuge */
+google_ad_slot = "8285175370";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+
+
 
 
 <script src="./js/bootstrap.min.js"></script>
