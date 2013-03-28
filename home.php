@@ -49,7 +49,7 @@
                     <div class="row">
                         <form class="form-horizontal">
                             <div class="control-group">
-                                <span class="controls">
+                                <span class="controls span2">
                                     <label class="radio inline">
                                         <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="golgo"><img src="/img/golgo.png" alt="ゴルゴ"/>
                                     </label>
@@ -59,6 +59,7 @@
                                     <label class="radio inline">
                                         <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="imoto"><img src="/img/imoto.png" alt="イモト"/>
                                     </label>
+                                    <br/>
                                     <label class="radio inline">
                                         <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="imoto2"><img src="/img/imoto2.png" alt="イモト2"/>
                                     </label>
@@ -66,6 +67,7 @@
                                         <input type="radio" ng-model="conf.mayugeType" name="mayugeType" id="mayugeType" value="sankaku"><img src="/img/sankaku.png" alt="三角"/>
                                     </label>
                                 </span>
+                                <br/>
                                 <a href="" ng-click="changeAllMayugeType()" class="btn">全まゆに適用</a>
                             </div>
                         </form>
