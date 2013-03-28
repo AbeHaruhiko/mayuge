@@ -6,6 +6,7 @@
 <meta property="og:description" content="写真にまゆげを。" />
 <link rel="icon" type="image/x-icon" href="./favicon.ico" />
 <link href="css/bootstrap.min.css" rel="stylesheet"/>
+<link href="css/bootstrap-responsive.min.css" rel="stylesheet"/>
 <link href="css/todc-bootstrap.css" rel="stylesheet"/>
 <link href="css/mayuge.css" rel="stylesheet"/>
 <link href="css/docs.css" rel="stylesheet"/>
@@ -14,6 +15,20 @@
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
 </head>
 <body id="content" ng-controller="mainCtrl" style="padding-top:60px">
+<div class="" id="ad-banner">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0206019164479134";
+/* mayuge */
+google_ad_slot = "8285175370";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+
 <div class="container" id="container">
  
 
@@ -29,24 +44,30 @@
     </div>
 </div>
 
+<div class="row">
 
-<?php include('./home.php');?>
+  <div class="span10">
+  <?php include('./home.php');?>
+  </div>
 
-</div>
-<div class="" id="ad-bottom">
+<div class="sidebar span2">
+<div id="ad-sky">
 <script type="text/javascript"><!--
 google_ad_client = "ca-pub-0206019164479134";
-/* mayuge */
-google_ad_slot = "8285175370";
-google_ad_width = 728;
-google_ad_height = 90;
+/* mamyuge 160 ×600 */
+google_ad_slot = "5735334972";
+google_ad_width = 160;
+google_ad_height = 600;
 //-->
 </script>
 <script type="text/javascript"
 src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 </div>
+</div>
+</div>
 
+</div>
 
 
 

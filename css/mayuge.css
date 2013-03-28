@@ -30,8 +30,22 @@ body {
 	background-color: #fbfbfb;
 }
 
-#ad-bottom {
+#ad-banner {
 	width: 728px;
-	margin: 15px auto;
+	margin: 0 auto;
 }
 
+#ad-sky {
+	/*float:right;*/
+}
+
+.container-fluid > .sidebar {
+/*    left: auto;
+    right: 20px;
+    width: 160px;*/
+}
+
+#mainContent {
+    margin-left: 0px;
+    /*margin-right: 240px;*/
+}

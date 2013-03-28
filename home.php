@@ -1,4 +1,4 @@
-<div class="span12" id="mainContent">
+<div class="span10" id="mainContent">
 
     <div class="row" style="height: 45px;">
         <div class="span4">
@@ -6,7 +6,7 @@
                 <div class="bar" style="width: {{progressbar.progress}}%;"></div>
             </div>
         </div>
-        <div class="span8">
+        <div class="span6">
             <div id="alertbox" class="alert alert-{{alertboxdata.status}}" ng-show="alertboxdata.show">
                 <!-- <button type="button" class="close" data-dismiss="alert">&times;</button> -->
                 <button type="button" class="close">&times;</button>
@@ -27,7 +27,7 @@
                 </label>
            </form>
         </div>
-        <div class="span6">
+        <div class="span4">
             <form class="form-inline">
                 <label class="checkbox" style="height: 30px; margin-top: 8px;">
                   <input type="checkbox" ng-model="conf.autoSave"> 自動保存する <a href="" rel="tooltip" data-title="まゆげを移動したり消した時に自動的にサーバに保存します。" data-placement="bottom" data-trigger="hover"><i class="icon-question-sign"></i></a>
@@ -43,9 +43,9 @@
                 <img itemprop="image" src="<?echo is_null($_GET['file']) ? '' : './imgstore/'.$_GET['file'].'.png?'.time() /* この画像はG+ボタン用。G+ボタンで画像キャッシュさせないために?time()を付加 */ ?>"/>
             </div>
         </div>
-        <div class="span6">
+        <div class="span4">
             <div class="row">
-                <div class="span6" ng-show="conf.showMayugeTypeBox" id="mayugeTypeBox">
+                <div class="span4" ng-show="conf.showMayugeTypeBox" id="mayugeTypeBox">
                     <div class="row">
                         <form class="form-horizontal">
                             <div class="control-group">
@@ -73,10 +73,10 @@
                 </div>
             </div>
             <div class="row">
-                <div class="span6" ng-show="conf.showToolBox" id="toolBox">
+                <div class="span4" ng-show="conf.showToolBox" id="toolBox">
                     <div class="row">
                         <!-- <form class="form-inline"> -->
-                        <form class="form-horizontal">
+                        <form class="form-vertical">
                             <div class="control-group">
                                 <label class="control-label">左右</label>
                                 <span class="controls">
