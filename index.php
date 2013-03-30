@@ -5,8 +5,12 @@ require_once('config.php');
 <html lang="ja" ng-app>
 <head>
 <meta charset="UTF-8">
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
 <meta property="og:title" content="まゆげジェネレータ" />
 <meta property="og:description" content="写真にまゆげを。" />
+<?php if(!is_null($_GET['file'])) : ?>
+<meta property="og:image" content="<?echo is_null($_GET['file']) ? '' : 'http://'.$_SERVER['SERVER_NAME'].'/imgstore/'.$_GET['file'].'.png?'.time() /* この画像はG+ボタン用。G+ボタンで画像キャッシュさせないために?time()を付加 */ ?>"/>
+<?php endif; ?>
 <link rel="icon" type="image/x-icon" href="./favicon.ico" />
 <link href="css/bootstrap.min.css" rel="stylesheet"/>
 <link href="css/bootstrap-responsive.min.css" rel="stylesheet"/>
@@ -16,9 +20,11 @@ require_once('config.php');
 <link href="css/jquery.simplecolorpicker.css" rel="stylesheet" type="text/css"/>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
+<script src="//connect.facebook.net/ja_JP/all.js#xfbml=1" type="text/javascript"></script>
 <script type="text/javascript">limitSize = <?php echo IMAGE_MAX_LENGTH?>;</script>
 </head>
 <body id="content" ng-controller="mainCtrl" style="padding-top:60px">
+<div id="fb-root"></div>
 <?php include_once("analyticstracking.php") ?>
 <div class="" id="ad-banner">
 <script type="text/javascript"><!--

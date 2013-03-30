@@ -1,38 +1,79 @@
+<?php
+require_once('config.php');
+?>
 <!DOCTYPE html>
 <html lang="ja" ng-app>
 <head>
 <meta charset="UTF-8">
 <meta property="og:title" content="まゆげジェネレータ" />
 <meta property="og:description" content="写真にまゆげを。" />
-<link href="css/mayuge.css" rel="stylesheet"/>
+<link rel="icon" type="image/x-icon" href="./favicon.ico" />
 <link href="css/bootstrap.min.css" rel="stylesheet"/>
+<link href="css/bootstrap-responsive.min.css" rel="stylesheet"/>
+<link href="css/todc-bootstrap.css" rel="stylesheet"/>
+<link href="css/mayuge.css" rel="stylesheet"/>
 <link href="css/docs.css" rel="stylesheet"/>
 <link href="css/jquery.simplecolorpicker.css" rel="stylesheet" type="text/css"/>
-<link href="css/egg.css" rel="stylesheet" type="text/css"/>
-<!-- <link rel="stylesheet" type="text/css" href="./css/jquery.svg.css"> -->
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
+<script type="text/javascript">limitSize = <?php echo IMAGE_MAX_LENGTH?>;</script>
 </head>
-<body id="content" ng-controller="mainCtrl" style="padding-top:40px">
-<div class="container">
+<body id="content" ng-controller="mainCtrl" style="padding-top:60px">
+<?php include_once("analyticstracking.php") ?>
+<div class="" id="ad-banner">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0206019164479134";
+/* mayuge */
+google_ad_slot = "8285175370";
+google_ad_width = 728;
+google_ad_height = 90;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+
+<div class="container" id="container">
  
 
-<div class="navbar navbar-fixed-top">
+<div class="navbar  navbar-inverse navbar-fixed-top navbar-googlenav">
     <div class="navbar-inner">
         <div class="container">
            <a href="/" class="brand">まゆげジェネレータ <small>ver. 0.1</small></a>
            <ul class="nav">
-                <li id="navhome"><a href="" ng-click="loadHome()">Home</a></li>
-                <li class="active" id="navabout"><a href="" ng-click="loadAbout()">About</a></li>
+                <li class="active" id="navhome"><a href="" ng-click="loadHome()">Home</a></li>
+                <li id="navabout"><a href="" ng-click="loadAbout()">About</a></li>
             </ul>
         </div>
     </div>
 </div>
 
+<div class="row">
 
-<?php include('./about.html');?>
+  <div class="span10">
+    <?php include('./about.html');?>
+  </div>
+
+<div class="sidebar span2">
+<div id="ad-sky">
+<script type="text/javascript"><!--
+google_ad_client = "ca-pub-0206019164479134";
+/* mamyuge 160 ×600 */
+google_ad_slot = "5735334972";
+google_ad_width = 160;
+google_ad_height = 600;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</div>
+</div>
+</div>
 
 </div>
+
 
 
 <script src="./js/bootstrap.min.js"></script>

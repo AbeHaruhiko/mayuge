@@ -309,8 +309,15 @@ var mainCtrl = function($scope, $http, $compile) {
       $("#snsBtn > a").remove();
       $("#snsBtn").append('<a id="tw-share" href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-size="large"></a>');
       // $("#tw-share").attr({"data-url": '/?file=' + data});        
-      $("#tw-share").attr({"data-url": location.href});        
+      // $("#tw-share").attr({"data-url": location.href});        
+      $("#tw-share").attr({"data-url": location.protocol + '//' + location.host + '/imgstore/' + data + '.png'});        
+      $("#tw-share").attr({"data-text": 'まゆげジェネレータ ' + location.href});        
+      $("#tw-share").attr({"data-hashtags": 'まゆげジェネレータ'});        
       twttr.widgets.load();
+
+      $("#snsBtn").append('<div id="fb-share" class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>');
+      // $scope.appendMetaInfo( "og:image", location.protocol + '//' + location.host + '/imgstore/' + data + '.png');
+      FB.XFBML.parse();
 
       $("#svgArea").unblock();
 
@@ -427,6 +434,7 @@ var mainCtrl = function($scope, $http, $compile) {
       $("#snsBtn > iframe").remove();
       $("#snsBtn > a").remove();
       $("#snsBtn").append('<a id="tw-share" href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-size="large"></a>');
+      $("#snsBtn").append('<div id="fb-share" class="fb-like" data-send="false" data-layout="button_count" data-width="450" data-show-faces="true"></div>');
 
       // Getパラメータにファイルが指定されてたら読み込む
       var urlGetParams = $scope.getUrlGetParams();
@@ -441,8 +449,14 @@ var mainCtrl = function($scope, $http, $compile) {
         // snsボタン
         gapi.plus.go();
         // $("#tw-share").attr({"data-url": '/?file=' + remoteFileName});        
-        $("#tw-share").attr({"data-url": location.href});        
+        // $("#tw-share").attr({"data-url": location.href});        
+        $("#tw-share").attr({"data-url": location.protocol + '//' + location.host + '/imgstore/' + remoteFileName + '.png'});        
+        $("#tw-share").attr({"data-text": 'まゆげジェネレータ(' + location.href + ')'});        
+        $("#tw-share").attr({"data-hashtags": 'まゆげジェネレータ'});        
         twttr.widgets.load();
+
+        // $scope.appendMetaInfo( "og:image", location.protocol + '//' + location.host + '/imgstore/' + remoteFileName + '.png');
+        FB.XFBML.parse();
       } else {
         $("#pngArea > img").remove();
         $("#pngArea").append('<img itemprop="image"/>');
@@ -607,6 +621,30 @@ var mainCtrl = function($scope, $http, $compile) {
       reader.readAsDataURL(file);
     });
 
+  }
+
+  // ■引数
+  // _type : "og:type" や ”og:title” のような文字列。
+  // _value : 設定したい値。<meta> の "content" 属性です。
+  $scope.appendMetaInfo = function (_type, _value)    {
+      // 既にメタタグがあった場合、2重に追加されてしまうのを避けるため探す
+      metatags = document.getElementsByTagName("meta");
+      // メタタグ自体なかったらループ処理を飛ばす
+      if(metatags.length > 0) {
+          for (i = 0; i < metatags.length; i++)    {
+              // <meta property=""> が一致したらアップデート
+              if ( _type == metatags[i].getAttribute("property") ){
+                    metatags[i].content=_value;
+                    // 設定したらやることもないので帰る。
+                    return true;
+              }
+          }
+      }
+      // 引数「_type」に一致するメタ情報がなかった場合は追加。
+      var metaObj=document.createElement('meta');
+      metaObj.setAttribute('property', _type);
+      metaObj.content=_value;
+      $("head").append(metaObj);
   }
 
   $scope.init();
