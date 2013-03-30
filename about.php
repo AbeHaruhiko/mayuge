@@ -2,7 +2,7 @@
 <html lang="ja" ng-app>
 <head>
 <meta charset="UTF-8">
-<meta property="og:title" content="まゆげジェネレーター" />
+<meta property="og:title" content="まゆげジェネレータ" />
 <meta property="og:description" content="写真にまゆげを。" />
 <link href="css/mayuge.css" rel="stylesheet"/>
 <link href="css/bootstrap.min.css" rel="stylesheet"/>
@@ -20,7 +20,7 @@
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-           <a href="/" class="brand">まゆげジェネレーター <small>ver. 0.1</small></a>
+           <a href="/" class="brand">まゆげジェネレータ <small>ver. 0.1</small></a>
            <ul class="nav">
                 <li id="navhome"><a href="" ng-click="loadHome()">Home</a></li>
                 <li class="active" id="navabout"><a href="" ng-click="loadAbout()">About</a></li>

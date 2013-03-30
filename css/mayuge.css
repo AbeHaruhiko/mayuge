@@ -36,22 +36,13 @@ body {
 }
 
 #ad-banner {
-/*	width: 728px;
-	margin: 0 auto;*/
 	margin-left: 50px;
 }
 
 #ad-sky {
-	/*float:right;*/
-}
-
-.container-fluid > .sidebar {
-/*    left: auto;
-    right: 20px;
-    width: 160px;*/
+	margin-top: 30px;
 }
 
 #mainContent {
     margin-left: 0px;
-    /*margin-right: 240px;*/
 }
