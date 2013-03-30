@@ -576,7 +576,7 @@ var mainCtrl = function($scope, $http, $compile) {
           selectedImageHeight = localImage.height;
 
 
-          var limitSize = 400;
+          // var limitSize = 400;
           if (selectedImageWidth > limitSize || selectedImageHeight > limitSize) {
 
             if (selectedImageWidth > selectedImageHeight) {

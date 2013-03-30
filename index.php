@@ -1,3 +1,6 @@
+<?php
+require_once('config.php');
+?>
 <!DOCTYPE html>
 <html lang="ja" ng-app>
 <head>
@@ -13,8 +16,10 @@
 <link href="css/jquery.simplecolorpicker.css" rel="stylesheet" type="text/css"/>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.5/angular.min.js"></script>
+<script type="text/javascript">limitSize = <?php echo IMAGE_MAX_LENGTH?>;</script>
 </head>
 <body id="content" ng-controller="mainCtrl" style="padding-top:60px">
+<?php include_once("analyticstracking.php") ?>
 <div class="" id="ad-banner">
 <script type="text/javascript"><!--
 google_ad_client = "ca-pub-0206019164479134";

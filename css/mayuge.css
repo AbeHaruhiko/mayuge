@@ -2,24 +2,20 @@
 	margin-bottom: 5px;
 }
 
-#toolBox .form-horizontal .control-label, #mayugeTypeBox .form-horizontal .control-label{
-	/*width: 140px;*/
-}
-
-#toolBox .form-horizontal .controls{
+#toolBox .form-vertical .controls{
 	margin-left: 20px;
 }
 
 #mayugeTypeBox .form-horizontal .controls{
 	margin-left: 0;		
-	margin-right: 30px;	/*全適用ボタンの位置を調整*/
+	margin-right: 10px;	/*全適用ボタンの位置を調整*/
 }
 
 #mayugeTypeBox img{
-	width: 25px;
+	width: 26px;
 }
 
-#toolBox .form-horizontal .controls .inline, #mayugeTypeBox .form-horizontal .controls .inline{
+#toolBox .form-vertical .controls .radio{
 	white-space: nowrap;
 }
 
@@ -40,8 +36,9 @@ body {
 }
 
 #ad-banner {
-	width: 728px;
-	margin: 0 auto;
+/*	width: 728px;
+	margin: 0 auto;*/
+	margin-left: 50px;
 }
 
 #ad-sky {

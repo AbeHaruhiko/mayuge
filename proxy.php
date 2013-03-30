@@ -50,7 +50,7 @@ list($width, $height) = getimagesize($filePath);
 // error_log($width.':'.$height);
 
 // ½Ä²£IMAGE_MAX_LENGTH°ÊÆâ¤Ë½Ì¾®
-// error_log(IMAGE_MAX_LENGTH);
+error_log(IMAGE_MAX_LENGTH);
 if ($width > IMAGE_MAX_LENGTH || $height > IMAGE_MAX_LENGTH) {
 
 	if ($width > $height) {
