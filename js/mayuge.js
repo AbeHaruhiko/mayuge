@@ -77,7 +77,7 @@ var mainCtrl = function($scope, $http, $compile) {
     $scope.progressbar.progress = 20;
     $scope.$apply('progressbar.show = true');
 
-    // console.log(res);
+    console.log(res);
     // $('#alertbox').alert('close');
 
     // 顔情報でなくメッセージが返ってきた場合
@@ -232,6 +232,9 @@ var mainCtrl = function($scope, $http, $compile) {
     $scope.progressbar.progress = 70;
     $scope.$apply('progressbar.show = true');
 
+    $('[rel=tooltip][data-default-show=true]').tooltip("hide");
+
+
 
     // CANVAS書き出し
     if (!$("#svg-mayuge").attr("xmlns:xlink")){
@@ -283,7 +286,7 @@ var mainCtrl = function($scope, $http, $compile) {
     var dataURL = $("#canvasArea")[0].toDataURL();
     var fd = new FormData();
     fd.append('mayugedImage', $scope.dataURItoBlob(dataURL));
-    fd.append('currentFile', currentFile);
+    if (currentFile) fd.append('currentFile', currentFile);
 
     $.ajax({
       url: './save.php',
@@ -341,6 +344,9 @@ var mainCtrl = function($scope, $http, $compile) {
   }
 
   $scope.openPNG = function(event) {
+
+    $('[rel=tooltip][data-default-show=true]').tooltip("hide");
+
     var dataURL = $("#canvasArea")[0].toDataURL();
     window.open(dataURL, 'save');
 
@@ -547,7 +553,7 @@ var mainCtrl = function($scope, $http, $compile) {
 
       // メッセージボックス表示
       $scope.alertboxdata.status = 'info';
-      $scope.alertboxdata.message = 'loading...';
+      $scope.alertboxdata.message = '画像読込中...数秒〜数十秒かかります...';
       $scope.$apply('alertboxdata.show = true');
       $scope.progressbar.progress = 5;
       $scope.$apply('progressbar.show = true');

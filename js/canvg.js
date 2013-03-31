@@ -2087,7 +2087,10 @@
 			this.base = svg.Element.RenderedElementBase;
 			this.base(node);
 			
-			var href = this.attribute('xlink:href').value;
+			// mayuge
+			// var href = this.attribute('xlink:href').value;
+			var href = (this.attribute('xlink:href').value == "" ? this.attribute('href').value : this.attribute('xlink:href').value);
+			//mayuge
 			var isSvg = href.match(/\.svg$/)
 			
 			svg.Images.push(this);
