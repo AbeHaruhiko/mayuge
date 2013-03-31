@@ -22,28 +22,21 @@
                     <input id="filePath" class="input-large" type="text" readonly>
                     <a class="btn" ng-click="clickFileSelectBtn()" rel="tooltip" data-default-show="true" data-title="まゆげを描きたい画像を選びます。" data-placement="bottom" data-trigger="hover">ファイル選択</a>
                 </span>
-                 <label class="checkbox" style="height: 30px; margin-top: 8px;">
+                 <label class="checkbox" style="height: 30px; margin-top: 8px; margin-right: 15px;">
                   <input type="checkbox" ng-model="conf.faceDetect" ng-change="toggleMayugeTypeBoxDisplay()"> 顔認識する <a href="" rel="tooltip" data-title="アップロードすると自動的に顔認識してまゆげを描画します。" data-placement="bottom" data-trigger="hover"><i class="icon-question-sign"></i></a>
+                </label>
+                <label class="checkbox" style="height: 30px; margin-top: 8px;">
+                  <input type="checkbox" ng-model="conf.autoSave"> 自動保存する <a href="" rel="tooltip" data-title="まゆげを移動したり消した時に自動的にサーバに保存します。" data-placement="bottom" data-trigger="hover"><i class="icon-question-sign"></i></a>
                 </label>
            </form>
         </div>
         <div class="span3">
             <form class="form-inline">
-                <label class="checkbox" style="height: 30px; margin-top: 8px;">
-                  <input type="checkbox" ng-model="conf.autoSave"> 自動保存する <a href="" rel="tooltip" data-title="まゆげを移動したり消した時に自動的にサーバに保存します。" data-placement="bottom" data-trigger="hover"><i class="icon-question-sign"></i></a>
-                </label>
             </form>
         </div>
     </div>
     <div class="row">
-        <div class="span7">
-            <div id="svgArea" rel="tooltip" data-title="まゆげを描きたいところでドラッグ&ドロップするとまゆげが追加されます。まゆげは移動したり、ダブルクリックで削除したりできます。" data-placement="right" data-trigger="hover"></div>
-            <canvas id="canvasArea" style="display:none;"></canvas>
-            <div id="pngArea" style="display: none;">
-                <img itemprop="image" src="<?echo is_null($_GET['file']) ? '' : './imgstore/'.$_GET['file'].'.png?'.time() /* この画像はG+ボタン用。G+ボタンで画像キャッシュさせないために?time()を付加 */ ?>"/>
-            </div>
-        </div>
-        <div class="span3">
+        <div class="span3" id="rightpane">
             <div class="row">
                 <div class="span3" ng-show="conf.showMayugeTypeBox" id="mayugeTypeBox">
                     <div class="row">
@@ -142,6 +135,14 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="span7">
+            <div id="svgArea" rel="tooltip" data-title="まゆげを描きたいところでドラッグ&ドロップするとまゆげが追加されます。まゆげは移動したり、ダブルクリックで削除したりできます。" data-placement="right" data-trigger="hover"></div>
+            <canvas id="canvasArea" style="display:none;"></canvas>
+            <div id="pngArea" style="display: none;">
+                <span id="png-warning" class="badge badge-info"><i class=" icon-warning-sign icon-white"></i> 今表示されているのはサーバに保存されている画像です。編集できません。<br/>新しい画像をアップロードしてまゆげを描きましょう！</span>
+                <img itemprop="image" src="<?echo is_null($_GET['file']) ? '' : './imgstore/'.$_GET['file'].'.png?'.time() /* この画像はG+ボタン用。G+ボタンで画像キャッシュさせないために?time()を付加 */ ?>"/>
             </div>
         </div>
     </div>

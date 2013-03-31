@@ -488,7 +488,7 @@ var mainCtrl = function($scope, $http, $compile) {
     $scope.conf = {};
     $scope.conf.mayugeType = "golgo";
     $scope.conf.optionsLR = "r";
-    $scope.conf.autoSave = false;
+    $scope.conf.autoSave = true;
     $scope.conf.faceDetect = true;
     $scope.conf.showToolBox = true;
     $scope.conf.changeAllMayugeColor = false;
@@ -503,7 +503,7 @@ var mainCtrl = function($scope, $http, $compile) {
 
     // ツールチップの準備
     // $('[rel=tooltip]:not(#svgArea)').tooltip("show");
-    // $('[rel=tooltip][data-default-show=true]').tooltip("show");
+    $('[rel=tooltip][data-default-show=true]').tooltip("show");
     $('[rel=tooltip]').tooltip();
 
     // // まゆ毛の種類ドロップダウン準備
