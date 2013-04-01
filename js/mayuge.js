@@ -494,7 +494,7 @@ var mainCtrl = function($scope, $http, $compile) {
     $scope.conf = {};
     $scope.conf.mayugeType = "golgo";
     $scope.conf.optionsLR = "r";
-    $scope.conf.autoSave = true;
+    $scope.conf.autoSave = false;
     $scope.conf.faceDetect = true;
     $scope.conf.showToolBox = true;
     $scope.conf.changeAllMayugeColor = false;
@@ -567,7 +567,7 @@ var mainCtrl = function($scope, $http, $compile) {
 
       // 画像ファイル以外は処理中止
       if (!file || !file.type || !file.type.match(/^image\/(png|jpeg|jpg|gif)$/)) {
-        $scope.alertboxdata.status = 'error';
+        $scope.alertboxdata.status = 'important';
         $scope.alertboxdata.message = 'PNG/JPG/GIFファイルを選択してください。';
         $scope.$apply('alertboxdata.show = true');
         $("#progressbar").fadeOut(1000);

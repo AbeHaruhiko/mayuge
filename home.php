@@ -1,17 +1,18 @@
 <div class="span10" id="mainContent">
 
-    <div class="row" style="height: 45px;">
+    <div class="row">
         <div class="span4">
             <div id="progressbar" class="progress progress-striped active hide" >
                 <div class="bar" style="width: {{progressbar.progress}}%;"></div>
             </div>
         </div>
         <div class="span6">
-            <div id="alertbox" class="alert alert-{{alertboxdata.status}}" ng-show="alertboxdata.show">
-                <!-- <button type="button" class="close" data-dismiss="alert">&times;</button> -->
+<!--             <div id="alertbox" class="alert alert-{{alertboxdata.status}}" ng-show="alertboxdata.show">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
                 <button type="button" class="close">&times;</button>
                 {{alertboxdata.message}}
-            </div>
+            </div> -->
+            <span class="badge badge-{{alertboxdata.status}}" ng-show="alertboxdata.show" style="display: none; padding-left: 40px; padding-right: 40px;">{{alertboxdata.message}}</span>
         </div>
     </div>
     <div class="row">
