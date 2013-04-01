@@ -24,9 +24,23 @@ require_once('config.php');
 <script src="//connect.facebook.net/ja_JP/all.js#xfbml=1" type="text/javascript"></script>
 <script type="text/javascript">limitSize = <?php echo IMAGE_MAX_LENGTH?>;</script>
 </head>
-<body id="content" ng-controller="mainCtrl" style="padding-top:60px">
+<body id="content" ng-controller="mainCtrl" style="padding-top:40px">
 <div id="fb-root"></div>
 <?php include_once("analyticstracking.php") ?>
+<div class="container" id="container">
+ 
+<div class="navbar  navbar-inverse navbar-fixed-top navbar-googlenav">
+    <div class="navbar-inner">
+        <div class="container">
+           <a href="/" class="brand">まゆげジェネレータ <small>ver. 0.1</small></a>
+           <ul class="nav">
+                <li class="active" id="navhome"><a href="" ng-click="loadHome()">Home</a></li>
+                <li id="navabout"><a href="" ng-click="loadAbout()">About</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
 <div class="" id="ad-banner">
 <script type="text/javascript"><!--
 google_ad_client = "ca-pub-0206019164479134";
@@ -41,20 +55,6 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 </div>
 
-<div class="container" id="container">
- 
-
-<div class="navbar  navbar-inverse navbar-fixed-top navbar-googlenav">
-    <div class="navbar-inner">
-        <div class="container">
-           <a href="/" class="brand">まゆげジェネレータ <small>ver. 0.1</small></a>
-           <ul class="nav">
-                <li class="active" id="navhome"><a href="" ng-click="loadHome()">Home</a></li>
-                <li id="navabout"><a href="" ng-click="loadAbout()">About</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
 
 <div class="row">
 
@@ -77,6 +77,7 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 </div>
 </div>
+
 </div>
 
 </div>
