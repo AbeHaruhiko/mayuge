@@ -99,6 +99,6 @@ src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
 </script>
 <script src="//platform.twitter.com/widgets.js" type="text/javascript"></script>
 <script src="./js/jquery.simplecolorpicker.js"></script>
-<script src="./js/egg.js"></script>
+<script src="./js/canvas-to-blob.min.js"></script>
 </body>
 </html>

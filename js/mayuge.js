@@ -283,64 +283,77 @@ var mainCtrl = function($scope, $http, $compile) {
     // SVGをレイヤでブロック
     $("#svgArea").block({message: null});
 
-    var dataURL = $("#canvasArea")[0].toDataURL();
-    var fd = new FormData();
-    fd.append('mayugedImage', $scope.dataURItoBlob(dataURL));
-    if (currentFile) fd.append('currentFile', currentFile);
-
-    $.ajax({
-      url: './save.php',
-      type: 'POST',
-      data: fd,
-      dataType: 'text',
-      contentType: false, // デフォルトの値は application/x-www-form-urlencoded; charset=UTF-8'
-      processData: false  // デフォルトの値は application/x-www-form-urlencoded
-    })
-    .done(function(data) {
-      console.log(data);
-      //history.replaceState("index");
-      if (currentFile == null) {
-        history.pushState(data, null, "?file=" + data);
-      } else {
-        history.replaceState(data, null, "?file=" + data);
-      }
-      currentFile = data;
-      $("#snsBtn > div").remove();  //G+ボタンとLikeボタン
-      $.get("fbcacheclear.php", { url: location.href } ); // FBのキャッシュクリア非同期なので早めに実行しておく
-
-      $("#snsBtn").prepend('<div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble"></div>');
-      gapi.plus.go();
-
-      // $("#snsBtn > iframe").remove(); // twボタンのiframe用
-      // $("#snsBtn > a").remove();
-      // $("#snsBtn").append('<a id="tw-share" href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-size="large"></a>');
-      // $("#tw-share").attr({"data-url": '/?file=' + data});        
-      // $("#tw-share").attr({"data-url": location.href});        
-      $("#tw-share").attr({"data-url": location.protocol + '//' + location.host + '/imgstore/' + data + '.png'});        
-      $("#tw-share").attr({"data-text": 'まゆげジェネレータ(' + location.href + ')'});        
-      // $("#tw-share").attr({"data-hashtags": 'まゆげジェネレータ'});        
-      twttr.widgets.load();
-
-      $("#snsBtn").append('<div id="fb-share" class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="true"></div>');
-      $scope.appendMetaInfo( "og:image", location.protocol + '//' + location.host + '/imgstore/' + data + '.png');
-      FB.XFBML.parse();
-
-      $("#svgArea").unblock();
-
-      $scope.progressbar.progress = 100;
-      // $scope.$apply('progressbar.show = false');
-      $("#progressbar").fadeOut(1000);
-      $scope.$apply('alertboxdata.show = false');
+    // var dataURL = $("#canvasArea")[0].toDataURL("image/png");
 
 
-    })
-    .fail(function(xhr, status, exception) {
-      console.log(status);
-      $("#svgArea").unblock();
+    var canvas = $("#canvasArea")[0]; 
+    if (canvas.toBlob) {
+        canvas.toBlob(
+            function (blob) {
 
-      $scope.$apply('alertboxdata.show = false');
+              var fd = new FormData();
+              fd.append('mayugedImage', blob);
+              if (currentFile) fd.append('currentFile', currentFile);
 
-    });
+              $.ajax({
+                url: './save.php',
+                type: 'POST',
+                data: fd,
+                dataType: 'text',
+                contentType: false, // デフォルトの値は application/x-www-form-urlencoded; charset=UTF-8'
+                processData: false  // デフォルトの値は application/x-www-form-urlencoded
+              })
+              .done(function(data) {
+                console.log(data);
+                //history.replaceState("index");
+                if (currentFile == null) {
+                  history.pushState(data, null, "?file=" + data);
+                } else {
+                  history.replaceState(data, null, "?file=" + data);
+                }
+                currentFile = data;
+                $("#snsBtn > div").remove();  //G+ボタンとLikeボタン
+                $.get("fbcacheclear.php", { url: location.href } ); // FBのキャッシュクリア非同期なので早めに実行しておく
+
+                $("#snsBtn").prepend('<div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble"></div>');
+                gapi.plus.go();
+
+                // $("#snsBtn > iframe").remove(); // twボタンのiframe用
+                // $("#snsBtn > a").remove();
+                // $("#snsBtn").append('<a id="tw-share" href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-size="large"></a>');
+                // $("#tw-share").attr({"data-url": '/?file=' + data});        
+                // $("#tw-share").attr({"data-url": location.href});        
+                $("#tw-share").attr({"data-url": location.protocol + '//' + location.host + '/imgstore/' + data + '.png'});        
+                $("#tw-share").attr({"data-text": 'まゆげジェネレータ(' + location.href + ')'});        
+                // $("#tw-share").attr({"data-hashtags": 'まゆげジェネレータ'});        
+                twttr.widgets.load();
+
+                $("#snsBtn").append('<div id="fb-share" class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="true"></div>');
+                $scope.appendMetaInfo( "og:image", location.protocol + '//' + location.host + '/imgstore/' + data + '.png');
+                FB.XFBML.parse();
+
+                $("#svgArea").unblock();
+
+                $scope.progressbar.progress = 100;
+                // $scope.$apply('progressbar.show = false');
+                $("#progressbar").fadeOut(1000);
+                $scope.$apply('alertboxdata.show = false');
+
+
+              })
+              .fail(function(xhr, status, exception) {
+                console.log(status);
+                $("#svgArea").unblock();
+
+                $scope.$apply('alertboxdata.show = false');
+
+              });
+
+            },
+            'image/png'
+        );
+    }
+
   }
 
   $scope.openPNG = function(event) {
