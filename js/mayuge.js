@@ -237,11 +237,11 @@ var mainCtrl = function($scope, $http, $compile) {
 
 
     // CANVAS書き出し
-    if (!$("#svg-mayuge").attr("xmlns:xlink")){
-      $("#svg-mayuge").attr({"xmlns:xlink": $.svg.xlinkNS});
+    if (!$("#svg-mayuge")[0].getAttributeNS($.svgsvgNS, "xlink")){
+      $("#svg-mayuge")[0].setAttributeNS($.svgsvgNS, 'xlink', $.svg.xlinkNS);
     }
     var xml = svgWrapper.toSVG();
-    // console.log(xml);
+    console.log(xml);
     // PNG書き出しはレンダリング完了後に行なう
     canvg($("#canvasArea")[0], xml, {renderCallback: function() {$scope.export2pngAndServer(doSave);}});
 
