@@ -237,11 +237,11 @@ var mainCtrl = function($scope, $http, $compile) {
 
 
     // CANVAS書き出し
-    if (!$("#svg-mayuge")[0].getAttributeNS($.svgsvgNS, "xlink")){
-      $("#svg-mayuge")[0].setAttributeNS($.svgsvgNS, 'xlink', $.svg.xlinkNS);
+    if (!$("#svg-mayuge").attr("xmlns:xlink")){
+      $("#svg-mayuge").attr({"xmlns:xlink": $.svg.xlinkNS});
     }
     var xml = svgWrapper.toSVG();
-    console.log(xml);
+    // console.log(xml);
     // PNG書き出しはレンダリング完了後に行なう
     canvg($("#canvasArea")[0], xml, {renderCallback: function() {$scope.export2pngAndServer(doSave);}});
 
@@ -265,12 +265,17 @@ var mainCtrl = function($scope, $http, $compile) {
       $scope.savePNG();
     } else {
       $scope.progressbar.progress = 100;
-      $("#progressbar").fadeOut(1000);      
+      $("#progressbar").fadeOut(1000, function() {
+        $('#tooltip4save').tooltip("show");
+      });
+
     }
 
   }
 
   $scope.savePNG = function() {
+
+    $('[rel=tooltip]').tooltip("hide");
 
     $scope.progressbar.progress = 90;
     $scope.$apply('progressbar.show = true');
@@ -358,7 +363,7 @@ var mainCtrl = function($scope, $http, $compile) {
 
   $scope.openPNG = function(event) {
 
-    $('[rel=tooltip][data-default-show=true]').tooltip("hide");
+    $('[rel=tooltip]').tooltip("hide");
 
     var dataURL = $("#canvasArea")[0].toDataURL();
     window.open(dataURL, 'save');

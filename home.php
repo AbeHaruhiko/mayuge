@@ -128,7 +128,7 @@
                     <div class="row">
                         <button class="btn" ng-click="export2canvas(true)"><i class="icon-upload"></i>サーバに保存</button>
                         <button class="btn" ng-click="openPNG($event)"><i class="icon-download"></i>ローカルに保存</button>
-                        <a href="" rel="tooltip" data-default-show="true" data-title="画像を編集したらサーバに保存しましょう。サーバに保存すると最新のまゆげ画像をshareできるようになります（SNSボタンが表示されます）。ローカルに保存ボタンを押すと別ウインドウでPNG画像が開くので右クリックで保存してください。。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a>
+                        <a href="" id="tooltip4save" rel="tooltip" data-default-show="false" data-title="画像を編集したらサーバに保存しましょう。サーバに保存すると最新のまゆげ画像をshareできるようになります（SNSボタンが表示されます）。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a>
                         <div id="snsBtn">
                             <div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble"></div>
                             <a id="tw-share" href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-size="middle" data-hashtags="まゆげジェネレータ"></a>
