@@ -321,7 +321,7 @@ var mainCtrl = function($scope, $http, $compile) {
                 $.get("fbcacheclear.php", { url: location.href } ); // FBのキャッシュクリア非同期なので早めに実行しておく
 
                 $("#snsBtn").prepend('<div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble"></div>');
-                gapi.plus.go();
+                gapi.plus.go('snsBtn');
 
                 // $("#snsBtn > iframe").remove(); // twボタンのiframe用
                 // $("#snsBtn > a").remove();
@@ -335,7 +335,7 @@ var mainCtrl = function($scope, $http, $compile) {
 
                 $("#snsBtn").append('<div id="fb-share" class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="true"></div>');
                 $scope.appendMetaInfo( "og:image", location.protocol + '//' + location.host + '/imgstore/' + data + '.png');
-                FB.XFBML.parse();
+                FB.XFBML.parse($('#snsBtn')[0]);
 
                 $("#svgArea").unblock();
 
@@ -476,7 +476,7 @@ var mainCtrl = function($scope, $http, $compile) {
 
 
         // snsボタン
-        gapi.plus.go();
+        gapi.plus.go('snsBtn');
         // $("#tw-share").attr({"data-url": '/?file=' + remoteFileName});        
         // $("#tw-share").attr({"data-url": location.href});        
         $("#tw-share").attr({"data-url": location.protocol + '//' + location.host + '/imgstore/' + remoteFileName + '.png'});        
@@ -485,7 +485,7 @@ var mainCtrl = function($scope, $http, $compile) {
         twttr.widgets.load();
 
         $scope.appendMetaInfo( "og:image", location.protocol + '//' + location.host + '/imgstore/' + remoteFileName + '.png');
-        FB.XFBML.parse();
+        FB.XFBML.parse($('#snsBtn')[0]);
       } else {
         $("#pngArea > img").remove();
         $("#pngArea").append('<img itemprop="image"/>');
@@ -529,6 +529,9 @@ var mainCtrl = function($scope, $http, $compile) {
     // $('[rel=tooltip]:not(#svgArea)').tooltip("show");
     $('[rel=tooltip][data-default-show=true]').tooltip("show");
     $('[rel=tooltip]').tooltip();
+
+    // snsボタン
+    gapi.plus.go('snsButtonTop');
 
     // // まゆ毛の種類ドロップダウン準備
     // $scope.$apply(function($scope){

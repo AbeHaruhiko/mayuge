@@ -23,6 +23,10 @@
 	margin:10px 0 10px 0;
 }
 
+.twitter-share-button {
+	width: 105px !important;
+}
+
 #about dt {
 	margin-top: 40px;
 }

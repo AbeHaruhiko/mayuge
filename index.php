@@ -8,9 +8,7 @@ require_once('config.php');
 <head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# article: http://ogp.me/ns/article#">
 <meta property="og:title" content="まゆげジェネレータ" />
 <meta property="og:description" content="写真にまゆげを。" />
-<?php if(!is_null($_GET['file'])) : ?>
-<meta property="og:image" content="<?echo is_null($_GET['file']) ? '' : 'http://'.$_SERVER['SERVER_NAME'].'/imgstore/'.$_GET['file'].'.png?'.time() /* この画像はG+ボタン用。G+ボタンで画像キャッシュさせないために?time()を付加 */ ?>"/>
-<?php endif; ?>
+<meta property="og:image" content="<?echo is_null($_GET['file']) ? 'http://'.$_SERVER['SERVER_NAME'].'/img/sample.png' : 'http://'.$_SERVER['SERVER_NAME'].'/imgstore/'.$_GET['file'].'.png?'.time() /* この画像はG+ボタン用。G+ボタンで画像キャッシュさせないために?time()を付加 */ ?>"/>
 <link rel="icon" type="image/x-icon" href="./favicon.ico" />
 <link href="css/bootstrap.min.css" rel="stylesheet"/>
 <link href="css/bootstrap-responsive.min.css" rel="stylesheet"/>
@@ -36,7 +34,19 @@ require_once('config.php');
            <ul class="nav">
                 <li class="active" id="navhome"><a href="" ng-click="loadHome()">Home</a></li>
                 <li id="navabout"><a href="" ng-click="loadAbout()">About</a></li>
+                <li class="divider-vertical"></li>
             </ul>
+            <div style="overflow:hidden;margin-top:15px;text-align:right;padding-left: 50px;">
+              <div style="float:left;height:20px;overflow:hidden;">
+                <div class="g-plus" data-action="share" data-annotation="bubble" data-href="<?php echo 'http://'.$_SERVER['SERVER_NAME'] ?>"></div>
+              </div>
+              <div style="float:left;width:105px!important;height:20px;overflow:hidden;">
+                <a href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-size="middle" data-hashtags="まゆげジェネレータ" data-url="<?php echo 'http://'.$_SERVER['SERVER_NAME'] ?>"></a>
+              </div>
+              <div style="float:left;height:20px;overflow:hidden;">
+                <div class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="true" data-href="<?php echo 'http://'.$_SERVER['SERVER_NAME'] ?>"></div>              
+              </div>
+            </div>
         </div>
     </div>
 </div>
