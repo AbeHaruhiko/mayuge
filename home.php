@@ -129,11 +129,14 @@
                         <button class="btn" ng-click="export2canvas(true)"><i class="icon-upload"></i>サーバに保存</button>
                         <button class="btn" ng-click="openPNG($event)"><i class="icon-download"></i>ローカルに保存</button>
                         <a href="" id="tooltip4save" rel="tooltip" data-default-show="false" data-title="画像を編集したらサーバに保存しましょう。サーバに保存すると最新のまゆげ画像をshareできるようになります（SNSボタンが表示されます）。" data-placement="right" data-trigger="hover"><i class="icon-question-sign"></i></a>
-                        <div id="snsBtn">
-                            <div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble"></div>
-                            <a id="tw-share" href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-size="middle" data-hashtags="まゆげジェネレータ"></a>
-                            <div id="fb-share" class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="true"></div>
-                        </div>
+                        <fieldset>
+                            <legend style="font-size: 13px; margin-bottom: 5px; line-height: 20px;">画像を共有</legend>
+                            <div id="snsBtn">
+                                <div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble"></div>
+                                <a id="tw-share" href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-size="middle" data-hashtags="まゆげジェネレータ"></a>
+                                <div id="fb-share" class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="true"></div>
+                            </div>
+                        </fieldset>
                     </div>
                 </div>
             </div>
