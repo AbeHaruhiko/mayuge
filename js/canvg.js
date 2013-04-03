@@ -2087,9 +2087,16 @@
 			this.base = svg.Element.RenderedElementBase;
 			this.base(node);
 			
-			// mayuge
+			// mayuge firefox対応
 			// var href = this.attribute('xlink:href').value;
-			var href = (this.attribute('xlink:href').value == "" ? this.attribute('href').value : this.attribute('xlink:href').value);
+			var href = '';
+			$.each(this.attributes, function() {
+				// console.log(this);
+				if (this.name.indexOf('href') != -1) {
+					href = this.value;
+				}
+			});
+			// var href = (this.attribute('xlink:href').value == "" ? this.attribute('href').value : this.attribute('xlink:href').value);
 			//mayuge
 			var isSvg = href.match(/\.svg$/)
 			
@@ -2248,7 +2255,16 @@
 			}
 			
 			this.getDefinition = function() {
-				var element = this.attribute('xlink:href').getDefinition();
+				// mayuge firefox対応
+				// var element = this.attribute('xlink:href').getDefinition();
+				var element = {};
+				$.each(this.attributes, function() {
+					// console.log(this);
+					if (this.name.indexOf('href') != -1) {
+						element = this.getDefinition();
+					}
+				});
+				//mayuge
 				if (this.attribute('width').hasValue()) element.attribute('width', true).value = this.attribute('width').value;
 				if (this.attribute('height').hasValue()) element.attribute('height', true).value = this.attribute('height').value;
 				return element;
