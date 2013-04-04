@@ -39,6 +39,7 @@
     <div class="row">
         <div class="span3" id="rightpane">
             <div class="row">
+                <legend style="font-size: 13px; margin-bottom: 5px; line-height: 20px;">まゆげ設定</legend>
                 <div class="span3" ng-show="conf.showMayugeTypeBox" id="mayugeTypeBox">
                     <div class="row">
                         <form class="form-horizontal">
