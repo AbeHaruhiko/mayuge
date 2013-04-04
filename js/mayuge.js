@@ -282,8 +282,8 @@ var mainCtrl = function($scope, $http, $compile) {
 
     // メッセージボックス表示
     $scope.alertboxdata.status = 'info';
-    $scope.alertboxdata.message = 'saving...';
-    $scope.alertboxdata.show = true;
+    $scope.alertboxdata.message = '保存中...';
+    $scope.$apply('alertboxdata.show = true');
 
     // SVGをレイヤでブロック
     $("#svgArea").block({message: null});
