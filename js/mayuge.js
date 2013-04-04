@@ -1,5 +1,13 @@
 var mainCtrl = function($scope, $http, $compile) {
 
+  $scope.changeAllMayugeType = function() {
+    $(".draggable > use", svgWrapper.root()).each(function(index, element) {
+
+      $(element).attr('href', "#path-r-mayuge-" + $scope.conf.mayugeType);
+    })
+    $scope.export2canvas();
+  };
+
   $scope.changeAllMayugeColor = function() {
     $(".draggable > use", svgWrapper.root()).each(function(index, element) {
 
@@ -56,6 +64,10 @@ var mainCtrl = function($scope, $http, $compile) {
     .done($scope.onUploadCompleted)
     .fail(function(xhr, status, exception) {
       console.log(status);
+      $scope.alertboxdata.status = 'error';
+      $scope.alertboxdata.message = 'アップロードに失敗しました。' + exception;
+      $scope.$apply('alertboxdata.show = true');
+
     });
 
   }
@@ -65,8 +77,19 @@ var mainCtrl = function($scope, $http, $compile) {
     $scope.progressbar.progress = 20;
     $scope.$apply('progressbar.show = true');
 
-    // console.log(res);
+    console.log(res);
     // $('#alertbox').alert('close');
+
+    // 顔情報でなくメッセージが返ってきた場合
+    var message = $(res).find("message").attr("val");
+    if (message && message != "") {
+      $scope.alertboxdata.status = 'error';
+      $scope.alertboxdata.message = 'アップロードに失敗しました。' + message;
+      $scope.$apply('alertboxdata.show = true');
+      $("#progressbar").fadeOut(1000);
+      return;    
+    }
+
     detectedFaces = res;
 
     $scope.getSVG();
@@ -101,6 +124,7 @@ var mainCtrl = function($scope, $http, $compile) {
 
     // 表示
     $scope.$apply('conf.showToolBox = true');
+    $scope.toggleMayugeTypeBoxDisplay();
     $('#svgArea').tooltip('show');
 
     // 手描き準備
@@ -184,16 +208,15 @@ var mainCtrl = function($scope, $http, $compile) {
 
 
 
-        var makeSVGElementDraggable = svgDrag.setupCanvasForDragging();
-
-        $(".draggable", svgWrapper.root()).each(function(index, element) {
-          makeSVGElementDraggable(element);
-
-          var $scope = angular.element('#content').scope();
-          element.addEventListener("dblclick", function() {$scope.removeMayuge($(element));});
-        })
       });
 
+      var makeSVGElementDraggable = svgDrag.setupCanvasForDragging();
+
+      $(".draggable", svgWrapper.root()).each(function(index, element) {
+        makeSVGElementDraggable(element);
+
+        element.addEventListener("dblclick", function() {$scope.removeMayuge($(element));});
+      })
     }
     detectedFaces = null;
 
@@ -208,6 +231,9 @@ var mainCtrl = function($scope, $http, $compile) {
 
     $scope.progressbar.progress = 70;
     $scope.$apply('progressbar.show = true');
+
+    $('[rel=tooltip][data-default-show=true]').tooltip("hide");
+
 
 
     // CANVAS書き出し
@@ -239,12 +265,17 @@ var mainCtrl = function($scope, $http, $compile) {
       $scope.savePNG();
     } else {
       $scope.progressbar.progress = 100;
-      $("#progressbar").fadeOut(1000);      
+      $("#progressbar").fadeOut(1000, function() {
+        $('#tooltip4save').tooltip("show");
+      });
+
     }
 
   }
 
   $scope.savePNG = function() {
+
+    $('[rel=tooltip]').tooltip("hide");
 
     $scope.progressbar.progress = 90;
     $scope.$apply('progressbar.show = true');
@@ -257,57 +288,83 @@ var mainCtrl = function($scope, $http, $compile) {
     // SVGをレイヤでブロック
     $("#svgArea").block({message: null});
 
-    var dataURL = $("#canvasArea")[0].toDataURL();
-    var fd = new FormData();
-    fd.append('mayugedImage', $scope.dataURItoBlob(dataURL));
-    fd.append('currentFile', currentFile);
-
-    $.ajax({
-      url: './save.php',
-      type: 'POST',
-      data: fd,
-      dataType: 'text',
-      contentType: false, // デフォルトの値は application/x-www-form-urlencoded; charset=UTF-8'
-      processData: false  // デフォルトの値は application/x-www-form-urlencoded
-    })
-    .done(function(data) {
-      console.log(data);
-      //history.replaceState("index");
-      if (currentFile == null) {
-        history.pushState(data, null, "?file=" + data);
-      } else {
-        history.replaceState(data, null, "?file=" + data);
-      }
-      currentFile = data;
-      $("#snsBtn > div").remove();
-      $("#snsBtn").append('<div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>');
-      gapi.plus.go();
-      $("#snsBtn > iframe").remove(); // twボタンのiframe用
-      $("#snsBtn > a").remove();
-      $("#snsBtn").append('<a id="tw-share" href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-size="large"></a>');
-      // $("#tw-share").attr({"data-url": '/?file=' + data});        
-      $("#tw-share").attr({"data-url": location.href});        
-      twttr.widgets.load();
-
-      $("#svgArea").unblock();
-
-      $scope.progressbar.progress = 100;
-      // $scope.$apply('progressbar.show = false');
-      $("#progressbar").fadeOut(1000);
-      $scope.$apply('alertboxdata.show = false');
+    // var dataURL = $("#canvasArea")[0].toDataURL("image/png");
 
 
-    })
-    .fail(function(xhr, status, exception) {
-      console.log(status);
-      $("#svgArea").unblock();
+    var canvas = $("#canvasArea")[0]; 
+    if (canvas.toBlob) {
+        canvas.toBlob(
+            function (blob) {
 
-      $scope.$apply('alertboxdata.show = false');
+              var fd = new FormData();
+              fd.append('mayugedImage', blob);
+              if (currentFile) fd.append('currentFile', currentFile);
 
-    });
+              $.ajax({
+                url: './save.php',
+                type: 'POST',
+                data: fd,
+                dataType: 'text',
+                contentType: false, // デフォルトの値は application/x-www-form-urlencoded; charset=UTF-8'
+                processData: false  // デフォルトの値は application/x-www-form-urlencoded
+              })
+              .done(function(data) {
+                console.log(data);
+                //history.replaceState("index");
+                if (currentFile == null) {
+                  history.pushState(data, null, "?file=" + data);
+                } else {
+                  history.replaceState(data, null, "?file=" + data);
+                }
+                currentFile = data;
+                $("#snsBtn > div").remove();  //G+ボタンとLikeボタン
+                $.get("fbcacheclear.php", { url: location.href } ); // FBのキャッシュクリア非同期なので早めに実行しておく
+
+                $("#snsBtn").prepend('<div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble"></div>');
+                gapi.plus.go('snsBtn');
+
+                // $("#snsBtn > iframe").remove(); // twボタンのiframe用
+                // $("#snsBtn > a").remove();
+                // $("#snsBtn").append('<a id="tw-share" href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-size="large"></a>');
+                // $("#tw-share").attr({"data-url": '/?file=' + data});        
+                // $("#tw-share").attr({"data-url": location.href});        
+                $("#tw-share").attr({"data-url": location.protocol + '//' + location.host + '/imgstore/' + data + '.png'});        
+                $("#tw-share").attr({"data-text": 'まゆげジェネレータ(' + location.href + ')'});        
+                // $("#tw-share").attr({"data-hashtags": 'まゆげジェネレータ'});        
+                twttr.widgets.load();
+
+                $("#snsBtn").append('<div id="fb-share" class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="true"></div>');
+                $scope.appendMetaInfo( "og:image", location.protocol + '//' + location.host + '/imgstore/' + data + '.png');
+                FB.XFBML.parse($('#snsBtn')[0]);
+
+                $("#svgArea").unblock();
+
+                $scope.progressbar.progress = 100;
+                // $scope.$apply('progressbar.show = false');
+                $("#progressbar").fadeOut(1000);
+                $scope.$apply('alertboxdata.show = false');
+
+
+              })
+              .fail(function(xhr, status, exception) {
+                console.log(status);
+                $("#svgArea").unblock();
+
+                $scope.$apply('alertboxdata.show = false');
+
+              });
+
+            },
+            'image/png'
+        );
+    }
+
   }
 
   $scope.openPNG = function(event) {
+
+    $('[rel=tooltip]').tooltip("hide");
+
     var dataURL = $("#canvasArea")[0].toDataURL();
     window.open(dataURL, 'save');
 
@@ -326,32 +383,13 @@ var mainCtrl = function($scope, $http, $compile) {
 
   $scope.popstate = function(event) {
 
-    $("#snsBtn > div").remove();
-    $("#snsBtn").append('<div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble" data-height="24"></div>');
-    $("#snsBtn > iframe").remove();
-    $("#snsBtn > a").remove();
-    $("#snsBtn").append('<a id="tw-share" href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-size="large"></a>');
-
-    // Getパラメータにファイルが指定されてたら読み込む
-    var urlGetParams = $scope.getUrlGetParams();
-    if (urlGetParams && urlGetParams.length) {
-      var remoteFileName = urlGetParams['file'];
-      $("#pngArea > img").attr({src: './imgstore/' + remoteFileName + '.png'});
-      $("#pngArea").css("display", "");
-      $("#svgArea").css("display", "none");
-      $scope.$apply('conf.showToolBox = false');
-
-
-      // snsボタン
-      gapi.plus.go();
-      // $("#tw-share").attr({"data-url": '/?file=' + remoteFileName});        
-      $("#tw-share").attr({"data-url": location.href});        
-      twttr.widgets.load();
-    } else {
-      $("#pngArea > img").remove();
-      $("#pngArea").append('<img itemprop="image"/>');
+    if (location.pathname == '' || location.pathname == '/') {
+      console.log(location.pathname);
+      $scope.loadHome();
+    } else if (location.pathname == '/about.php') {
+      console.log(location.pathname);
+      $scope.loadAbout();
     }
-    $("#svgArea").svg('destroy');
   }
 
   $scope.getUrlGetParams = function()
@@ -389,7 +427,8 @@ var mainCtrl = function($scope, $http, $compile) {
       dataType: 'html'
     })
     .done(function(res) {
-      history.pushState(res, null, "about"); 
+      if (location.pathname != "/about.php")
+        history.pushState(res, null, "about.php"); 
       $("#navhome").removeClass("active");
       $("#navabout").addClass("active");
       mainContent = $("#mainContent");
@@ -405,7 +444,8 @@ var mainCtrl = function($scope, $http, $compile) {
       dataType: 'html'
     })
     .done(function(res) {
-      history.pushState(res, null, "/"); 
+      if (location.pathname != "/")
+        history.pushState(res, null, "/" + location.search); 
       $("#navhome").addClass("active");
       $("#navabout").removeClass("active");
 
@@ -415,8 +455,56 @@ var mainCtrl = function($scope, $http, $compile) {
         mainContent.replaceWith($compile(res)($scope));
         $scope.init();
       })
+
+      $("#snsBtn > div").remove();  //G+ボタンとLikeボタン
+      $.get("fbcacheclear.php", { url: location.href } ); // FBのキャッシュクリア非同期なので早めに実行しておく
+
+      $("#snsBtn").prepend('<div id="g-plus-share" class="g-plus" data-action="share" data-annotation="bubble"></div>');
+      // $("#snsBtn > iframe").remove();
+      // $("#snsBtn > a").remove();
+      // $("#snsBtn").append('<a id="tw-share" href="https://twitter.com/share" class="twitter-share-button" data-lang="ja" data-size="large"></a>');
+      $("#snsBtn").append('<div id="fb-share" class="fb-like" data-send="false" data-layout="button_count" data-width="100" data-show-faces="true"></div>');
+
+      // Getパラメータにファイルが指定されてたら読み込む
+      var urlGetParams = $scope.getUrlGetParams();
+      if (urlGetParams && urlGetParams.length) {
+        var remoteFileName = urlGetParams['file'];
+        $("#pngArea > img").attr({src: './imgstore/' + remoteFileName + '.png?' + (new Date()).getTime()});
+        $("#pngArea").css("display", "");
+        $("#svgArea").css("display", "none");
+        $scope.$apply('conf.showToolBox = true');
+
+
+        // snsボタン
+        gapi.plus.go('snsBtn');
+        // $("#tw-share").attr({"data-url": '/?file=' + remoteFileName});        
+        // $("#tw-share").attr({"data-url": location.href});        
+        $("#tw-share").attr({"data-url": location.protocol + '//' + location.host + '/imgstore/' + remoteFileName + '.png'});        
+        $("#tw-share").attr({"data-text": 'まゆげジェネレータ(' + location.href + ')'});        
+        // $("#tw-share").attr({"data-hashtags": 'まゆげジェネレータ'});        
+        twttr.widgets.load();
+
+        $scope.appendMetaInfo( "og:image", location.protocol + '//' + location.host + '/imgstore/' + remoteFileName + '.png');
+        FB.XFBML.parse($('#snsBtn')[0]);
+      } else {
+        $("#pngArea > img").remove();
+        $("#pngArea").append('<img itemprop="image"/>');
+      }
+      $("#svgArea").svg('destroy');
     })
 
+  }
+
+  $scope.toggleMayugeTypeBoxDisplay = function() {
+    if ($scope.conf.showToolBox) {
+      $scope.conf.showMayugeTypeBox = true;
+    } else {
+      if ($scope.conf.faceDetect) {
+        $scope.conf.showMayugeTypeBox = true;
+      } else {
+        $scope.conf.showMayugeTypeBox = false;
+      }
+    }
   }
 
   $scope.init = function() {
@@ -424,9 +512,9 @@ var mainCtrl = function($scope, $http, $compile) {
     $scope.conf = {};
     $scope.conf.mayugeType = "golgo";
     $scope.conf.optionsLR = "r";
-    $scope.conf.autoSave = true;
+    $scope.conf.autoSave = false;
     $scope.conf.faceDetect = true;
-    $scope.conf.showToolBox = false;
+    $scope.conf.showToolBox = true;
     $scope.conf.changeAllMayugeColor = false;
     $scope.alertboxdata = {};
     $scope.alertboxdata.status = '';
@@ -434,13 +522,16 @@ var mainCtrl = function($scope, $http, $compile) {
     $scope.alertboxdata.show = false;
     $scope.progressbar = {};
     $scope.progressbar.show = false;
-
+    $scope.toggleMayugeTypeBoxDisplay();
 
 
     // ツールチップの準備
     // $('[rel=tooltip]:not(#svgArea)').tooltip("show");
     $('[rel=tooltip][data-default-show=true]').tooltip("show");
     $('[rel=tooltip]').tooltip();
+
+    // snsボタン
+    gapi.plus.go('snsButtonTop');
 
     // // まゆ毛の種類ドロップダウン準備
     // $scope.$apply(function($scope){
@@ -483,8 +574,8 @@ var mainCtrl = function($scope, $http, $compile) {
 
       // メッセージボックス表示
       $scope.alertboxdata.status = 'info';
-      $scope.alertboxdata.message = 'loading...';
-      // $scope.$apply('alertboxdata.show = true');
+      $scope.alertboxdata.message = '画像読込中...数秒〜数十秒かかります...';
+      $scope.$apply('alertboxdata.show = true');
       $scope.progressbar.progress = 5;
       $scope.$apply('progressbar.show = true');
       $("#progressbar").show();
@@ -497,8 +588,11 @@ var mainCtrl = function($scope, $http, $compile) {
 
       // 画像ファイル以外は処理中止
       if (!file || !file.type || !file.type.match(/^image\/(png|jpeg|jpg|gif)$/)) {
-        $scope.$apply('alertboxdata.show = false')
-        return;
+        $scope.alertboxdata.status = 'important';
+        $scope.alertboxdata.message = 'PNG/JPG/GIFファイルを選択してください。';
+        $scope.$apply('alertboxdata.show = true');
+        $("#progressbar").fadeOut(1000);
+        return;    
       }
 
       // サーバ側保存済みファイルIDをクリア
@@ -528,7 +622,7 @@ var mainCtrl = function($scope, $http, $compile) {
           selectedImageHeight = localImage.height;
 
 
-          var limitSize = 400;
+          // var limitSize = 400;
           if (selectedImageWidth > limitSize || selectedImageHeight > limitSize) {
 
             if (selectedImageWidth > selectedImageHeight) {
@@ -559,6 +653,30 @@ var mainCtrl = function($scope, $http, $compile) {
       reader.readAsDataURL(file);
     });
 
+  }
+
+  // ■引数
+  // _type : "og:type" や ”og:title” のような文字列。
+  // _value : 設定したい値。<meta> の "content" 属性です。
+  $scope.appendMetaInfo = function (_type, _value)    {
+      // 既にメタタグがあった場合、2重に追加されてしまうのを避けるため探す
+      metatags = document.getElementsByTagName("meta");
+      // メタタグ自体なかったらループ処理を飛ばす
+      if(metatags.length > 0) {
+          for (i = 0; i < metatags.length; i++)    {
+              // <meta property=""> が一致したらアップデート
+              if ( _type == metatags[i].getAttribute("property") ){
+                    metatags[i].content=_value;
+                    // 設定したらやることもないので帰る。
+                    return true;
+              }
+          }
+      }
+      // 引数「_type」に一致するメタ情報がなかった場合は追加。
+      var metaObj=document.createElement('meta');
+      metaObj.setAttribute('property', _type);
+      metaObj.content=_value;
+      $("head").append(metaObj);
   }
 
   $scope.init();
