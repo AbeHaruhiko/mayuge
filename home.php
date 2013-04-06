@@ -16,7 +16,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="span7">
+        <div class="span7 bootstro">
             <form class="form-inline">
                 <input id="imageSelector" name="imageSelector" type="file" style="display:none" onchange="angular.element(this).scope().setFiles(this);">
                 <span class="input-append" style="height: 30px;">
